@@ -1,0 +1,18 @@
+{
+  "name": "GraphiteJS",
+  "version": "0.0.1",
+  "description": "GraphiteJS Framework",
+  "scripts": {
+    "lint": "eslint -f table ./packages/**/src ./packages/**/test || exit 1",
+    "coverage": "lerna exec npm run coverage"
+  },
+  "pre-push": [],
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.11.1",
+    "eslint-plugin-babel": "^4.0.0",
+    "eslint-plugin-react": "^6.10.2",
+    "lerna": "^2.0.0-beta.34",
+    "pre-push": "^0.1.1"
+  }
+}

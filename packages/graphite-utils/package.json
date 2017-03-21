@@ -1,0 +1,27 @@
+{
+  "name": "graphite-utils",
+  "version": "0.0.1",
+  "description": "Graphite Framework, utils",
+  "main": "dist/utils.js",
+  "scripts": {
+    "test": "npm run compile && mocha --compilers js:babel-core/register --recursive",
+    "coverage": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --recursive",
+    "compile": "babel src --out-dir dist",
+    "prepublish": "npm run compile"
+  },
+  "author": "Walter Zalazar",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-istanbul": "^0.11.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-latest": "^6.16.0",
+    "chai": "^3.5.0",
+    "debug": "^2.3.3",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
+}

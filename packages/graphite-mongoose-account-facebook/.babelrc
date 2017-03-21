@@ -1,0 +1,8 @@
+{
+  "presets": ["latest"],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "add-module-exports"
+  ]
+}
