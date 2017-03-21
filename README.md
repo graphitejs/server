@@ -1,2 +1,1 @@
-# graphitejs
-Framework GraphQl
+# GraphiteJS Framework
