@@ -1,6 +1,6 @@
 {
   "name": "graphite-decorators",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Graphite Framework, decorators",
   "main": "dist/decorators.js",
   "scripts": {
@@ -25,6 +25,6 @@
     "debug": "^2.3.3",
     "lodash": "^4.17.2",
     "pluralize": "^3.0.0",
-    "graphite-utils": "^0.1.0"
+    "graphite-utils": "^0.1.2"
   }
 }
