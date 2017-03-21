@@ -1,6 +1,6 @@
 {
   "name": "graphite-mongoose-account-facebook",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Graphite Framework, mongoose account facebook",
   "main": "dist/AccountFacebook.js",
   "scripts": {
