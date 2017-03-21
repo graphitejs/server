@@ -68,6 +68,8 @@ export default class AccountPassword {
     responseType: 'authenticationPassword',
   })
   async createUser(_, { email, password }) {
+    let newAccount;
+    let user;
     try {
       this.logger('Init createUser');
       this.logger(`Parameters, email: ${email} - password: ${password}`);
@@ -86,8 +88,8 @@ export default class AccountPassword {
         const hashPassword = await bcrypt.hash(beforeCreate.password, this.saltRounds);
         this.logger(`hashPassword: ${hashPassword}`);
 
-        const { _id } = await accountModel.create({ type: 'password' });
-        const user = await this.Model.create({ userId: _id, email, password: hashPassword });
+        newAccount = await accountModel.create({ type: 'password' });
+        user = await this.Model.create({ userId: newAccount._id, email, password: hashPassword });
         this.logger(`User created:  ${user}`);
 
         if (account.onAfterCreateCallback) {
@@ -101,12 +103,12 @@ export default class AccountPassword {
       this.logger('Finish createUser');
       return null;
     } catch (error) {
-      if (_id) {
-        accountModel.remove({ _id });
+      if (newAccount) {
+        await accountModel.remove({ _id: newAccount._id });
       }
 
       if (user) {
-        this.Model.remove({ _id: user._id });
+        await this.Model.remove({ _id: user._id });
       }
       this.logger(`Error createUser: ${error}`);
       return null;
