@@ -26,8 +26,8 @@
     "graphite-apollo-express": "^0.1.2",
     "graphite-mongoose": "^0.1.2",
     "graphite-mongoose-account": "^0.1.2",
-    "graphite-mongoose-account-password": "^0.1.2",
-    "graphite-mongoose-account-facebook": "^0.1.2",
+    "graphite-mongoose-account-password": "^0.1.3",
+    "graphite-mongoose-account-facebook": "^0.1.4",
     "graphite-react-account-password": "^0.1.2",
     "graphite-react-account-facebook": "^0.1.2",
     "graphite-react-account-logout": "^0.1.2"

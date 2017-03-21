@@ -32,6 +32,12 @@ mutation loginPassword($email: String, $password: String) {
   }
 }
 
+mutation loginFacebook {
+  loginFacebook {
+    url
+  }
+}
+
 mutation changePassword($oldPassword: String, $newPassword: String) {
   changePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
     loginToken
@@ -58,7 +64,6 @@ query getAccounts {
     }
   }
 }
-
 
 query getAccountsPassword {
   accountPassword {
