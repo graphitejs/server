@@ -1,0 +1,6 @@
+node_modules/
+test/
+src/
+coverage/
+*.log
+.babelrc
