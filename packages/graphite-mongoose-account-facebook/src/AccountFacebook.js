@@ -149,6 +149,8 @@ export default class AccountFacebook {
   }
 
   async callbackFacebook(req, res) {
+    let newAccount;
+    let user;
     try {
       const code = req.query.code;
       if (req.query.error) {
@@ -163,7 +165,7 @@ export default class AccountFacebook {
       const { token } = await this.getExtendAccessToken(this.appId, this.secret, result.token);
       const me = await this.getMe(token);
       this.logger('me: ', me);
-      let user = await this.Model.findOne({ facebookId: me.id });
+      user = await this.Model.findOne({ facebookId: me.id });
       this.logger('user: ', user);
 
       if (user) {
@@ -171,8 +173,8 @@ export default class AccountFacebook {
         return;
       }
 
-      const { _id } = await accountModel.create({ type: 'facebook' });
-      user = await this.Model.create({ userId: _id, facebookId: me.id, accessToken: token });
+      newAccount = await accountModel.create({ type: 'facebook' });
+      user = await this.Model.create({ userId: newAccount._id, facebookId: me.id, accessToken: token });
 
       if (account.onBeforeCreateCallback) {
         beforeCreate = account.onBeforeCreateCallback(me);
@@ -180,12 +182,12 @@ export default class AccountFacebook {
 
       res.write(this.templateToken(this.generateAppToken(user, JwSToken)));
     } catch (error) {
-      if (_id) {
-        accountModel.remove({ _id });
+      if (newAccount) {
+        await accountModel.remove({ _id: newAccount._id });
       }
 
       if (user) {
-        this.Model.remove({ _id: user._id });
+        await this.Model.remove({ _id: user._id });
       }
       this.logger(`Error callbackFacebook: ${error}`);
       res.write(templateError());
