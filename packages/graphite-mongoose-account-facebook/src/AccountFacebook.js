@@ -173,11 +173,17 @@ export default class AccountFacebook {
         return;
       }
 
+      if (account.onBeforeCreateCallback) {
+        account.onBeforeCreateCallback(me);
+        this.logger('onBeforeCreateCallback');
+      }
+
       newAccount = await accountModel.create({ type: 'facebook' });
       user = await this.Model.create({ userId: newAccount._id, facebookId: me.id, accessToken: token });
 
-      if (account.onBeforeCreateCallback) {
-        beforeCreate = account.onBeforeCreateCallback(me);
+      if (account.onAfterCreateCallback) {
+        account.onAfterCreateCallback(user);
+        this.logger('onAfterCreateCallback');
       }
 
       res.write(this.templateToken(this.generateAppToken(user, JwSToken)));
