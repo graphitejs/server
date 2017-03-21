@@ -1,0 +1,53 @@
+body {
+  font-family: arial;
+}
+
+button {
+  border: none;
+  border-radius: 1px;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.4em 1em;
+}
+
+#LoginFacebook {
+  button {
+    background-color: #29487d;
+  }
+}
+
+#LoginPassword {
+  button {
+    background-color: #2681aa;
+  }
+
+  input {
+    border: none;
+    border-radius: 1px;
+    color: #000;
+    font-size: 1em;
+    padding: 0.4em 1em;
+    margin: 0px 5px;
+    width: 45%;
+  }
+
+  fieldset {
+    border: 1px solid #ccc;
+    padding: 1em;
+  }
+}
+
+#LogOut {
+  button {
+    background-color: #2681aa;
+  }
+}
+
+#app {
+  margin: auto;
+  width: 960px;
+  #LoginFacebook, #LoginPassword {
+    margin-top: 30px
+  }
+}
