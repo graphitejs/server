@@ -1,0 +1,14 @@
+machine:
+  node:
+    version: 7.1.0
+dependencies:
+  pre:
+    - npm install --global lerna@2.0.0-beta.34
+    - npm install -g codecov
+    - lerna exec npm install
+test:
+  override:
+    - lerna exec npm run test
+    - lerna exec npm run coverage
+  post:
+    - bash <(curl -s https://codecov.io/bash)
