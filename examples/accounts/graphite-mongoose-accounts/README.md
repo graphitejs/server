@@ -1,4 +1,4 @@
-# Example Mars mongoose accounts
+# Example GraphiteJS mongoose accounts
 
 Requirement: You have to install **mongo** in your system.
 
