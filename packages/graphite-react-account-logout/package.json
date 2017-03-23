@@ -1,6 +1,6 @@
 {
   "name": "graphite-react-account-logout",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "Graphite Framework, react logout",
   "main": "dist/Logout.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "dependencies": {
     "debug": "^2.6.1",
     "react": "^15.4.2",
-    "graphite-account": "^0.1.2"
+    "graphite-account": "^0.1.5"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

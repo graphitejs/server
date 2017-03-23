@@ -1,6 +1,6 @@
 {
   "name": "graphite-mongoose-account",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "Graphite Framework, mongoose account",
   "main": "dist/account.js",
   "scripts": {
