@@ -29,7 +29,7 @@
     "graphite-mongoose-account-password": "^0.1.5",
     "graphite-mongoose-account-facebook": "^0.1.5",
     "graphite-react-account-password": "^0.1.5",
-    "graphite-react-account-facebook": "^0.1.5",
+    "graphite-react-account-facebook": "^0.1.6",
     "graphite-react-account-logout": "^0.1.5"
   },
   "devDependencies": {
