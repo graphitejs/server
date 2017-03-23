@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import Account from 'graphite-account';
 import debug from 'debug';
 
-class LoginFacebook extends Component {
+export class LoginFacebook extends Component {
   logger = debug('react-account-facebook');
 
   static propTypes = {
