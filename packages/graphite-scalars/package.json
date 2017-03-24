@@ -1,6 +1,6 @@
 {
   "name": "@graphite/scalars",
-  "version": "0.1.2",
+  "version": "0.1.7",
   "description": "Graphite Framework, scalars",
   "main": "dist/scalars.js",
   "scripts": {
