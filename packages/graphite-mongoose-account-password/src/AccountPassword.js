@@ -1,7 +1,7 @@
-import { mongoose } from 'graphite-mongoose';
-import { extendTypeGraphQl } from 'graphite-utils';
-import account, { Model as accountModel } from 'graphite-mongoose-account';
-import { property, graphQl, mutation, type, query } from 'graphite-decorators';
+import { mongoose } from '@graphite/mongoose';
+import { extendTypeGraphQl } from '@graphite/utils';
+import account, { Model as accountModel } from '@graphite/mongoose-account';
+import { property, graphQl, mutation, type, query } from '@graphite/decorators';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import debug from 'debug';

@@ -3,7 +3,7 @@ import typeDefs from './schema';
 import { makeExecutableSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
 import { get } from 'lodash';
-import scalars from 'graphite-scalars';
+import scalars from '@graphite/scalars';
 import { keys, without } from 'lodash';
 import * as defaultConfig from '../config/default';
 import debug from 'debug';

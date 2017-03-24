@@ -1,4 +1,4 @@
-import { functionName } from 'graphite-utils';
+import { functionName } from '@graphite/utils';
 import Mongoose from 'mongoose';
 import MongooseReadonly from 'mongoose-readonly/lib';
 import customId from 'mongoose-hook-custom-id';

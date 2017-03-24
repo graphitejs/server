@@ -1,5 +1,5 @@
-import { mongoose } from 'graphite-mongoose';
-import { graphQl, query } from 'graphite-decorators';
+import { mongoose } from '@graphite/mongoose';
+import { graphQl, query } from '@graphite/decorators';
 import jwt from 'jsonwebtoken';
 import debug from 'debug';
 

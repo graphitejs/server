@@ -7,7 +7,7 @@ import {
   get,
 } from 'lodash';
 
-import { functionName } from 'graphite-utils';
+import { functionName } from '@graphite/utils';
 
 const graphQl = function(target) {
   const name = functionName(target);

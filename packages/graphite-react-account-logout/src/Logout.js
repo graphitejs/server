@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Account from 'graphite-account';
+import Account from '@graphite/account';
 
 export default class Logout extends Component {
 

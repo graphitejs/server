@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import Account from 'graphite-account';
+import Account from '@graphite/account';
 import debug from 'debug';
 
 export class LoginFacebook extends Component {
