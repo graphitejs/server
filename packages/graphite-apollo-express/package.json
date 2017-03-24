@@ -1,5 +1,5 @@
 {
-  "name": "graphite-apollo-express",
+  "name": "@graphite/apollo-express",
   "version": "0.1.2",
   "description": "Graphite Framework, apollo express",
   "main": "dist/Graphite.js",
@@ -33,6 +33,9 @@
     "graphql": "^0.8.2",
     "graphql-tools": "^0.8.3",
     "lodash": "^4.17.2",
-    "graphite-scalars": "^0.1.2"
+    "@graphite/scalars": "^0.1.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

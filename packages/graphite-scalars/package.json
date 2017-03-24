@@ -1,5 +1,5 @@
 {
-  "name": "graphite-scalars",
+  "name": "@graphite/scalars",
   "version": "0.1.2",
   "description": "Graphite Framework, scalars",
   "main": "dist/scalars.js",
@@ -23,5 +23,8 @@
   },
   "dependencies": {
     "graphql": "^0.8.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

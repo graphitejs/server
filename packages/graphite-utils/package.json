@@ -1,5 +1,5 @@
 {
-  "name": "graphite-utils",
+  "name": "@graphite/utils",
   "version": "0.1.2",
   "description": "Graphite Framework, utils",
   "main": "dist/utils.js",
@@ -23,5 +23,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

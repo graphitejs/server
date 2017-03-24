@@ -1,5 +1,5 @@
 {
-  "name": "graphite-account",
+  "name": "@graphite/account",
   "version": "0.1.5",
   "description": "Graphite Framework, login account",
   "main": "dist/Account.js",
@@ -22,5 +22,8 @@
     "babel-runtime": "^6.23.0",
     "chai": "^3.5.0",
     "mocha": "^3.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
