@@ -1,6 +1,6 @@
 {
   "name": "@graphite/mongoose",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Graphite Framework, middleware mongoose",
   "main": "dist/mongoose.js",
   "scripts": {
