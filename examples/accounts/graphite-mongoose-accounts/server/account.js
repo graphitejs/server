@@ -1,4 +1,4 @@
-import account from 'graphite-mongoose-account';
+import account from '@graphite/mongoose-account';
 import { JwSToken } from './config/default';
 
 account.setConfig(JwSToken);

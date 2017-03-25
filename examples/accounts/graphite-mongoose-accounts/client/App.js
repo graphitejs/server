@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
-import LoginFacebook from 'graphite-react-account-facebook';
-import LoginPassword from 'graphite-react-account-password';
-import LogOut from 'graphite-react-account-logout';
+import LoginFacebook from '@graphite/react-account-facebook';
+import LoginPassword from '@graphite/react-account-password';
+import LogOut from '@graphite/react-account-logout';
 import './style/theme.scss';
 
 const networkInterface = createNetworkInterface('http://localhost:4000/graphql');
