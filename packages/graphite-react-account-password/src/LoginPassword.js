@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import Account from '@graphite/account';
 import debug from 'debug';
 
-class LoginPassword extends Component {
+export class LoginPassword extends Component {
   logger = debug('react-account-password');
 
   static propTypes = {
