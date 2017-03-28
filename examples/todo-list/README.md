@@ -3,6 +3,9 @@
 Requirement: You have to install **mongo** in your system.
 
 
+![Alt text](https://github.com/graphitejs/graphitejs/blob/master/examples/todo-list/screenshot/todo-list.png)
+
+
 
 ```bash
 npm install && npm run start
@@ -10,6 +13,7 @@ npm install && npm run start
 
 
 Open browser in **http://localhost:4000** for app
+
 Open browser in **http://localhost:8001/graphiql** for graphiql
 
 
