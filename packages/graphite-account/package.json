@@ -11,7 +11,9 @@
   },
   "author": "Walter Zalazar",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "debug": "^2.6.3"
+  },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.23.1",
