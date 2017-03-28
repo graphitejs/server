@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
+import { todoList, updateTodo, removeTodo, options } from '../graphql/todo';
+
 
 export class TodoList extends Component {
 
@@ -9,6 +10,8 @@ export class TodoList extends Component {
       loading: PropTypes.bool.isRequired,
       todo: PropTypes.array,
     }).isRequired,
+    updateTodo: PropTypes.func,
+    removeTodo: PropTypes.func,
   }
 
   static defaultProps = {
@@ -17,6 +20,30 @@ export class TodoList extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  async onChange(item, event) {
+    try {
+      event.preventDefault();
+      const id = item._id;
+      const updateTodo = {
+        name: item.name,
+        status: !item.status,
+      };
+
+      await this.props.updateTodo({ variables: { id, updateTodo } });
+    } catch (error) {
+      console.log("Error: ",error);
+    }
+  }
+
+  async onRemove(id, event) {
+    try {
+      event.preventDefault();
+      await this.props.removeTodo({ variables: { id } });
+    } catch (error) {
+      console.log("Error: ",error);
+    }
   }
 
   render() {
@@ -31,24 +58,23 @@ export class TodoList extends Component {
     }
 
     return (
-      <ul>
-        {todo.map(({ _id, name }) => (
-          <li key={_id}>{name}</li>
-        ))}
+      <ul id= "todo-list">
+        {
+          todo.map(item => (
+            <li className={ item.status ? 'done' : '' }
+                onClick= { this.onChange.bind(this, item) } key={item._id}>{item.name}
+                <span className={ item.status ? 'done' : 'hidden' }> &#10004; </span>
+                <button className = {'reset delete'} onClick= {this.onRemove.bind(this, item._id) }><span>&#10006;</span></button>
+            </li>
+          ))
+        }
       </ul>
     );
   }
 }
 
-const todoList = gql `
-  query todoList {
-    todo {
-      _id
-      status
-      name
-    }
-  }
-`;
-
-const options = { pollInterval: 1000 };
-export default graphql(todoList, { options })(TodoList);
+export default compose(
+  graphql(todoList, { options }),
+  graphql(updateTodo, { name: 'updateTodo' }),
+  graphql(removeTodo, { name: 'removeTodo' }),
+)(TodoList);

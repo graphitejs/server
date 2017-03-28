@@ -12,6 +12,7 @@ const client = new ApolloClient({ networkInterface, dataIdFromObject: r => r.id 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <div>
+      <h1> GraphiteJS Todo list </h1>
       <AddTodo />
       <TodoList />
     </div>

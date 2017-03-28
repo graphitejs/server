@@ -9,9 +9,8 @@ npm install && npm run start
 ```
 
 
-
-Open browser in **http://localhost:8001/graphiql**
-
+Open browser in **http://localhost:4000** for app
+Open browser in **http://localhost:8001/graphiql** for graphiql
 
 
 ```javascript

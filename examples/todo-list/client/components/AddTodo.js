@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { createTodo } from '../graphql/todo';
 
 export class AddTodo extends Component {
 
@@ -30,45 +31,32 @@ export class AddTodo extends Component {
       const { data } = await this.props.mutate({ variables: { newTodo } });
       if (data) {
         this.setState({ showMessage: true, success: true });
+        addTaskInput.value = '';
         setTimeout(() => {
           this.setState({ showMessage: false, success: undefined });
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       this.setState({ showMessage: true, success: false });
       setTimeout(() => {
         this.setState({ showMessage: false, success: undefined });
-      }, 2000);
+      }, 1000);
     }
   }
 
   render() {
     const { success, showMessage } = this.state;
+    const successStatus = success && showMessage ? 'success' : '';
+    const failStatus = !success && showMessage ? 'fail' : '';
     return (
-      <div>
-        { success && showMessage ? (<div>Success</div>) : null }
-        { !success && showMessage ? (<div>Fail</div>) : null }
+      <div id= "add-todo">
         <form onSubmit= { this.onSubmit.bind(this) }>
-          <input ref="addTaskInput" type= "text" placeholder= "Add task" />
-          <button> Add todo </button>
+          <input className= { successStatus + failStatus } ref="addTaskInput" type= "text" placeholder= "Add task" />
+          <button> Add </button>
         </form>
       </div>
     );
   }
 }
 
-export default graphql(gql `
-  mutation createTodo($newTodo: createTodo) {
-  createTodo(todo: $newTodo) {
-    todo {
-      _id
-      name
-      status
-    }
-    errors {
-      key
-      message
-    }
-  }
-}
-`)(AddTodo);
+export default graphql(createTodo)(AddTodo);
