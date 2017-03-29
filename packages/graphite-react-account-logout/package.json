@@ -4,8 +4,8 @@
   "description": "Graphite Framework, react logout",
   "main": "dist/Logout.js",
   "scripts": {
-    "test": "npm run compile && mocha --compilers js:babel-core/register --require babel-polyfill --recursive",
-    "coverage": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --recursive",
+    "test": "npm run compile && mocha --compilers js:babel-core/register --require babel-polyfill --require jsdom-global/register --recursive",
+    "coverage": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --require jsdom-global/register --recursive",
     "compile": "babel src --out-dir dist",
     "prepublish": "npm run compile"
   },
@@ -27,7 +27,14 @@
     "babel-preset-react": "^6.23.0",
     "babel-runtime": "^6.23.0",
     "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "enzyme": "^2.7.1",
+    "jsdom": "9.12.0",
+    "jsdom-global": "2.1.1",
+    "mocha": "^3.2.0",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "sinon": "^2.1.0",
+    "sinon-chai": "^2.9.0"
   },
   "publishConfig": {
     "access": "public"
