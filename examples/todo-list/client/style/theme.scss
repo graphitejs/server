@@ -58,6 +58,8 @@ form {
 }
 
 #add-todo {
+  position: relative;
+
   .success {
     border: 1px solid #5cb85c;
   }
@@ -69,6 +71,7 @@ form {
 
 #todo-list {
   position: relative;
+  margin-top: 45px;
 
   li {
     color: #333;
@@ -104,4 +107,18 @@ form {
       outline: none;
     }
   }
+}
+
+
+#error-message {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+  color: #fff;
+  position: absolute;
+  top: 44px;
+  width: calc(100% - 10px);
+  margin: 0px 5px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  padding: 5px 20px;
 }

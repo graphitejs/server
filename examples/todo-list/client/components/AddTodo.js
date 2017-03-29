@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { createTodo } from '../graphql/todo';
 
@@ -16,6 +15,8 @@ export class AddTodo extends Component {
     this.state = {
       success: undefined,
       showMessage: false,
+      showErrorMessage: false,
+      errorMessage: '',
     };
   }
 
@@ -29,33 +30,52 @@ export class AddTodo extends Component {
       };
 
       const { data } = await this.props.mutate({ variables: { newTodo } });
-      if (data) {
-        this.setState({ showMessage: true, success: true });
+      if (data.createTodo.todo) {
         addTaskInput.value = '';
-        setTimeout(() => {
-          this.setState({ showMessage: false, success: undefined });
-        }, 1000);
+        this.toggleNotification(true);
+      }
+
+      if (data.createTodo.errors) {
+        const mapErrors = data.createTodo.errors.map(error => error.message);
+        this.toggleNotification(false);
+        this.toggleShowError(mapErrors.join('\n'));
       }
     } catch (error) {
-      this.setState({ showMessage: true, success: false });
-      setTimeout(() => {
-        this.setState({ showMessage: false, success: undefined });
-      }, 1000);
+      this.toggleNotification(false);
     }
   }
 
   render() {
-    const { success, showMessage } = this.state;
+    const { success, showMessage, showErrorMessage, errorMessage } = this.state;
     const successStatus = success && showMessage ? 'success' : '';
     const failStatus = !success && showMessage ? 'fail' : '';
+    const contentError = showErrorMessage ? (
+      <div id= "error-message"> {errorMessage} </div>
+    ) : null;
+
     return (
       <div id= "add-todo">
         <form onSubmit= { this.onSubmit.bind(this) }>
           <input className= { successStatus + failStatus } ref="addTaskInput" type= "text" placeholder= "Add task" />
           <button> Add </button>
         </form>
+        {contentError}
       </div>
     );
+  }
+
+  toggleNotification(status) {
+    this.setState({ showMessage: true, success: status });
+    setTimeout(() => {
+      this.setState({ showMessage: false, success: undefined });
+    }, 1000);
+  }
+
+  toggleShowError(message) {
+    this.setState({ showErrorMessage: true, errorMessage: message });
+    setTimeout(() => {
+      this.setState({ showErrorMessage: false, errorMessage: '' });
+    }, 1000);
   }
 }
 

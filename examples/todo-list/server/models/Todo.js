@@ -21,7 +21,11 @@ class Todo {
     try {
       return await this.Model.create(todo);
     } catch (err) {
-      return null;
+      const errorKeys = Object.keys(err.errors);
+      return errorKeys.reduce((errorsCreate, error) => {
+        errorsCreate.push({ key: error, message: err.errors[error].message });
+        return errorsCreate;
+      }, []);
     }
   }
 
