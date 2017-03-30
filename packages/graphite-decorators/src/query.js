@@ -19,7 +19,7 @@ const query = function(params) {
           return await descriptor.value.bind(target)(...arguments);
         }
 
-        return await descriptor.value.bind(target)(...arguments);
+        return null;
       } catch (error) {
         throw new Error('Decorators query failed. \n' + error);
       }
