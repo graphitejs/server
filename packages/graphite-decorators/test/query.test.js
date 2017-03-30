@@ -64,7 +64,7 @@ describe('query', () => {
 
   describe('Promise query', () => {
     describe('Promise success', () => {
-      it('should return result', (done) => {
+      it('should return Graphite', (done) => {
         decoratorQuery(target, key, descriptor);
         target.Resolvers.Query[key]().then(result => {
           expect(result).eql('Graphite');
