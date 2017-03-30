@@ -1,6 +1,6 @@
 {
   "name": "@graphite/apollo-express",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "Graphite Framework, apollo express",
   "main": "dist/Graphite.js",
   "scripts": {
