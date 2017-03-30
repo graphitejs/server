@@ -1,5 +1,5 @@
 import { mongoose } from '@graphite/mongoose';
-import { property, mutation, graphQl, query, create, update, remove } from '@graphite/decorators';
+import { property, mutation, graphQl, query, create, update, remove, allow } from '@graphite/decorators';
 
 @mongoose
 @graphQl
@@ -11,12 +11,14 @@ class Todo {
   status = false;
 
   @query()
+  @allow((_, todo, {}) => true)
   todo() {
     return this.Model.find();
   }
 
   @create
   @mutation()
+  @allow((_, todo, {}) => true)
   async createTodo(_, { todo }) {
     try {
       return await this.Model.create(todo);
