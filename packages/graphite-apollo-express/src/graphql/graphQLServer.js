@@ -102,9 +102,9 @@ export default class GraphQLServer {
 
     return collections.reduce((acum, collection) => {
       return  {
-        Types: acum.Types + get(collection, 'Types', ''),
-        Query: acum.Query + get(collection, 'Query', ''),
-        Mutation: acum.Mutation + get(collection, 'Mutation', ''),
+        Types: acum.Types +' '+get(collection, 'Types', ''),
+        Query: acum.Query +' '+get(collection, 'Query', ''),
+        Mutation: acum.Mutation +' '+ get(collection, 'Mutation', ''),
         Resolvers: defaultsDeep(acum.Resolvers, collection.Resolvers),
       };
     }, defReduce);
