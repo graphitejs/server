@@ -11,13 +11,16 @@ const mutation = function(params) {
     target.Resolvers.Mutation = Object.assign({}, target.Resolvers.Mutation);
     target.Resolvers.Mutation[key] = async function() {
       try {
-        return await descriptor.value.bind(target)(...arguments);
+        const isAllow = get(target[key], 'allow', function() { return true });
+        if (isAllow.bind(target)(...arguments)) {
+          return await descriptor.value.bind(target)(...arguments);
+        }
+
+        return null;
       } catch (error) {
         throw new Error('Decorators mutation failed. \n' + error);
       }
     };
-
-    target.Resolvers.Mutation[key].bind(target);
   };
 };
 

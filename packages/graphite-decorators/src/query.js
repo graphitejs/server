@@ -1,4 +1,5 @@
 import pluralize from 'pluralize';
+import { get } from 'lodash';
 
 const query = function(params) {
   return (target, key, descriptor) => {
@@ -13,6 +14,11 @@ const query = function(params) {
     target.Resolvers.Query = Object.assign({}, target.Resolvers.Query);
     target.Resolvers.Query[key] = async function() {
       try {
+        const isAllow = get(target[key], 'allow', function() { return true });
+        if (isAllow.bind(target)(...arguments)) {
+          return await descriptor.value.bind(target)(...arguments);
+        }
+
         return await descriptor.value.bind(target)(...arguments);
       } catch (error) {
         throw new Error('Decorators query failed. \n' + error);
