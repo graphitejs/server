@@ -1,3 +1,4 @@
+import allow from './allow';
 import create from './create';
 import errors from './errors';
 import graphQl from './graphQl';
@@ -12,6 +13,7 @@ import type from './type';
 import update from './update';
 
 export default {
+  allow,
   create,
   errors,
   graphQl,
