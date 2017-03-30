@@ -2,7 +2,7 @@ import { apolloExpress, graphiqlExpress } from 'apollo-server';
 import typeDefs from './schema';
 import { makeExecutableSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
-import { get } from 'lodash';
+import { get, defaultsDeep } from 'lodash';
 import scalars from '@graphite/scalars';
 import { keys, without } from 'lodash';
 import * as defaultConfig from '../config/default';
@@ -97,40 +97,15 @@ export default class GraphQLServer {
       Types: '',
       Query: '',
       Mutation: '',
-      Resolvers: {
-        Mutation: {},
-        Query: {},
-      },
+      Resolvers: {},
     };
 
     return collections.reduce((acum, collection) => {
-      const mutationMethods = keys(get(collection, 'Resolvers.Mutation', {}));
-      const queryMethods = keys(get(collection, 'Resolvers.Query', {}));
-      const resolversNames = without(keys(collection.Resolvers), 'Query', 'Mutation');
-
-      mutationMethods.map((value) => {
-        acum.Resolvers.Mutation[value] = collection[value].bind(collection);
-      });
-
-      queryMethods.map((value) => {
-        acum.Resolvers.Query[value] = collection[value].bind(collection);
-      });
-
-      resolversNames.forEach(resolverName => {
-        const methods = keys(collection.Resolvers[resolverName]);
-        methods.forEach(method => {
-          acum.Resolvers[resolverName] = Object.assign({}, acum.Resolvers[resolverName]);
-          if (typeof collection.Resolvers[resolverName][method] === 'function') {
-            acum.Resolvers[resolverName][method] = collection.Resolvers[resolverName][method].bind(collection);
-          }
-        });
-      });
-
       return  {
-        Types: `${acum.Types} ${get(collection, 'Types', '')}`,
-        Query: `${acum.Query} ${get(collection, 'Query', '')}`,
-        Mutation: `${acum.Mutation} ${get(collection, 'Mutation', '')}`,
-        Resolvers: acum.Resolvers,
+        Types: acum.Types + get(collection, 'Types', ''),
+        Query: acum.Query + get(collection, 'Query', ''),
+        Mutation: acum.Mutation + get(collection, 'Mutation', ''),
+        Resolvers: defaultsDeep(acum.Resolvers, collection.Resolvers),
       };
     }, defReduce);
   }
