@@ -24,12 +24,25 @@ describe('query', () => {
     done();
   });
 
-  it('should be Query a String and contain user: [User]', (done) => {
-    decoratorQuery(target, key, descriptor);
-    expect(target.Query).to.have.string;
-    expect(target.Query.trim()).eql('user: [User],');
-    done();
+  context('When query not have params', () => {
+    it('should be Query a String and contain user: [User]', (done) => {
+      decoratorQuery(target, key, descriptor);
+      expect(target.Query).to.have.string;
+      expect(target.Query.trim()).eql('user: [User],');
+      done();
+    });
   });
+
+  context('When query have params', () => {
+    it('should be Query a String and contain user(name: String): [User]', (done) => {
+      const decoratorQuery = query('name: String');
+      decoratorQuery(target, key, descriptor);
+      expect(target.Query).to.have.string;
+      expect(target.Query.trim()).eql('user(name: String): [User],');
+      done();
+    });
+  });
+
 
   it('should be Resolvers a Object', (done) => {
     decoratorQuery(target, key, descriptor);

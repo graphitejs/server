@@ -1,9 +1,13 @@
 import pluralize from 'pluralize';
 
-const query = function() {
+const query = function(params) {
   return (target, key, descriptor) => {
     const singularKey = pluralize(key, 1);
-    target.Query = `${target.Query || ''} \n ${key}: [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+    if (params) {
+      target.Query = `${target.Query || ''} \n ${key}(${params}): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+    } else {
+      target.Query = `${target.Query || ''} \n ${key}: [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+    }
 
     target.Resolvers = Object.assign({}, target.Resolvers);
     target.Resolvers.Query = Object.assign({}, target.Resolvers.Query);
