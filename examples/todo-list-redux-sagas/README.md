@@ -3,9 +3,9 @@
 Requirement: You have to install **mongo** in your system.
 
 
-![Alt text](https://github.com/graphitejs/graphitejs/blob/master/examples/todo-list/screenshot/todo-list.png)
+![Alt text](https://github.com/graphitejs/graphitejs/blob/master/examples/todo-list-redux-sagas/screenshot/todo-list.png)
 
-![Alt text](https://github.com/graphitejs/graphitejs/blob/master/examples/todo-list/screenshot/todo-list-redux.png)
+![Alt text](https://github.com/graphitejs/graphitejs/blob/master/examples/todo-list-redux-sagas/screenshot/todo-list-redux.png)
 
 ```bash
 npm install && npm run start
