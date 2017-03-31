@@ -21,7 +21,7 @@ const query = function(params) {
     target.Resolvers = Object.assign({}, target.Resolvers);
     target.Resolvers.Query = Object.assign({}, target.Resolvers.Query);
     target.Resolvers.Query[key] = async function() {
-      try {
+    try {
         const isAllow = get(target[key], 'allow', function() { return true });
         if (isAllow.bind(target)(...arguments)) {
           return await descriptor.value.bind(target)(...arguments);
