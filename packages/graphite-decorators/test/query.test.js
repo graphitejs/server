@@ -25,7 +25,7 @@ describe('query', () => {
   });
 
   context('When query not have params', () => {
-    it('should be Query a String and contain user: [User]', (done) => {
+    it('should be Query a String and contain user: [User], the default is the name of function', (done) => {
       decoratorQuery(target, key, descriptor);
       expect(target.Query).to.have.string;
       expect(target.Query.trim()).eql('user: [User],');
@@ -33,13 +33,66 @@ describe('query', () => {
     });
   });
 
-  context('When query have params', () => {
+  context('When query have params and params is a String', () => {
     it('should be Query a String and contain user(name: String): [User]', (done) => {
       const decoratorQuery = query('name: String');
       decoratorQuery(target, key, descriptor);
       expect(target.Query).to.have.string;
       expect(target.Query.trim()).eql('user(name: String): [User],');
       done();
+    });
+  });
+
+  context('When query have params and params is a Object', () => {
+    context('When object contain fields and responseType', () => {
+      it('should be Query a String and contain user(name: String): [response]', (done) => {
+        const params = {
+          fields: 'name: String',
+          responseType: 'response'
+        };
+        const decoratorQuery = query(params);
+        decoratorQuery(target, key, descriptor);
+        expect(target.Query).to.have.string;
+        expect(target.Query.trim()).eql('user(name: String): [response],');
+        done();
+      });
+    });
+
+    context('When object only contain fields', () => {
+      it('should be Query a String and contain user(name: String): []', (done) => {
+        const params = {
+          fields: 'name: String',
+        };
+        const decoratorQuery = query(params);
+        decoratorQuery(target, key, descriptor);
+        expect(target.Query).to.have.string;
+        expect(target.Query.trim()).eql('user(name: String): [],');
+        done();
+      });
+    });
+
+    context('When object only contain responseType', () => {
+      it('should be Query a String and contain user: [response]', (done) => {
+        const params = {
+          responseType: 'response'
+        };
+        const decoratorQuery = query(params);
+        decoratorQuery(target, key, descriptor);
+        expect(target.Query).to.have.string;
+        expect(target.Query.trim()).eql('user: [response],');
+        done();
+      });
+    });
+
+    context('When object not contain fields and responseType', () => {
+      it('should be Query a String and contain user: []', (done) => {
+        const params = {};
+        const decoratorQuery = query(params);
+        decoratorQuery(target, key, descriptor);
+        expect(target.Query).to.have.string;
+        expect(target.Query.trim()).eql('user: [],');
+        done();
+      });
     });
   });
 

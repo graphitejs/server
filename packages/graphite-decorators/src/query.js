@@ -4,10 +4,18 @@ import { get } from 'lodash';
 const query = function(params) {
   return (target, key, descriptor) => {
     const singularKey = pluralize(key, 1);
-    if (params) {
-      target.Query = `${target.Query || ''} \n ${key}(${params}): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
-    } else {
-      target.Query = `${target.Query || ''} \n ${key}: [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+
+    switch (typeof params) {
+      case 'string':
+        target.Query = `${target.Query || ''} \n ${key}(${params}): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+        break;
+      case 'object':
+        const fields = get(params, 'fields', undefined);
+        const parseFields = fields ? `(${fields})` : '';
+        target.Query = `${target.Query || ''} \n ${key}${parseFields}: [${get(params, 'responseType', '')}],`;
+        break;
+      default:
+        target.Query = `${target.Query || ''} \n ${key}: [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
     }
 
     target.Resolvers = Object.assign({}, target.Resolvers);
