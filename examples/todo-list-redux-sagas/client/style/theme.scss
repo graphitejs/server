@@ -1,0 +1,107 @@
+body {
+  font-family: arial;
+}
+
+h1 {
+  margin-top: 60px;
+}
+
+button:not(.reset) {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    height: 34px;
+    text-size-adjust: 100%;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: calc(20% - 10px);
+    background: #337ab7 none repeat scroll 0% 0% / auto padding-box border-box;
+    border: 1px solid #2e6da4;
+    border-radius: 4px 4px 4px 4px;
+    font: 14px / 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    outline: rgb(255, 255, 255) none 0px;
+    padding: 6px 12px;
+}
+
+input {
+    box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+    color: #555555;
+    display: block;
+    height: 34px;
+    text-size-adjust: 100%;
+    width: calc(80% - 10px);
+    border: 1px solid #cccccc;
+    border-radius: 4px 4px 4px 4px;
+    font: normal normal normal normal 14px / 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    outline: #555555 none 0px;
+    padding: 6px 12px;
+    transition:border 1s;
+}
+
+.hidden {
+  display: none;
+}
+
+form {
+  input {
+    display: inline;
+  }
+
+  * {
+    margin: 5px;
+  }
+}
+
+#app {
+  margin: auto;
+  width: 960px;
+}
+
+#add-todo {
+  .success {
+    border: 1px solid #5cb85c;
+  }
+
+  .fail {
+    border: 1px solid #d9534f;
+  }
+}
+
+#todo-list {
+  position: relative;
+
+  li {
+    color: #333;
+    cursor: pointer;
+    height: 30px;
+    list-style: none;
+  }
+
+  li.done {
+    text-decoration: line-through;
+  }
+
+  span.done {
+    color: #5cb85c;
+    font-size: 15px;
+    text-decoration: none!important;
+    font-weight: bold;
+    position: absolute;
+    left: 20px;
+  }
+
+  button.delete {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    &:focus {
+      outline: none;
+    }
+  }
+}
