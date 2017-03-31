@@ -24,7 +24,7 @@ export class TodoList extends Component {
   }
 
   componentDidMount() {
-    this.props.getTodos()
+    this.props.getTodos();
   }
 
   async onChange(item, event) {
