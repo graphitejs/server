@@ -98,7 +98,7 @@ Todo List:
 
 [todo-list-redux-sagas](/examples/todo-list-redux-sagas)
 
-[todo-list](/examples/examples/todo-list)
+[todo-list](/examples/todo-list)
 
 
 ## Packages
