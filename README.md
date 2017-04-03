@@ -7,6 +7,30 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
 - **Any Front:** GraphiteJS support any front library.
 - **Data agnostic:** GraphiteJS supports any kind of data source. Now is availabe MongoDB.
 
+## How to work
+
+GraphiteJS allow choose the packages and built your project like you want
+
+Firstly you need to choose one Sever - GraphQL.
+
+For example:
+
+npm i @graphite/apollo-express --save
+
+
+The code:
+
+server.js
+
+```javascript
+
+import { Graphite } from '@graphite/apollo-express';
+Graphite.graphQLServer({ graphql: PORT: 8001 }, []);
+
+```
+
+Done, your first server is ready! Now you only need to create the models and pass them to GraphQl server.
+
 
 ## Packages
 
