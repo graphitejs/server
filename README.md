@@ -23,6 +23,13 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
         <td>
             <a href="/packages/graphite-apollo-express">graphite-mars-apollo-express</a>
         </td>
-        <td>![npm](https://img.shields.io/npm/v/@graphite/apollo-express.svg?style=flat)](https://www.npmjs.com/package/@graphite/apollo-express)</td>
+        <td>
+            <a href="https://www.npmjs.com/package/@graphite/apollo-express">
+                <img src="https://img.shields.io/npm/v/@graphite/apollo-express.svg?style=flat"
+                     alt="npm"
+                     data-canonical-src="https://img.shields.io/npm/v/@graphite/apollo-express.svg?style=flat"
+                     style="max-width:100%;">
+            </a>
+        </td>
     </tr>
 </table>
