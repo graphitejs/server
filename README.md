@@ -13,7 +13,7 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 <table>
     <tr>
-        <td colspan="2" align="center">GraphQL Server</td>
+        <td colspan="2" align="center"><strong>Server</strong> - GraphQL</td>
     </tr>
     <tr>
         <td width="88%">Package</td>
@@ -36,7 +36,7 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 <table>
     <tr>
-        <td colspan="2" align="center">Server Common</td>
+        <td colspan="2" align="center"><strong>Server</strong> - Common</td>
     </tr>
     <tr>
         <td width="88%">Package</td>
@@ -85,7 +85,7 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 <table>
     <tr>
-        <td colspan="2" align="center">Server Databases Connectors</td>
+        <td colspan="2" align="center"><strong>Server</strong> - Databases Connectors</td>
     </tr>
     <tr>
         <td width="88%">Package</td>
@@ -108,7 +108,7 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 <table>
     <tr>
-        <td colspan="2" align="center">Server Mongoose Accounts</td>
+        <td colspan="2" align="center"><strong>Server</strong> - Mongoose Accounts</td>
     </tr>
     <tr>
         <td width="88%">Package</td>
@@ -170,7 +170,7 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 <table>
     <tr>
-        <td colspan="2" align="center">Client common</td>
+        <td colspan="2" align="center"><strong>Client</strong> - Common</td>
     </tr>
     <tr>
         <td width="88%">Package</td>
@@ -193,7 +193,7 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 <table>
     <tr>
-        <td colspan="2" align="center">Client React JS</td>
+        <td colspan="2" align="center"><strong>Client</strong> - React JS</td>
     </tr>
     <tr>
         <td width="88%">Package</td>
