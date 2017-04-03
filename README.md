@@ -9,18 +9,20 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
 
 ## How to work
 
-GraphiteJS allow choose the packages and built your project like you want
+GraphiteJS **allow choose** the packages and built your project **like you want**
 
 Firstly you need to choose one Sever - GraphQL.
 
-For example:
+**For example:**
+
+```bash
 
 npm i @graphite/apollo-express --save
 
+```
+
 
 The code:
-
-server.js
 
 ```javascript
 
@@ -29,7 +31,7 @@ Graphite.graphQLServer({ graphql: PORT: 8001 }, []);
 
 ```
 
-Done, your first server is ready! Now you only need to create the models and pass them to GraphQl server.
+Done, your first server **is ready!**. Now you only need to create the models and pass them to GraphQl server.
 
 
 ## Packages
