@@ -57,19 +57,6 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
     </tr>
     <tr>
         <td>
-            <a href="/packages/graphite-decorators">graphite-decorators</a>
-        </td>
-        <td>
-            <a href="https://www.npmjs.com/package/@graphite/decorators">
-                <img src="https://img.shields.io/npm/v/@graphite/decorators.svg?style=flat"
-                     alt="npm"
-                     data-canonical-src="https://img.shields.io/npm/v/@graphite/decorators.svg?style=flat"
-                     style="max-width:100%;">
-            </a>
-        </td>
-    </tr>
-    <tr>
-        <td>
             <a href="/packages/graphite-scalars">graphite-scalars</a>
         </td>
         <td>
@@ -103,19 +90,6 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
     <tr>
         <td style="width: 85%;">Package</td>
         <td>Version</td>
-    </tr>
-    <tr>
-        <td>
-            <a href="/packages/graphite-mongoose">graphite-mongoose</a>
-        </td>
-        <td>
-            <a href="https://www.npmjs.com/package/@graphite/mongoose">
-                <img src="https://img.shields.io/npm/v/@graphite/mongoose.svg?style=flat"
-                     alt="npm"
-                     data-canonical-src="https://img.shields.io/npm/v/@graphite/mongoose.svg?style=flat"
-                     style="max-width:100%;">
-            </a>
-        </td>
     </tr>
     <tr>
         <td>
