@@ -130,19 +130,6 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
     </tr>
     <tr>
         <td>
-            <a href="/packages/graphite-mongoose-account">graphite-mongoose-account</a>
-        </td>
-        <td>
-            <a href="https://www.npmjs.com/package/@graphite/mongoose-account">
-                <img src="https://img.shields.io/npm/v/@graphite/mongoose-account.svg?style=flat"
-                     alt="npm"
-                     data-canonical-src="https://img.shields.io/npm/v/@graphite/mongoose-account.svg?style=flat"
-                     style="max-width:100%;">
-            </a>
-        </td>
-    </tr>
-    <tr>
-        <td>
             <a href="/packages/graphite-mongoose-account-facebook">graphite-mongoose-account-facebook</a>
         </td>
         <td>
