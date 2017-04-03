@@ -20,7 +20,9 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
         <td>Version</td>
     </tr>
     <tr>
-        <td>[`graphite-mars-apollo-express`](/packages/graphite-apollo-express)</td>
+        <td>
+            <a href="/packages/graphite-apollo-express">graphite-mars-apollo-express</a>
+        </td>
         <td>![npm](https://img.shields.io/npm/v/@graphite/apollo-express.svg?style=flat)](https://www.npmjs.com/package/@graphite/apollo-express)</td>
     </tr>
 </table>
