@@ -320,3 +320,34 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
         </td>
     </tr>
 </table>
+
+
+## Contributing
+
+- Clone this repository.
+- Install dependencies.
+
+```bash
+
+npm i install
+
+```
+
+- Execute a lerna command.
+
+```bash
+
+lerna bootstap
+
+```
+
+**Bootstrap the packages in the current Lerna repo. Installs all of their dependencies and links any cross-dependencies.**
+
+- Manage the packages with npm link.
+
+- Feel free for pull request.
+
+
+## Documentation
+
+Is under development.
