@@ -22,7 +22,7 @@ npm i @graphite/apollo-express --save
 ```
 
 
-###Create GraphQl server:
+### Create GraphQl server:
 
 ```javascript
 
@@ -33,7 +33,7 @@ Graphite.graphQLServer({ graphql: PORT: 8001 }, []);
 
 Done, your first server **is ready!** Now you only need to create the models and pass them to GraphQl server.
 
-###Create your first model:
+### Create your first model:
 
 ```bash
 
@@ -72,7 +72,7 @@ export default new Todo();
 
 ```
 
-###Update GraphQl server:
+### Update GraphQl server:
 
 Now, you need to pass the new model Todo.
 
