@@ -329,7 +329,7 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 ```bash
 
-npm i install
+npm install
 
 ```
 
