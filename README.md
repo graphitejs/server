@@ -357,3 +357,7 @@ lerna bootstap
 ## Documentation
 
 Is under development.
+
+## License
+
+[MIT](https://github.com/babel/babel/blob/master/LICENSE)
