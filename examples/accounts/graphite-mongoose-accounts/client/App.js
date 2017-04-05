@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import LoginFacebook from '@graphite/react-account-facebook';
-import LoginPassword from '@graphite/react-account-password';
+import { LoginPassword, CreateUser } from '@graphite/react-account-password';
 import LogOut from '@graphite/react-account-logout';
 import './style/theme.scss';
 
@@ -15,6 +15,7 @@ ReactDOM.render(
     <div>
       <LoginFacebook />
       <LoginPassword />
+      <CreateUser />
       <LogOut />
     </div>
   </ApolloProvider>,
