@@ -21,13 +21,13 @@
     "babel-polyfill": "^6.20.0",
     "babel-preset-latest": "^6.16.0",
     "chai": "^3.5.0",
-    "debug": "^2.3.3",
     "mocha": "^3.2.0",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
     "sinon-stub-promise": "^4.0.0"
   },
   "dependencies": {
+    "debug": "^2.3.3",
     "fb": "^1.1.1",
     "jsonwebtoken": "^7.2.1",
     "step": "^1.0.0",
