@@ -1,0 +1,11 @@
+{
+  "presets": ["react", "babel-preset-latest"],
+  "plugins": [
+      "add-module-exports",
+      "transform-class-properties",
+      ["transform-runtime", {
+        "polyfill": false,
+        "regenerator": true
+      }]
+    ]
+}

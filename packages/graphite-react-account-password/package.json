@@ -2,12 +2,14 @@
   "name": "@graphite/react-account-password",
   "version": "0.1.9",
   "description": "Graphite Framework, react account password",
-  "main": "dist/LoginPassword.js",
+  "main": "dist/account.js",
   "scripts": {
     "test": "npm run compile && mocha --compilers js:babel-core/register --require babel-polyfill --require jsdom-global/register --recursive",
     "coverage": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --require jsdom-global/register --recursive",
     "compile": "babel src --out-dir dist",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "Walter Zalazar",
   "license": "MIT",
@@ -36,7 +38,8 @@
     "mocha": "^3.2.0",
     "react-addons-test-utils": "^15.4.2",
     "sinon": "^2.1.0",
-    "sinon-chai": "^2.9.0"
+    "sinon-chai": "^2.9.0",
+    "@kadira/storybook": "^2.21.0"
   },
   "publishConfig": {
     "access": "public"

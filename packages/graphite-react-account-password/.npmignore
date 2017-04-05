@@ -4,3 +4,5 @@ src/
 coverage/
 *.log
 .babelrc
+.storybook
+stories
