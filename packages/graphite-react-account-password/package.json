@@ -1,6 +1,6 @@
 {
   "name": "@graphite/react-account-password",
-  "version": "0.1.20",
+  "version": "0.2.0",
   "description": "Graphite Framework, react account password",
   "main": "dist/account.js",
   "scripts": {
