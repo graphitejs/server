@@ -55,7 +55,7 @@ export class LoginPassword extends Component {
         this.setState({ isLoggedIn: true, loginToken, loginTokenExpires, userId });
       }
     } catch (e) {
-      logger(e);
+      this.logger(e);
     }
   }
 
