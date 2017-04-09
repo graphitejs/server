@@ -65,4 +65,14 @@ describe('Mongoose Account Password', () => {
       done();
     });
   });
+
+  context('when createUser', () => {
+    context('when email is valid', () => {
+
+    });
+
+    context('when email is invalid', () => {
+
+    });
+  });
 });
