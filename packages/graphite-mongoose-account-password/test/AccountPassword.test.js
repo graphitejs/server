@@ -75,4 +75,14 @@ describe('Mongoose Account Password', () => {
 
     });
   });
+
+  context('when loginPassword', () => {
+    context('when password is valid', () => {
+
+    });
+
+    context('when password is invalid', () => {
+
+    });
+  });
 });
