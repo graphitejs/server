@@ -149,6 +149,11 @@ export default class AccountPassword {
     try {
       this.logger('Init changePassword');
       this.logger(`Parameters, oldPassword: ${oldPassword} - newPassword: ${newPassword} - userId: ${userId}`);
+      if (typeof userId === 'undefined') {
+        this.logger('Finish changePassword');
+        return null;
+      }
+
       const { SECRET, EXPIRES_IN } = account.JwSToken;
       let user = await this.Model.findOne({ userId });
       this.logger(`User ${user}`);
@@ -159,9 +164,7 @@ export default class AccountPassword {
         const hashPassword = await bcrypt.hash(newPassword, this.saltRounds);
         this.logger(`hashPassword: ${hashPassword}`);
         user = await this.Model.findOneAndUpdate({ userId }, { $set: { password: hashPassword }});
-        if (user) {
-          return this.formatCallback(user, SECRET, EXPIRES_IN);
-        }
+        return this.formatCallback(user, SECRET, EXPIRES_IN);
       }
       this.logger('Finish changePassword');
       return null;
