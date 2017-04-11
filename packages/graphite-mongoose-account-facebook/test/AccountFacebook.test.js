@@ -4,7 +4,6 @@ import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 const { expect } = chai;
 
-import { Facebook } from 'fb';
 import AccountFacebook from '../src/AccountFacebook';
 
 describe('Mongoose Account Facebook', () => {
@@ -21,6 +20,10 @@ describe('Mongoose Account Facebook', () => {
       findOne: () => {},
       remove: () => {},
       findOneAndUpdate: () => {},
+    };
+
+    accountFacebook.facebook = {
+      napi: () => {},
     };
   });
 
@@ -47,6 +50,26 @@ describe('Mongoose Account Facebook', () => {
       accountFacebook.initialize(app);
       expect(app.get).to.have.been.calledWith('/login/facebook');
       done();
+    });
+  });
+
+  context('when getAccessToken', () => {
+    it('should return token and expires', (done) => {
+      const code = '123456';
+      sinon.stub(accountFacebook.facebook, 'napi', (url, config, callback) => {
+        const result = {
+          access_token: '12345',
+          expires: 0,
+        };
+        callback(null, result);
+      });
+      const getAccessTokenPromise = accountFacebook.getAccessToken(appId, secret, code, redirect);
+      getAccessTokenPromise.then(result => {
+        expect(result).to.include.keys('token', 'expires');
+        expect(result.token).eql('12345');
+        expect(result.expires).eql(0);
+        done();
+      });
     });
   });
 });
