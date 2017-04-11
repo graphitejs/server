@@ -37,4 +37,16 @@ describe('Mongoose Account Facebook', () => {
       done();
     });
   });
+
+  context('when initialize', () => {
+    it('Should create endpoint /login/facebook', (done) => {
+      const app = {
+        get: sinon.spy(),
+      };
+
+      accountFacebook.initialize(app);
+      expect(app.get).to.have.been.calledWith('/login/facebook');
+      done();
+    });
+  });
 });
