@@ -15,9 +15,26 @@ describe('Mongoose Account Facebook', () => {
 
   beforeEach(() => {
     accountFacebook = new AccountFacebook(appId, secret, redirect);
+    accountFacebook.Model = {
+      create: () => {},
+      find: () => {},
+      findOne: () => {},
+      remove: () => {},
+      findOneAndUpdate: () => {},
+    };
   });
 
-  it('Should be include this keys redirect, appId, secret, facebook, url', () => {
-    expect(accountFacebook).to.include.keys('redirect', 'appId', 'secret', 'facebook', 'url');
+  it('Should be include this keys redirect, appId, secret, facebook, url, Model', () => {
+    expect(accountFacebook).to.include.keys('redirect', 'appId', 'secret', 'facebook', 'url', 'Model');
+  });
+
+  context('when execute findAccount', () => {
+    it('Should be execute this.Model.find', (done) => {
+      sinon.spy(accountFacebook.Model, 'findOne');
+      accountFacebook.findAccount({ _id: '123456' });
+      expect(accountFacebook.Model.findOne).to.have.been.called;
+      accountFacebook.Model.findOne.restore();
+      done();
+    });
   });
 });
