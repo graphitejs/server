@@ -66,21 +66,65 @@ describe('Mongoose Account Facebook', () => {
   });
 
   context('when getAccessToken', () => {
-    it('should return token and expires', (done) => {
-      const code = '123456';
-      sinon.stub(accountFacebook.facebook, 'napi', (url, config, callback) => {
-        const result = {
+    context('when success facebook napi', () => {
+      const features = [{
+        context: 'when return has expires',
+        titleTest: 'should return token and expires',
+        data: {
           access_token: '12345',
-          expires: 0,
-        };
-        callback(null, result);
+          expires: 10,
+        },
+        expectation: {
+          token: '12345',
+          expires: 10,
+        },
+      }, {
+        context: 'when return not has expires',
+        titleTest: 'should return token and expires with zero(0)',
+        data: {
+          access_token: '12345',
+          expires: 10,
+        },
+        expectation: {
+          token: '12345',
+        },
+      }];
+
+      features.forEach(feature => {
+        context(feature.context, () => {
+          it(feature.titleTest, (done) => {
+            const code = '123456';
+            sinon.stub(accountFacebook.facebook, 'napi', (url, config, callback) => {
+              const result = feature.data;
+              callback(null, result);
+            });
+            const getAccessTokenPromise = accountFacebook.getAccessToken(appId, secret, code, redirect);
+            getAccessTokenPromise.then(result => {
+              expect(result).to.include.keys('token', 'expires');
+              expect(result.token).eql(feature.data.access_token);
+              expect(result.expires).eql(feature.data.expires);
+              done();
+            });
+          });
+        });
       });
-      const getAccessTokenPromise = accountFacebook.getAccessToken(appId, secret, code, redirect);
-      getAccessTokenPromise.then(result => {
-        expect(result).to.include.keys('token', 'expires');
-        expect(result.token).eql('12345');
-        expect(result.expires).eql(0);
-        done();
+    });
+
+    context('when failed facebook napi', () => {
+      it('should reject with the error', (done) => {
+        const code = '123456';
+        sinon.stub(accountFacebook.facebook, 'napi', (url, config, callback) => {
+          const result = {
+            access_token: '12345',
+            expires: 0,
+          };
+          callback('error', result);
+        });
+        const getAccessTokenPromise = accountFacebook.getAccessToken(appId, secret, code, redirect);
+        getAccessTokenPromise.then().catch(error => {
+          expect(error).eql('error');
+          done();
+        });
       });
     });
   });

@@ -57,8 +57,8 @@ export default class AccountFacebook {
         redirect_uri: redirect,
         code: code,
       }, function(error, result) {
-        if (error !== null) {
-          reject(!error ? 'error occurred' : error);
+        if (error) {
+          reject(error);
         }
 
         resolve({ token: result.access_token, expires: result.expires ? result.expires : 0 });
