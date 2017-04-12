@@ -1,6 +1,6 @@
 {
   "name": "@graphite/mongoose",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Graphite Framework, middleware mongoose",
   "main": "dist/mongoose.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "mongoose": "^4.7.2",
     "mongoose-hook-custom-id": "^0.1.4",
     "mongoose-readonly": "^1.0.2",
-    "@graphite/utils": "^0.2.5"
+    "@graphite/utils": "^0.2.6"
   },
   "publishConfig": {
     "access": "public"
