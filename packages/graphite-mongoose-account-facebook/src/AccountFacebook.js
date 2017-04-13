@@ -74,8 +74,8 @@ export default class AccountFacebook {
         grant_type: 'fb_exchange_token',
         fb_exchange_token: token,
       }, function(error, result) {
-        if (error !== null) {
-          reject(!error ? 'error occurred' : error);
+        if (error) {
+          reject(error);
         }
 
         resolve({ token: result.access_token, expires: result.expires ? result.expires : 0 });
