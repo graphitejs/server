@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 const { expect } = chai;
+import { Model as accountModel } from '@graphite/mongoose-account';
 
 import AccountFacebook from '../src/AccountFacebook';
 
@@ -66,65 +67,82 @@ describe('Mongoose Account Facebook', () => {
     });
   });
 
-  context('when getAccessToken', () => {
-    context('when success facebook napi', () => {
-      const features = [{
-        context: 'when return has expires',
-        titleTest: 'should return token and expires',
-        data: {
-          access_token: '12345',
-          expires: 10,
-        },
-        expectation: {
-          token: '12345',
-          expires: 10,
-        },
-      }, {
-        context: 'when return not has expires',
-        titleTest: 'should return token and expires with zero(0)',
-        data: {
-          access_token: '12345',
-          expires: 10,
-        },
-        expectation: {
-          token: '12345',
-        },
-      }];
+  const success = [{
+    context: 'when return has expires',
+    titleTest: 'should return token and expires',
+    data: {
+      access_token: '12345',
+      expires: 10,
+    },
+    expectation: {
+      token: '12345',
+      expires: 10,
+    },
+  }, {
+    context: 'when return not has expires',
+    titleTest: 'should return token and expires with zero(0)',
+    data: {
+      access_token: '12345',
+      expires: 10,
+    },
+    expectation: {
+      token: '12345',
+    },
+  }];
 
-      features.forEach(feature => {
-        context(feature.context, () => {
-          it(feature.titleTest, (done) => {
-            const code = '123456';
-            sinon.stub(accountFacebook.facebook, 'napi', (url, config, callback) => {
-              const result = feature.data;
-              callback(null, result);
-            });
-            const getAccessTokenPromise = accountFacebook.getAccessToken(appId, secret, code, redirect);
-            getAccessTokenPromise.then(result => {
-              expect(result).to.include.keys('token', 'expires');
-              expect(result.token).eql(feature.data.access_token);
-              expect(result.expires).eql(feature.data.expires);
-              done();
+  const features = [
+    {
+      context: 'when getAccessToken',
+      context2: 'when success facebook napi',
+      method: 'getAccessToken',
+      success,
+    },
+    {
+      context: 'when getExtendAccessToken',
+      context2: 'when success facebook napi',
+      method: 'getExtendAccessToken',
+      success,
+    },
+  ];
+
+  features.forEach(feature => {
+    context(feature.context, () => {
+      context(feature.context2, () => {
+        feature.success.forEach(item => {
+          context(item.context, () => {
+            it(item.titleTest, (done) => {
+              const code = '123456';
+              sinon.stub(accountFacebook.facebook, 'napi', (url, config, callback) => {
+                const result = item.data;
+                callback(null, result);
+              });
+              const getAccessTokenPromise = accountFacebook[feature.method](appId, secret, code, redirect);
+              getAccessTokenPromise.then(result => {
+                expect(result).to.include.keys('token', 'expires');
+                expect(result.token).eql(item.data.access_token);
+                expect(result.expires).eql(item.data.expires);
+                done();
+              });
             });
           });
-        });
-      });
-    });
 
-    context('when failed facebook napi', () => {
-      it('should reject with the error', (done) => {
-        const code = '123456';
-        sinon.stub(accountFacebook.facebook, 'napi', (url, config, callback) => {
-          const result = {
-            access_token: '12345',
-            expires: 0,
-          };
-          callback('error', result);
-        });
-        const getAccessTokenPromise = accountFacebook.getAccessToken(appId, secret, code, redirect);
-        getAccessTokenPromise.then().catch(error => {
-          expect(error).eql('error');
-          done();
+          context('when failed facebook napi', () => {
+            it('should reject with the error', (done) => {
+              const code = '123456';
+              sinon.stub(accountFacebook.facebook, 'napi', (url, config, callback) => {
+                const result = {
+                  access_token: '12345',
+                  expires: 0,
+                };
+                callback('error', result);
+              });
+              const getAccessTokenPromise = accountFacebook[feature.method](appId, secret, code, redirect);
+              getAccessTokenPromise.then().catch(error => {
+                expect(error).eql('error');
+                done();
+              });
+            });
+          });
         });
       });
     });
@@ -191,6 +209,139 @@ describe('Mongoose Account Facebook', () => {
       const result = accountFacebook.templateError();
       expect(result).to.be.string;
       expect(result.replace(/\s/g, '')).eql(script.replace(/\s/g, ''));
+    });
+  });
+
+  context('when generateAppToken', () => {
+    it('should return string with content script', () => {
+      const user = {
+        userId: '123456',
+      };
+
+      const JwSToken = {
+        SECRET: '123456',
+        EXPIRES_IN: '2d',
+      };
+
+      const result = accountFacebook.generateAppToken(user, JwSToken);
+      expect(result).to.include.keys('loginToken', 'loginTokenExpires', 'userId');
+    });
+  });
+
+  context('when callbackFacebook', () => {
+    context('when success', () => {
+      context('when user is new', () => {
+        it('Should execute all methods getAccessToken, getExtendAccessToken, getMe, generateAppToken, Model.findOne, Model.create and accountModel.create', (done) => {
+          const reqToken = {
+            loginToken: '123456',
+            loginTokenExpires: 0,
+            userId: '123456',
+          };
+
+          sinon.stub(accountFacebook, 'getAccessToken', () => Promise.resolve('123456'));
+          sinon.stub(accountFacebook, 'getExtendAccessToken', () => Promise.resolve({ token: '123456' }));
+          sinon.stub(accountFacebook, 'getMe', () => Promise.resolve({ id: '123456', first_name: 'GraphiteJS' }));
+          sinon.stub(accountFacebook, 'generateAppToken', () => reqToken);
+          sinon.stub(accountFacebook.Model, 'findOne', () => Promise.resolve(null));
+          sinon.stub(accountFacebook.Model, 'create', () => ({ _id: '123456' }));
+          sinon.stub(accountModel, 'create', () => ({ _id: '123456' }));
+
+
+          const req = {
+            query: {
+              code: '1234',
+            },
+          };
+          const res = {
+            write: sinon.spy(),
+          };
+
+          const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
+          callbackFacebookPromise.then(() => {
+            expect(accountFacebook.getAccessToken).to.have.been.called;
+            expect(accountFacebook.getExtendAccessToken).to.have.been.called;
+            expect(accountFacebook.getMe).to.have.been.called;
+            expect(accountFacebook.generateAppToken).to.have.been.called;
+            expect(accountFacebook.Model.findOne).to.have.been.called;
+            expect(accountFacebook.Model.create).to.have.been.called;
+            expect(accountModel.create).to.have.been.called;
+            expect(res.write).to.have.been.called;
+            accountFacebook.getAccessToken.restore();
+            accountFacebook.getExtendAccessToken.restore();
+            accountFacebook.getMe.restore();
+            accountFacebook.generateAppToken.restore();
+            accountFacebook.Model.findOne.restore();
+            accountFacebook.Model.create.restore();
+            accountModel.create.restore();
+            done();
+          });
+        });
+      });
+
+      context('when user exists', () => {
+        it('Should execute all methods getAccessToken, getExtendAccessToken, getMe, Model.findOne and Model.create', (done) => {
+          sinon.stub(accountFacebook, 'getAccessToken', () => Promise.resolve('123456'));
+          sinon.stub(accountFacebook, 'getExtendAccessToken', () => Promise.resolve({ token: '123456' }));
+          sinon.stub(accountFacebook, 'getMe', () => Promise.resolve({ id: '123456', first_name: 'GraphiteJS' }));
+          sinon.stub(accountFacebook.Model, 'findOne', () => Promise.resolve({ _id: '123456' }));
+          sinon.spy(accountFacebook.Model, 'create');
+          sinon.spy(accountModel, 'create');
+
+          const req = {
+            query: {
+              code: '1234',
+            },
+          };
+          const res = {
+            write: sinon.spy(),
+          };
+
+          const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
+          callbackFacebookPromise.then(() => {
+            expect(accountFacebook.getAccessToken).to.have.been.called;
+            expect(accountFacebook.getExtendAccessToken).to.have.been.called;
+            expect(accountFacebook.getMe).to.have.been.called;
+            expect(accountFacebook.Model.findOne).to.have.been.called;
+            expect(accountFacebook.Model.create).to.have.not.been.called;
+            expect(accountModel.create).to.have.not.been.called;
+            expect(res.write).to.have.been.called;
+            accountFacebook.getAccessToken.restore();
+            accountFacebook.getExtendAccessToken.restore();
+            accountFacebook.getMe.restore();
+            accountFacebook.Model.findOne.restore();
+            accountFacebook.Model.create.restore();
+            accountModel.create.restore();
+            done();
+          });
+        });
+      });
+    });
+
+    context('when failed', () => {
+      context('when fail request api', () => {
+        it('Should be execute logger with \'Error with login\'', (done) => {
+          sinon.spy(accountFacebook, 'logger');
+          const req = {
+            query: {
+              error: 'error',
+            },
+          };
+          const res = {
+            write: sinon.spy(),
+          };
+
+          const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
+          callbackFacebookPromise.then(() => {
+            expect(accountFacebook.logger).to.have.been.calledWith('Error with login');
+            expect(res.write).to.have.been.called;
+            done();
+          });
+        });
+      });
+
+      context('when fail all', () => {
+
+      });
     });
   });
 });
