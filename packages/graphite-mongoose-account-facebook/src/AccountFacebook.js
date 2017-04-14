@@ -195,8 +195,9 @@ export default class AccountFacebook {
       if (user) {
         await this.Model.remove({ _id: user._id });
       }
+
       this.logger(`Error callbackFacebook: ${error}`);
-      res.write(templateError());
+      res.write(this.templateError());
     }
   }
 
@@ -211,10 +212,6 @@ export default class AccountFacebook {
     responseType: 'authenticationFacebook',
   })
   loginFacebook() {
-    try {
-      return { url: this.url };
-    } catch (error) {
-      return null;
-    }
+    return { url: this.url };
   }
 }

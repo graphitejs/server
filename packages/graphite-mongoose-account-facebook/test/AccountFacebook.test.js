@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 const { expect } = chai;
-import { Model as accountModel } from '@graphite/mongoose-account';
+import account, { Model as accountModel } from '@graphite/mongoose-account';
 
 import AccountFacebook from '../src/AccountFacebook';
 
@@ -32,6 +32,19 @@ describe('Mongoose Account Facebook', () => {
   context('When create accountFacebook', () => {
     it('Should be include this keys redirect, appId, secret, facebook, url, Model', () => {
       expect(accountFacebook).to.include.keys('redirect', 'appId', 'secret', 'facebook', 'url', 'Model');
+    });
+  });
+
+  context('When create accountFacebook without params', () => {
+    it('Should be throw exeption client_id required', (done) => {
+      try {
+        /* eslint-disable */
+        const accountFacebookMock = new AccountFacebook();
+        /* eslint-enable */
+      } catch (error) {
+        expect(error.message).eql('client_id required');
+        done();
+      }
     });
   });
 
@@ -231,49 +244,106 @@ describe('Mongoose Account Facebook', () => {
   context('when callbackFacebook', () => {
     context('when success', () => {
       context('when user is new', () => {
-        it('Should execute all methods getAccessToken, getExtendAccessToken, getMe, generateAppToken, Model.findOne, Model.create and accountModel.create', (done) => {
-          const reqToken = {
-            loginToken: '123456',
-            loginTokenExpires: 0,
-            userId: '123456',
-          };
+        context('when not has onBeforeCreateCallback and onAfterCreateCallback', () => {
+          it('Should execute all methods getAccessToken, getExtendAccessToken, getMe, generateAppToken, Model.findOne, Model.create and accountModel.create', (done) => {
+            const reqToken = {
+              loginToken: '123456',
+              loginTokenExpires: 0,
+              userId: '123456',
+            };
 
-          sinon.stub(accountFacebook, 'getAccessToken', () => Promise.resolve('123456'));
-          sinon.stub(accountFacebook, 'getExtendAccessToken', () => Promise.resolve({ token: '123456' }));
-          sinon.stub(accountFacebook, 'getMe', () => Promise.resolve({ id: '123456', first_name: 'GraphiteJS' }));
-          sinon.stub(accountFacebook, 'generateAppToken', () => reqToken);
-          sinon.stub(accountFacebook.Model, 'findOne', () => Promise.resolve(null));
-          sinon.stub(accountFacebook.Model, 'create', () => ({ _id: '123456' }));
-          sinon.stub(accountModel, 'create', () => ({ _id: '123456' }));
+            sinon.stub(accountFacebook, 'getAccessToken', () => Promise.resolve('123456'));
+            sinon.stub(accountFacebook, 'getExtendAccessToken', () => Promise.resolve({ token: '123456' }));
+            sinon.stub(accountFacebook, 'getMe', () => Promise.resolve({ id: '123456', first_name: 'GraphiteJS' }));
+            sinon.stub(accountFacebook, 'generateAppToken', () => reqToken);
+            sinon.stub(accountFacebook.Model, 'findOne', () => Promise.resolve(null));
+            sinon.stub(accountFacebook.Model, 'create', () => ({ _id: '123456' }));
+            sinon.stub(accountModel, 'create', () => ({ _id: '123456' }));
 
+            const req = {
+              query: {
+                code: '1234',
+              },
+            };
+            const res = {
+              write: sinon.spy(),
+            };
 
-          const req = {
-            query: {
-              code: '1234',
-            },
-          };
-          const res = {
-            write: sinon.spy(),
-          };
+            const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
+            callbackFacebookPromise.then(() => {
+              expect(accountFacebook.getAccessToken).to.have.been.called;
+              expect(accountFacebook.getExtendAccessToken).to.have.been.called;
+              expect(accountFacebook.getMe).to.have.been.called;
+              expect(accountFacebook.generateAppToken).to.have.been.called;
+              expect(accountFacebook.Model.findOne).to.have.been.called;
+              expect(accountFacebook.Model.create).to.have.been.called;
+              expect(accountModel.create).to.have.been.called;
+              expect(res.write).to.have.been.called;
+              accountFacebook.getAccessToken.restore();
+              accountFacebook.getExtendAccessToken.restore();
+              accountFacebook.getMe.restore();
+              accountFacebook.generateAppToken.restore();
+              accountFacebook.Model.findOne.restore();
+              accountFacebook.Model.create.restore();
+              accountModel.create.restore();
+              done();
+            });
+          });
+        });
 
-          const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
-          callbackFacebookPromise.then(() => {
-            expect(accountFacebook.getAccessToken).to.have.been.called;
-            expect(accountFacebook.getExtendAccessToken).to.have.been.called;
-            expect(accountFacebook.getMe).to.have.been.called;
-            expect(accountFacebook.generateAppToken).to.have.been.called;
-            expect(accountFacebook.Model.findOne).to.have.been.called;
-            expect(accountFacebook.Model.create).to.have.been.called;
-            expect(accountModel.create).to.have.been.called;
-            expect(res.write).to.have.been.called;
-            accountFacebook.getAccessToken.restore();
-            accountFacebook.getExtendAccessToken.restore();
-            accountFacebook.getMe.restore();
-            accountFacebook.generateAppToken.restore();
-            accountFacebook.Model.findOne.restore();
-            accountFacebook.Model.create.restore();
-            accountModel.create.restore();
-            done();
+        context('when has onBeforeCreateCallback and onAfterCreateCallback', () => {
+          it('Should execute all methods getAccessToken, getExtendAccessToken, getMe, generateAppToken, Model.findOne, Model.create, accountModel.create, onBeforeCreateCallback and onAfterCreateCallback', (done) => {
+            const reqToken = {
+              loginToken: '123456',
+              loginTokenExpires: 0,
+              userId: '123456',
+            };
+
+            account.onBeforeCreateCallback = () => {};
+            account.onAfterCreateCallback = () => {};
+
+            sinon.stub(accountFacebook, 'getAccessToken', () => Promise.resolve('123456'));
+            sinon.stub(accountFacebook, 'getExtendAccessToken', () => Promise.resolve({ token: '123456' }));
+            sinon.stub(accountFacebook, 'getMe', () => Promise.resolve({ id: '123456', first_name: 'GraphiteJS' }));
+            sinon.stub(accountFacebook, 'generateAppToken', () => reqToken);
+            sinon.stub(accountFacebook.Model, 'findOne', () => Promise.resolve(null));
+            sinon.stub(accountFacebook.Model, 'create', () => ({ _id: '123456' }));
+            sinon.stub(accountModel, 'create', () => ({ _id: '123456' }));
+            sinon.stub(account, 'onBeforeCreateCallback', () => ({ _id: '123456' }));
+            sinon.stub(account, 'onAfterCreateCallback', () => ({ _id: '123456' }));
+
+            const req = {
+              query: {
+                code: '1234',
+              },
+            };
+            const res = {
+              write: sinon.spy(),
+            };
+
+            const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
+            callbackFacebookPromise.then(() => {
+              expect(accountFacebook.getAccessToken).to.have.been.called;
+              expect(accountFacebook.getExtendAccessToken).to.have.been.called;
+              expect(accountFacebook.getMe).to.have.been.called;
+              expect(accountFacebook.generateAppToken).to.have.been.called;
+              expect(accountFacebook.Model.findOne).to.have.been.called;
+              expect(accountFacebook.Model.create).to.have.been.called;
+              expect(accountModel.create).to.have.been.called;
+              expect(res.write).to.have.been.called;
+              expect(account.onBeforeCreateCallback).to.have.been.called;
+              expect(account.onAfterCreateCallback).to.have.been.called;
+              accountFacebook.getAccessToken.restore();
+              accountFacebook.getExtendAccessToken.restore();
+              accountFacebook.getMe.restore();
+              accountFacebook.generateAppToken.restore();
+              accountFacebook.Model.findOne.restore();
+              accountFacebook.Model.create.restore();
+              accountModel.create.restore();
+              account.onBeforeCreateCallback.restore();
+              account.onAfterCreateCallback.restore();
+              done();
+            });
           });
         });
       });
@@ -342,6 +412,133 @@ describe('Mongoose Account Facebook', () => {
       context('when fail all', () => {
 
       });
+    });
+
+    context('when throw error', () => {
+      context('when not create newAccount and user', () => {
+        it('Shoud return null and not execute the remove of account and user', (done) => {
+          const req = {
+            query: {
+              code: '1234',
+            },
+          };
+          const res = {
+            write: sinon.spy(),
+          };
+          const error = 'Error message';
+
+          sinon.stub(accountFacebook, 'getAccessToken');
+          accountFacebook.getAccessToken.onCall(0).throws(error);
+
+          sinon.spy(accountFacebook, 'logger');
+          sinon.stub(accountFacebook.Model, 'remove', () => Promise.resolve(sinon.spy()) );
+          sinon.stub(accountModel, 'remove', () => Promise.resolve(sinon.spy()) );
+
+          const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
+          callbackFacebookPromise.then(() => {
+            expect(accountFacebook.Model.remove).to.have.not.been.called;
+            expect(accountModel.remove).to.have.not.been.called;
+            expect(accountFacebook.logger).to.have.been.calledWith(`Error callbackFacebook: ${error}`);
+            expect(res.write).to.have.been.called;
+            accountFacebook.getAccessToken.restore();
+            accountFacebook.logger.restore();
+            accountFacebook.Model.remove.restore();
+            accountModel.remove.restore();
+            done();
+          });
+        });
+      });
+
+      context('when create newAccount and user', () => {
+        it('Shoud execute the remove of account and user', (done) => {
+          const res = {};
+          const req = {
+            query: {
+              code: '1234',
+            },
+          };
+
+          res.write = sinon.stub();
+          res.write.onCall(0).returns(() => {});
+          sinon.stub(accountFacebook, 'getAccessToken', () => Promise.resolve('123456'));
+          sinon.stub(accountFacebook, 'getExtendAccessToken', () => Promise.resolve({ token: '123456' }));
+          sinon.stub(accountFacebook, 'getMe', () => Promise.resolve({ id: '123456', first_name: 'GraphiteJS' }));
+          sinon.stub(accountFacebook, 'generateAppToken', () => reqToken);
+          sinon.stub(accountFacebook.Model, 'findOne', () => Promise.resolve(null));
+          sinon.stub(accountFacebook.Model, 'create', () => ({ _id: '123456' }));
+          sinon.stub(accountModel, 'create', () => ({ _id: '123456' }));
+          sinon.spy(accountFacebook, 'logger');
+          sinon.stub(accountFacebook.Model, 'remove', () => Promise.resolve(sinon.spy()) );
+          sinon.stub(accountModel, 'remove', () => Promise.resolve(sinon.spy()) );
+
+          const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
+          callbackFacebookPromise.then(() => {
+            expect(accountFacebook.Model.remove).to.have.been.called;
+            expect(accountModel.remove).to.have.been.called;
+            expect(res.write).to.have.been.called;
+            accountFacebook.getAccessToken.restore();
+            accountFacebook.getExtendAccessToken.restore();
+            accountFacebook.getMe.restore();
+            accountFacebook.generateAppToken.restore();
+            accountFacebook.Model.findOne.restore();
+            accountFacebook.Model.remove.restore();
+            accountFacebook.Model.create.restore();
+            accountModel.create.restore();
+            accountModel.remove.restore();
+            res.write.create();
+            done();
+          });
+        });
+      });
+
+      context('when create newAccount and not user', () => {
+        it('Shoud execute the remove of account and not execute remove of user', (done) => {
+          const res = {};
+          const req = {
+            query: {
+              code: '1234',
+            },
+          };
+
+          res.write = sinon.stub();
+          res.write.onCall(0).returns(() => {});
+          sinon.stub(accountFacebook, 'getAccessToken', () => Promise.resolve('123456'));
+          sinon.stub(accountFacebook, 'getExtendAccessToken', () => Promise.resolve({ token: '123456' }));
+          sinon.stub(accountFacebook, 'getMe', () => Promise.resolve({ id: '123456', first_name: 'GraphiteJS' }));
+          sinon.stub(accountFacebook, 'generateAppToken', () => reqToken);
+          sinon.stub(accountFacebook.Model, 'findOne', () => Promise.resolve(null));
+          sinon.stub(accountFacebook.Model, 'create', () => { throw new Error(); });
+          sinon.stub(accountModel, 'create', () => ({ _id: '123456' }));
+          sinon.spy(accountFacebook, 'logger');
+          sinon.stub(accountFacebook.Model, 'remove', () => Promise.resolve(sinon.spy()) );
+          sinon.stub(accountModel, 'remove', () => Promise.resolve(sinon.spy()) );
+
+          const callbackFacebookPromise = accountFacebook.callbackFacebook(req, res);
+          callbackFacebookPromise.then(() => {
+            expect(accountFacebook.Model.remove).to.have.not.been.called;
+            expect(accountModel.remove).to.have.been.called;
+            expect(res.write).to.have.been.called;
+            accountFacebook.getAccessToken.restore();
+            accountFacebook.getExtendAccessToken.restore();
+            accountFacebook.getMe.restore();
+            accountFacebook.generateAppToken.restore();
+            accountFacebook.Model.findOne.restore();
+            accountFacebook.Model.create.restore();
+            accountModel.create.restore();
+            res.write.create();
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  context('when loginFacebook', () => {
+    it('Should return object with url property', (done) => {
+      const result = accountFacebook.loginFacebook();
+      expect(result).to.be.object;
+      expect(result).to.include.keys('url');
+      done();
     });
   });
 });
