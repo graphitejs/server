@@ -41,20 +41,24 @@ class Account {
     };
   }
 
-  onBeforeCreate(callback = (value) => value ) {
+  onBeforeCreate(callback) {
     if (this.onBeforeCreateCallback) {
       throw new Error('Can only call onBeforeCreate once');
     }
 
-    this.onBeforeCreateCallback = callback;
+    if (typeof callback === 'function') {
+      this.onBeforeCreateCallback = callback;
+    }
   }
 
-  onAfterCreate(callback = (value) => value ) {
+  onAfterCreate(callback) {
     if (this.onAfterCreateCallback) {
       throw new Error('Can only call onAfterCreate once');
     }
 
-    this.onAfterCreateCallback = callback;
+    if (typeof callback === 'function') {
+      this.onAfterCreateCallback = callback;
+    }
   }
 }
 
