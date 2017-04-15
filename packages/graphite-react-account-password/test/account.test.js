@@ -8,15 +8,15 @@ const { expect } = chai;
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 
-import { CreateUser, LoginPassword } from '../dist/account';
+import { CreateUser, LoginPassword } from '../src/account';
 
 describe('<Account />', () => {
-  var wrapper;
+  let wrapper;
 
   global.localStorage = {
     getItem: sinon.spy(),
-    setItem: sinon.spy()
-  }
+    setItem: sinon.spy(),
+  };
 
   beforeEach(() => {
     const networkInterface = createNetworkInterface({ uri: 'http://localhost:4000/graphql' });
