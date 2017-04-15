@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -9,27 +9,47 @@ const { expect } = chai;
 import Logout from '../src/Logout';
 
 describe('<Logout />', () => {
-  var wrapper;
+  let wrapper;
 
   global.localStorage = {
-    getItem: sinon.spy(),
-    setItem: sinon.spy()
-  }
+    getItem: sinon.stub(),
+    setItem: sinon.stub(),
+  };
 
   beforeEach(() => {
-    wrapper = shallow(<Logout />);
+    localStorage.getItem.withArgs('Graphite.userId').returns('123456');
+    wrapper = mount(<Logout />);
   });
 
-  it('Logout should exist', () => {
-    expect(wrapper).to.exist;
+  context('when create instance', () => {
+    it('Logout should exist', () => {
+      expect(wrapper).to.exist;
+    });
+
+    it('should be instance of my component', () => {
+      const inst = wrapper.instance();
+      expect(inst).to.be.instanceOf(Logout);
+    });
+
+    it('Should be render button element', () => {
+      expect(wrapper.find('button')).to.exist;
+    });
   });
 
-  it('should be instance of my component', () => {
-    const inst = wrapper.instance();
-    expect(inst).to.be.instanceOf(Logout);
-  });
+  context('when interactive', () => {
+    context('when isLoggedIn is true and I do click', () => {
+      it('Should set isLoggedIn to false', () => {
+        wrapper.find('button').simulate('click');
+        expect(wrapper.state().isLoggedIn).to.be.false;
+      });
+    });
 
-  it('Should be render button element', () => {
-    expect(wrapper.find('button')).to.exist;
+    context('when loggedIn', () => {
+      it('Should set isLoggedIn to true', () => {
+        const instance = wrapper.instance();
+        instance.loggedIn();
+        expect(wrapper.state().isLoggedIn).to.be.true;
+      });
+    });
   });
 });
