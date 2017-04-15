@@ -11,10 +11,11 @@ export default class Logout extends Component {
     textButton: 'Logout',
   }
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     const userId = localStorage.getItem('Graphite.userId');
-    const isLoggedIn = userId ? true : false;
+    const isLoggedIn = !!userId;
 
     this.state = {
       isLoggedIn,
