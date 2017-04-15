@@ -8,19 +8,19 @@ const mutateSuccess = () => {
       createUser: {
         loginToken: '',
         loginTokenExpires: '',
-        userId: ''
-      }
-    }
-  }
+        userId: '',
+      },
+    },
+  };
 };
 
 const mutateError = () => {
   return {
     data: {
       errors: {
-      }
-    }
-  }
+      },
+    },
+  };
 };
 
 storiesOf('CreateUser', module)
@@ -29,4 +29,4 @@ storiesOf('CreateUser', module)
   ))
   .add('Default error', () => (
     <CreateUser mutate={mutateError} />
-  ))
+  ));
