@@ -2,11 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import Account from '@graphite/account';
-import debug from 'debug';
 
 export class CreateUser extends Component {
-  logger = debug('react-account-password');
-
   static propTypes = {
     mutate: PropTypes.func,
     emailInputPlaceholder: PropTypes.string,
@@ -22,13 +19,12 @@ export class CreateUser extends Component {
     legendtext: 'Create user',
   }
 
-  constructor(props) {
-    super(props);
-
+  constructor() {
+    super();
     const loginToken = localStorage.getItem('Graphite.loginToken');
     const loginTokenExpires = localStorage.getItem('Graphite.loginTokenExpires');
     const userId = localStorage.getItem('Graphite.userId');
-    const isLoggedIn = userId ? true : false;
+    const isLoggedIn = !!userId;
 
     this.state = {
       url: '',
@@ -55,7 +51,7 @@ export class CreateUser extends Component {
         this.setState({ isLoggedIn: true, loginToken, loginTokenExpires, userId });
       }
     } catch (e) {
-      this.logger(e);
+      this.logout();
     }
   }
 
