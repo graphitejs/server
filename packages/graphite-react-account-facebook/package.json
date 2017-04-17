@@ -1,6 +1,6 @@
 {
   "name": "@graphite/react-account-facebook",
-  "version": "0.2.8",
+  "version": "0.2.13",
   "description": "Graphite Framework, react account facebook",
   "main": "dist/LoginFacebook.js",
   "scripts": {

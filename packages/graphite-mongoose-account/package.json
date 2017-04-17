@@ -1,6 +1,6 @@
 {
   "name": "@graphite/mongoose-account",
-  "version": "0.2.10",
+  "version": "0.2.13",
   "description": "Graphite Framework, mongoose account",
   "main": "dist/account.js",
   "scripts": {
@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "jsonwebtoken": "^7.3.0",
-    "@graphite/decorators": "^0.2.8",
-    "@graphite/mongoose": "^0.2.8"
+    "@graphite/decorators": "^0.2.13",
+    "@graphite/mongoose": "^0.2.13"
   },
   "publishConfig": {
     "access": "public"
