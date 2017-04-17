@@ -1,6 +1,6 @@
 {
   "name": "@graphite/mongoose-account-facebook",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "Graphite Framework, mongoose account facebook",
   "main": "dist/AccountFacebook.js",
   "scripts": {
@@ -27,14 +27,14 @@
     "sinon-stub-promise": "^4.0.0"
   },
   "dependencies": {
+    "@graphite/decorators": "^0.2.14",
+    "@graphite/mongoose": "^0.2.14",
+    "@graphite/mongoose-account": "^0.2.14",
+    "@graphite/utils": "^0.2.14",
     "debug": "^2.3.3",
     "fb": "^1.1.1",
     "jsonwebtoken": "^7.2.1",
-    "step": "^1.0.0",
-    "@graphite/decorators": "^0.2.13",
-    "@graphite/mongoose": "^0.2.13",
-    "@graphite/mongoose-account": "^0.2.13",
-    "@graphite/utils": "^0.2.13"
+    "step": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

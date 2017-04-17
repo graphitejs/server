@@ -1,6 +1,6 @@
 {
   "name": "@graphite/react-account-logout",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "Graphite Framework, react logout",
   "main": "dist/Logout.js",
   "scripts": {
@@ -12,9 +12,9 @@
   "author": "Walter Zalazar",
   "license": "MIT",
   "dependencies": {
+    "@graphite/account": "^0.2.14",
     "debug": "^2.6.1",
-    "react": "^15.4.2",
-    "@graphite/account": "^0.2.13"
+    "react": "^15.4.2"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

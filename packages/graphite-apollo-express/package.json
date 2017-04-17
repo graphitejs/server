@@ -1,6 +1,6 @@
 {
   "name": "@graphite/apollo-express",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "Graphite Framework, apollo express",
   "main": "dist/Graphite.js",
   "scripts": {
@@ -26,14 +26,14 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
+    "@graphite/scalars": "^0.2.14",
     "apollo-server": "^0.3.3",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "graphql": "^0.8.2",
     "graphql-tools": "^0.8.3",
-    "lodash": "^4.17.2",
-    "@graphite/scalars": "^0.2.13"
+    "lodash": "^4.17.2"
   },
   "publishConfig": {
     "access": "public"

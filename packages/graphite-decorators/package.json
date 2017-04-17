@@ -1,6 +1,6 @@
 {
   "name": "@graphite/decorators",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "Graphite Framework, decorators",
   "main": "dist/decorators.js",
   "scripts": {
@@ -22,10 +22,10 @@
     "mocha": "^3.2.0"
   },
   "dependencies": {
+    "@graphite/utils": "^0.2.14",
     "debug": "^2.3.3",
     "lodash": "^4.17.2",
-    "pluralize": "^3.0.0",
-    "@graphite/utils": "^0.2.13"
+    "pluralize": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
