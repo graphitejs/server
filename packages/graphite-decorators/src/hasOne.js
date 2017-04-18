@@ -3,6 +3,9 @@ import {
 } from 'lodash';
 
 const hasOne = function(target, key, descriptor) {
+  const attrModel = {};
+  attrModel[key] = String;
+  target.schema = Object.assign({}, target.schema, attrModel);
   const currentTypes = target.Types || '';
   const currentCreateTypes = target.createTypes || '';
   const currentUpdateTypes = target.createTypes || '';
@@ -13,7 +16,7 @@ const hasOne = function(target, key, descriptor) {
 
   target.hasOne[key.toLowerCase()] = async function() {
     try {
-      return await descriptor.initializer()(...arguments);
+      return await descriptor.value.bind(target)(...arguments);
     } catch (error) {
       throw new Error('Decorators hasOne failed. \n' + error);
     }
