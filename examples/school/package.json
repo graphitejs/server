@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "@graphite/apollo-express": "^0.2.14",
-    "@graphite/decorators": "^0.2.14",
+    "@graphite/decorators": "^0.2.15",
     "@graphite/mongoose": "^0.2.14",
     "apollo-client": "^0.10.1",
     "debug": "^2.6.1",
