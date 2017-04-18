@@ -1,0 +1,56 @@
+{
+  "name": "Example",
+  "description": "Example Graphite Todo List",
+  "private": false,
+  "scripts": {
+    "test": "npm run compile && mocha --compilers js:babel-core/register --recursive",
+    "coverage": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --recursive",
+    "lint": "eslint -f table ./client ./server ./imports || exit 1",
+    "compile": "babel src --out-dir dist",
+    "client": "webpack-dev-server --port 3002 --config ./.webpack/webpack.client.js",
+    "proxy": "webpack-dev-server --config ./.webpack/webpack.proxy.js",
+    "server:debug": "DEBUG=apollo-express,mongoose,mongoose-account,mongoose-account-password,mongoose-account-facebook node_modules/babel-cli/bin/babel-node.js ./server/main.js",
+    "mongod": "(killall -9 mongod || true) && mkdir -p ./.build/data/log && mongod --fork --quiet --logpath ./.build/data/mongodb.log --dbpath ./.build/data --port 3001",
+    "mongo:reset": "rm -R ./build/data",
+    "start": "npm run mongod && npm run proxy & npm run server:debug"
+  },
+  "pre-push": [
+    "lint",
+    "test"
+  ],
+  "dependencies": {
+    "@graphite/apollo-express": "^0.2.14",
+    "@graphite/decorators": "^0.2.14",
+    "@graphite/mongoose": "^0.2.14",
+    "apollo-client": "^0.10.1",
+    "debug": "^2.6.1",
+    "react": "^15.4.2",
+    "react-apollo": "^0.13.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.23.1",
+    "babel-istanbul": "^0.11.0",
+    "babel-loader": "^6.4.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-env": "^1.2.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-runtime": "^6.23.0",
+    "chai": "^3.5.0",
+    "css-loader": "^0.27.3",
+    "eslint-plugin-react": "^6.10.3",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.28.0",
+    "install": "^0.8.7",
+    "mocha": "^3.2.0",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.14.1",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.3"
+  }
+}
