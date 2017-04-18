@@ -1,6 +1,6 @@
 {
   "name": "@graphite/decorators",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "Graphite Framework, decorators",
   "main": "dist/decorators.js",
   "scripts": {
