@@ -10,10 +10,8 @@ describe('hasMany', () => {
     target = function() {};
     key = 'user';
     descriptor = function() {};
-    descriptor.initializer = function() {
-      return function() {
-        return 'Graphite';
-      };
+    descriptor.value = function() {
+      return Promise.resolve('Graphite');
     };
   });
 
