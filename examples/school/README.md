@@ -182,3 +182,87 @@ Student Variables
 }
 
 ```
+
+## Teacher
+
+Teacher Mutations
+
+```javascript
+
+
+mutation createTeacher($newTeacher: createTeacher) {
+  createTeacher(teacher: $newTeacher) {
+    teacher {
+      _id
+      name
+      street
+      active
+    }
+    errors {
+      key
+      message
+    }
+  }
+}
+
+mutation updateTeacher($id: String, $updateTeacher: updateTeacher) {
+  updateTeacher(id: $id, teacher: $updateTeacher) {
+    teacher {
+      _id
+      name
+      street
+      active
+    }
+    errors {
+      key
+      message
+    }
+  }
+}
+
+mutation removeTeacher($id: String) {
+  removeTeacher(id: $id) {
+    teacher {
+      _id
+      name
+      street
+      active
+    }
+    errors {
+      key
+      message
+    }
+  }
+}
+
+query listTeacher {
+  teacher {
+    _id
+    name
+    street
+    active
+  }
+}
+
+
+```
+
+Teacher Variables
+
+
+```Javascript
+
+{
+  "id": "58f6dd957cc0bf109e54d03c",
+  "newTeacher": {
+    "name": "Teacher name",
+    "street": "Teacher direction"
+  },
+  "updateTeacher": {
+    "name": "New Teacher name",
+    "street": "New Teacher direction",
+    "active": true
+  }
+}
+
+```
