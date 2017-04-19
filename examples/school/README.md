@@ -14,6 +14,8 @@ Open browser in **http://localhost:4000** for app
 
 Open browser in **http://localhost:8001/graphiql** for graphiql
 
+## School
+
 School Mutations
 
 ```javascript
@@ -78,7 +80,7 @@ query listSchool {
 
 ```
 
-Variables Accounts
+School Variables
 
 
 ```Javascript
@@ -92,6 +94,90 @@ Variables Accounts
   "updateSchool": {
     "name": "Updated School name",
     "street": "Updated School direction"
+  }
+}
+
+```
+
+## Student
+
+Student Mutations
+
+```javascript
+
+
+mutation createStudent($newStudent: createStudent) {
+  createStudent(student: $newStudent) {
+    student {
+      _id
+      name
+      street
+      active
+    }
+    errors {
+      key
+      message
+    }
+  }
+}
+
+mutation updateStudent($id: String, $updateStudent: updateStudent) {
+  updateStudent(id: $id, student: $updateStudent) {
+    student {
+      _id
+      name
+      street
+      active
+    }
+    errors {
+      key
+      message
+    }
+  }
+}
+
+mutation removeStudent($id: String) {
+  removeStudent(id: $id) {
+    student {
+      _id
+      name
+      street
+      active
+    }
+    errors {
+      key
+      message
+    }
+  }
+}
+
+query listStudent {
+  student {
+    _id
+    name
+    street
+    active
+  }
+}
+
+
+```
+
+Student Variables
+
+
+```Javascript
+
+{
+  "id": "58f6dc057cc0bf109e54d03a",
+  "newStudent": {
+    "name": "Student name",
+    "street": "Student direction"
+  },
+  "updateStudent": {
+    "name": "New Student name",
+    "street": "New Student direction",
+    "active": true
   }
 }
 
