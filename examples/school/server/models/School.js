@@ -25,7 +25,7 @@ class School {
 
   @query()
   @allow((_, todo, {}) => true)
-  school() {
+  schools() {
     return this.Model.find();
   }
 

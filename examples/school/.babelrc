@@ -1,8 +1,9 @@
 {
   "presets": ["react", "babel-preset-latest"],
   "plugins": [
+    "transform-runtime",
+    "transform-object-rest-spread",
     "transform-decorators-legacy",
-    "add-module-exports",
     "transform-class-properties"
   ]
 }
