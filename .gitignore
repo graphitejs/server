@@ -4,3 +4,5 @@ coverage
 dist
 .build
 .DS_Store
+.next
+next
