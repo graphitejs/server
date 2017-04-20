@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import { Component, PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 import List from '../components/List';
-import { studentList } from '../graphql/students';
+import { all } from '../graphql/students';
 
 export class StudentList extends Component {
   static propTypes = {
@@ -32,4 +32,4 @@ export class StudentList extends Component {
   }
 }
 
-export default graphql(studentList)(StudentList);
+export default graphql(all)(StudentList);
