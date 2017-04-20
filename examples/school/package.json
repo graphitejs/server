@@ -1,14 +1,12 @@
 {
   "name": "Example",
-  "description": "Example Graphite Todo List",
+  "description": "Example Graphite School",
   "private": false,
   "scripts": {
     "test": "npm run compile && mocha --compilers js:babel-core/register --recursive",
     "coverage": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --recursive",
     "lint": "eslint -f table ./client ./server ./imports || exit 1",
     "compile": "babel src --out-dir dist",
-    "client": "webpack-dev-server --port 3002 --config ./.webpack/webpack.client.js",
-    "proxy": "webpack-dev-server --config ./.webpack/webpack.proxy.js",
     "server:debug": "DEBUG=apollo-express,mongoose,mongoose-account,mongoose-account-password,mongoose-account-facebook node_modules/babel-cli/bin/babel-node.js ./server/main.js",
     "mongod": "(killall -9 mongod || true) && mkdir -p ./.build/data/log && mongod --fork --quiet --logpath ./.build/data/mongodb.log --dbpath ./.build/data --port 3001",
     "mongo:reset": "rm -R ./build/data",
