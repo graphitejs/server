@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
+import { Component, PropTypes } from 'react';
 import identity from 'lodash/identity';
 
-export default class List extends React.Component {
+export default class List extends Component {
   render() {
     const { items, onClick } = this.props;
 
