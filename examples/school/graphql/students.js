@@ -11,7 +11,7 @@ export const all = gql `
   }
 `;
 
-export const createStudent = gql `
+export const create = gql `
   mutation createSchool($newSchool: createSchool) {
     createSchool(school: $newSchool) {
       school {
