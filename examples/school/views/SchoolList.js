@@ -35,4 +35,5 @@ export class StudentList extends Component {
   }
 }
 
-export default graphql(all)(StudentList);
+const options = { pollInterval: 300 };
+export default graphql(all, { options })(StudentList);
