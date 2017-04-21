@@ -1,6 +1,6 @@
 import { mongoose } from '@graphite/mongoose';
 import { property, mutation, graphQl, query, create, update, remove, allow, hasMany } from '@graphite/decorators';
-import { Model as Student } from './Student';
+import Student from './Student';
 
 @mongoose
 @graphQl
@@ -17,7 +17,7 @@ class School {
   @hasMany
   async student(school) {
     try {
-      return await Student.find({ school: school._id });
+      return await Student.Model.find({ school: school._id });
     } catch (e) {
       return null;
     }
@@ -34,7 +34,9 @@ class School {
   @allow((_, todo, {}) => true)
   async createSchool(_, { school }) {
     try {
-      return await this.Model.create(school);
+      const schoolCreated = await this.Model.create(school);
+      await Student.Model.update({ _id: { $in: schoolCreated.student }}, { $set: { school: schoolCreated._id }}, { multi: true });
+      return schoolCreated;
     } catch (err) {
       const errorKeys = Object.keys(err.errors);
       return errorKeys.reduce((errorsCreate, error) => {

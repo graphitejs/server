@@ -25,7 +25,7 @@ class Student {
 
   @query()
   @allow((_, todo, {}) => true)
-  student() {
+  students() {
     return this.Model.find();
   }
 
@@ -34,7 +34,9 @@ class Student {
   @allow((_, todo, {}) => true)
   async createStudent(_, { student }) {
     try {
-      return await this.Model.create(student);
+      const studentCreated =  await this.Model.create(student);
+      await School.Model.update({ _id: studentCreated.school }, { $push: { student: studentCreated._id }});
+      return studentCreated;
     } catch (err) {
       const errorKeys = Object.keys(err.errors);
       return errorKeys.reduce((errorsCreate, error) => {

@@ -1,12 +1,9 @@
 import { Component, PropTypes } from 'react';
 import { graphql } from 'react-apollo';
-
 import List from '../components/List';
-import Table from '../components/Table';
+import { all } from '../graphql/students';
 
-import { all } from '../graphql/schools';
-
-export class SchoolList extends Component {
+export class StudentList extends Component {
   static propTypes = {
     mutate: PropTypes.func,
     data: PropTypes.shape({
@@ -18,7 +15,7 @@ export class SchoolList extends Component {
   static defaultProps = {
     loading: true,
     data: {
-      schools: [],
+      students: [],
     },
   }
 
@@ -27,16 +24,16 @@ export class SchoolList extends Component {
   }
 
   render() {
-    const { data: { loading, error, schools } } = this.props;
-    const items = !loading && !error ? schools.map(school => ({ label: school.name, value: school.name })) : [];
+    const { data: { loading, error, students } } = this.props;
+    const items = !loading && !error ? students.map(school => ({ label: school.name, value: school.name })) : [];
     return (
       <div>
-        <h2>Schools</h2>
-        <Table items= {schools} omit={['__typename', 'active']} />
+        <h2>List of students</h2>
+        <List items= {items} />
       </div>
     );
   }
 }
 
 const options = { pollInterval: 300 };
-export default graphql(all, { options })(SchoolList);
+export default graphql(all, { options })(StudentList);

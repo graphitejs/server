@@ -1,9 +1,12 @@
 import Layout from '../components/MyLayout.js';
+import SchoolList from '../views/SchoolList';
+import SchoolCreate from '../views/SchoolCreate';
 import withData from '../lib/withData';
 
 const Index = withData(() => (
   <Layout>
-    <h1>Home</h1>
+    <SchoolList />
+    <SchoolCreate />
   </Layout>
 ));
 

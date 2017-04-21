@@ -4,19 +4,20 @@ import { graphql, compose } from 'react-apollo';
 import Formsy from 'formsy-react';
 import Input from '../components/Input';
 import Select from '../components/Select';
-import { create } from '../graphql/schools';
-import { all as studentsAll } from '../graphql/students';
 
-class SchoolCreate extends Component {
+import { create } from '../graphql/students';
+import { all as schoolsAll } from '../graphql/schools';
+
+class StudentCreate extends Component {
   static propTypes = {
     data: PropTypes.shape({
-      students: PropTypes.array,
+      schools: PropTypes.array,
     }),
   }
 
   static defaultProps = {
     data: {
-      students: [],
+      schools: [],
     },
   }
 
@@ -30,15 +31,15 @@ class SchoolCreate extends Component {
 
   render() {
     const { canSubmit } = this.state;
-    const { data: { students } } = this.props;
+    const { data: { schools } } = this.props;
 
     return (
       <div>
-        <h2>Create school</h2>
+        <h2>Create student</h2>
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required />
           <Input name="street" title="Street" validationError="This is not a valid street" required />
-          <Select name= {'student'} multiple title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
+          <Select name= {'school'} title= {'Choose your school'} items={schools}  keyLabel={'name'} keyValue={'_id'} />
           <button type="submit" disabled={!canSubmit}>Submit</button>
         </Formsy.Form>
       </div>
@@ -55,7 +56,7 @@ class SchoolCreate extends Component {
 
   async submit(model) {
     try {
-      const { data } = await this.props.mutate({ variables: { newSchool: model }});
+      const { data } = await this.props.mutate({ variables: { newStudent: model }});
     } catch (e) {
     }
   }
@@ -63,5 +64,5 @@ class SchoolCreate extends Component {
 
 export default compose(
   graphql(create),
-  graphql(studentsAll)
-)(SchoolCreate);
+  graphql(schoolsAll)
+)(StudentCreate);
