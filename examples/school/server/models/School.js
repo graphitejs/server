@@ -1,6 +1,7 @@
 import { mongoose } from '@graphite/mongoose';
 import { property, mutation, graphQl, query, create, update, remove, allow, hasMany } from '@graphite/decorators';
 import Student from './Student';
+import { capitalize, keys } from 'lodash';
 
 @mongoose
 @graphQl
@@ -34,8 +35,14 @@ class School {
   @allow((_, todo, {}) => true)
   async createSchool(_, { school }) {
     try {
+      const keysHasMany = keys(this.hasMany);
+      const keyStudent = capitalize(keysHasMany[0]);
+      const DynRequire = require('dyn-require');
+      const modules = new DynRequire(__dirname);
+      const moduleStudent = modules.require(keyStudent);
+
       const schoolCreated = await this.Model.create(school);
-      await Student.Model.update({ _id: { $in: schoolCreated.student }}, { $set: { school: schoolCreated._id }}, { multi: true });
+      await moduleStudent.default.Model.update({ _id: { $in: schoolCreated.student }}, { $set: { school: schoolCreated._id }}, { multi: true });
       return schoolCreated;
     } catch (err) {
       const errorKeys = Object.keys(err.errors);
