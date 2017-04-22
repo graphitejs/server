@@ -22,6 +22,7 @@
     "@graphite/mongoose": "^0.2.14",
     "apollo-client": "^0.10.1",
     "debug": "^2.6.1",
+    "dyn-require": "0.0.3",
     "formsy-react": "^0.19.2",
     "isomorphic-unfetch": "^1.0.0",
     "lodash": "^4.17.4",
