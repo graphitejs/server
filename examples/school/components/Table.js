@@ -66,7 +66,6 @@ export default class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            <table>
                 {items.map(function(item, keyRow) {
                   return <tr key={keyRow}>
                     {(values(omitKeys(item, omit))).map(function(i, keyCell) {
@@ -74,7 +73,6 @@ export default class Table extends Component {
                     })}
                   </tr>;
                 })}
-            </table>
           </tbody>
         </table>
       </div>
