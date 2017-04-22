@@ -42,7 +42,7 @@ class School {
       const moduleStudent = modules.require(keyStudent);
 
       const schoolCreated = await this.Model.create(school);
-      await moduleStudent.default.Model.update({ _id: { $in: schoolCreated.student }}, { $set: { school: schoolCreated._id }}, { multi: true });
+      await moduleStudent.default.Model.update({ _id: { $in: schoolCreated[keysHasMany[0]] }}, { $set: { school: schoolCreated._id }}, { multi: true });
       return schoolCreated;
     } catch (err) {
       const errorKeys = Object.keys(err.errors);
