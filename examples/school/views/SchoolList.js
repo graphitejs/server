@@ -1,7 +1,6 @@
 import { Component, PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 
-import List from '../components/List';
 import Table from '../components/Table';
 
 import { all } from '../graphql/schools';
@@ -28,11 +27,15 @@ export class SchoolList extends Component {
 
   render() {
     const { data: { loading, error, schools } } = this.props;
-    const items = !loading && !error ? schools.map(school => ({ label: school.name, value: school.name })) : [];
+
+    const schoolTable = !loading && !error ? (
+      <Table items= {schools} omit={['__typename', 'active']} />
+    ) : null;
+
     return (
       <div>
         <h2>Schools</h2>
-        <Table items= {schools} omit={['__typename', 'active']} />
+        {schoolTable}
       </div>
     );
   }
