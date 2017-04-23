@@ -36,13 +36,25 @@ class School {
   async createSchool(_, { school }) {
     try {
       const keysHasMany = keys(this.hasMany);
-      const keyStudent = capitalize(keysHasMany[0]);
+      const keysHasOne = keys(this.hasOne);
+
       const DynRequire = require('dyn-require');
       const modules = new DynRequire(__dirname);
-      const moduleStudent = modules.require(keyStudent);
 
       const schoolCreated = await this.Model.create(school);
-      await moduleStudent.default.Model.update({ _id: { $in: schoolCreated[keysHasMany[0]] }}, { $set: { school: schoolCreated._id }}, { multi: true });
+
+      keysHasMany.forEach(async (keyHasMany) => {
+        const modelModule = modules.require(capitalize(keyHasMany));
+        const arrItems = schoolCreated[keyHasMany];
+        await modelModule.default.Model.update({ _id: { $in: arrItems }}, { $set: { school: schoolCreated._id }}, { multi: true });
+      });
+
+      keysHasOne.forEach(async (keyHasOne) => {
+        const modelModule = modules.require(capitalize(keyHasOne));
+        const item = schoolCreated[keyHasOne];
+        await modelModule.default.Model.update({ _id: item }, { $set: { school: schoolCreated._id }});
+      });
+
       return schoolCreated;
     } catch (err) {
       const errorKeys = Object.keys(err.errors);
