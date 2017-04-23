@@ -1,4 +1,4 @@
-import Layout from '../components/MyLayout.js';
+import Layout from '../components/Layout.js';
 import withData from '../lib/withData';
 
 const Index = withData(() => (

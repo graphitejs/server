@@ -1,4 +1,4 @@
-import Layout from '../components/MyLayout.js';
+import Layout from '../components/Layout.js';
 import StudentList from '../views/StudentList';
 import StudentCreate from '../views/StudentCreate';
 import withData from '../lib/withData';

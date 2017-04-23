@@ -1,4 +1,4 @@
-import Layout from '../components/MyLayout.js';
+import Layout from '../components/Layout.js';
 import SchoolList from '../views/SchoolList';
 import SchoolCreate from '../views/SchoolCreate';
 import withData from '../lib/withData';
