@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { keys, pullAll, values, omit as omitKeys } from 'lodash';
 
@@ -6,6 +6,10 @@ export default class Table extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
     omit: PropTypes.arrayOf(PropTypes.string),
+    actions: PropTypes.shape({
+      name: PropTypes.string,
+      elements: PropTypes.element,
+    }),
   }
 
   static defaultProps = {
@@ -18,8 +22,12 @@ export default class Table extends Component {
   }
 
   render() {
-    const { items, omit } = this.props;
+    const { items, omit, actions } = this.props;
     const keyItems = pullAll(keys(items[0]), omit);
+
+    if (actions) {
+      keyItems.push(actions.name);
+    }
 
     return (
       <div>
@@ -67,11 +75,14 @@ export default class Table extends Component {
             </tr>
           </thead>
           <tbody>
-                {items.map(function(item, keyRow) {
+                {items.map((item, keyRow) => {
                   return <tr key={keyRow}>
-                    {(values(omitKeys(item, omit))).map(function(i, keyCell) {
+                    {(values(omitKeys(item, omit))).map((i, keyCell) => {
                       return <td key={`${keyRow}-${keyCell}`}><p>{i}</p></td>;
                     })}
+                    {actions ? <td>{React.cloneElement(actions.elements, {
+                      item: item
+                    })}</td> : null}
                   </tr>;
                 })}
           </tbody>
