@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Header from './Header';
 
 const layoutStyle = {
@@ -12,5 +13,9 @@ const Layout = (props) => (
     {props.children}
   </div>
 );
+
+Layout.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element),
+};
 
 export default Layout;

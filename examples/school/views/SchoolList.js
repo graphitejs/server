@@ -34,16 +34,7 @@ export class SchoolList extends Component {
     return (
       <div>
         <h2>List of Schools</h2>
-        <div className="schoolsListContainer">
-          <style jsx>{`
-            .schoolsListContainer {
-              height: 180px;
-              overflow-x: scroll;
-              background: #f1f1f1;
-            }
-          `}</style>
-          {schoolTable}
-        </div>
+        {schoolTable}
       </div>
     );
   }
