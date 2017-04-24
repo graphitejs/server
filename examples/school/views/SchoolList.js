@@ -1,12 +1,8 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-
 import Table from '../components/Table';
-
 import { all } from '../graphql/schools';
-
-import '../graphql/schools';
 
 export class SchoolList extends Component {
   static propTypes = {

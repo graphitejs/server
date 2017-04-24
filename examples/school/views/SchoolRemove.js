@@ -4,7 +4,7 @@ import { graphql, compose } from 'react-apollo';
 
 import Formsy from 'formsy-react';
 import Select from '../components/Select';
-import { removeSchool } from '../graphql/schools';
+import { remove } from '../graphql/schools';
 import { all as schoolsAll } from '../graphql/schools';
 
 class SchoolRemove extends Component {
@@ -60,6 +60,6 @@ class SchoolRemove extends Component {
 }
 
 export default compose(
-  graphql(removeSchool),
+  graphql(remove),
   graphql(schoolsAll)
 )(SchoolRemove);

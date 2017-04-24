@@ -39,7 +39,7 @@ class SchoolCreate extends Component {
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required />
           <Input name="street" title="Street" validationError="This is not a valid street" required />
-          <Select multiple={true} name= {'student'} title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
+          <Select multiple name= {'student'} title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
           <button type="submit" disabled={!canSubmit}>Submit</button>
         </Formsy.Form>
       </div>

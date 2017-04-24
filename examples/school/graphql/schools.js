@@ -27,7 +27,7 @@ export const create = gql `
   }
 `;
 
-export const removeSchool = gql `
+export const remove = gql `
   mutation removeSchool($id: String) {
     removeSchool(id: $id) {
       school {

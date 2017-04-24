@@ -4,7 +4,7 @@ import { graphql, compose } from 'react-apollo';
 
 import Formsy from 'formsy-react';
 import Select from '../components/Select';
-import { removeStudent } from '../graphql/students';
+import { remove } from '../graphql/students';
 import { all as studentsAll } from '../graphql/students';
 
 class StudentRemove extends Component {
@@ -53,7 +53,6 @@ class StudentRemove extends Component {
 
   async submit(model) {
     try {
-      debugger
       const { data } = await this.props.mutate({ variables: { id: model.students[0] }});
     } catch (e) {
     }
@@ -61,6 +60,6 @@ class StudentRemove extends Component {
 }
 
 export default compose(
-  graphql(removeStudent),
+  graphql(remove),
   graphql(studentsAll)
 )(StudentRemove);
