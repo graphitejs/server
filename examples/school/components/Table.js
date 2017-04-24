@@ -63,6 +63,8 @@ export default class Table extends Component {
 
           td {
             height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
           }
         `}</style>
 
@@ -78,11 +80,10 @@ export default class Table extends Component {
                 {items.map((item, keyRow) => {
                   return <tr key={keyRow}>
                     {(values(omitKeys(item, omit))).map((i, keyCell) => {
-                      return <td key={`${keyRow}-${keyCell}`}><p>{i}</p></td>;
+                      return <td key={`${keyRow}-${keyCell}`}>{i}</td>;
                     })}
-                    {actions ? <td>{React.cloneElement(actions.elements, {
-                      item: item
-                    })}</td> : null}
+                    { actions ?
+                      <td>{React.cloneElement(actions.elements, { item: item })}</td> : null }
                   </tr>;
                 })}
           </tbody>

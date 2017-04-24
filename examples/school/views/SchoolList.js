@@ -1,8 +1,9 @@
+import Link from 'next/link';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import Table from '../components/Table';
-import SchoolRemove from './SchoolRemove';
+import SchoolActions from './SchoolActions';
 import { all } from '../graphql/schools';
 
 export class SchoolList extends Component {
@@ -30,7 +31,7 @@ export class SchoolList extends Component {
 
     const actions = {
       name: 'Actions',
-      elements: (<SchoolRemove />),
+      elements: (<SchoolActions />),
     };
 
     const schoolTable = !loading && !error ? (
@@ -39,7 +40,22 @@ export class SchoolList extends Component {
 
     return (
       <div>
-        <h2>List of Schools</h2>
+        <style jsx>{`
+          h2 {
+            float: left;
+          }
+          a {
+            float: right;
+            padding: 30px;
+          }
+        `}
+        </style>
+        <div>
+          <h2>Schools</h2>
+          <Link href="/school/create">
+            <a>Add school</a>
+          </Link>
+        </div>
         {schoolTable}
       </div>
     );

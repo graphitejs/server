@@ -17,6 +17,17 @@ class SchoolRemove extends Component {
   render() {
     return (
       <div>
+        <style jsx>{`
+          div {
+            display: inline-block;
+            padding: 0 5px;
+          }
+
+          button {
+            cursor: pointer;
+          }
+        `}</style>
+
         <Formsy.Form onValidSubmit={this.submit.bind(this)}>
           <button type="submit">Delete</button>
         </Formsy.Form>
