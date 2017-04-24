@@ -1,6 +1,6 @@
 {
   "name": "@graphite/utils",
-  "version": "0.2.14",
+  "version": "0.2.16",
   "description": "Graphite Framework, utils",
   "main": "dist/utils.js",
   "scripts": {
