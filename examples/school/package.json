@@ -1,5 +1,5 @@
 {
-  "name": "Example",
+  "name": "school-example",
   "description": "Example Graphite School",
   "private": false,
   "scripts": {
@@ -21,24 +21,25 @@
     "@graphite/decorators": "^0.2.15",
     "@graphite/mongoose": "^0.2.14",
     "apollo-client": "^0.10.1",
-    "debug": "^2.6.1",
+    "debug": "^2.6.4",
     "dyn-require": "0.0.3",
     "formsy-react": "^0.19.2",
     "isomorphic-unfetch": "^1.0.0",
     "lodash": "^4.17.4",
-    "next": "^2.1.1",
-    "react": "^15.4.2",
-    "react-apollo": "^0.13.2"
+    "next": "^2.2.0",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-apollo": "^0.13.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.23.1",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
     "babel-istanbul": "^0.11.0",
-    "babel-loader": "^6.4.0",
-    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-env": "^1.4.0",
-    "babel-preset-latest": "^6.16.0",
+    "babel-preset-latest": "^6.24.1",
     "chai": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
     "mocha": "^3.2.0"

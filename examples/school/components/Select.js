@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { HOC } from 'formsy-react';
 import { get } from 'lodash';
 
@@ -16,7 +17,7 @@ class Select extends Component {
     keyLabel: PropTypes.string,
     keyValue: PropTypes.string,
     items: PropTypes.array,
-    multiple: PropTypes.boolean,
+    multiple: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -45,7 +46,7 @@ class Select extends Component {
           name={props.name}
           onChange={this.changeValue.bind(this)}
           multiple={multiple}>
-          <option selected hidden>Choose here</option>
+          <option defaultValue hidden>Choose here</option>
           { items.map((item, key) => {
             return <option key= {key} value= {item[defaultValue]}> {item[defaultLabel]} </option>;
           })}

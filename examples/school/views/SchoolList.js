@@ -1,8 +1,7 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-
 import Table from '../components/Table';
-
 import { all } from '../graphql/schools';
 
 export class SchoolList extends Component {
@@ -34,8 +33,17 @@ export class SchoolList extends Component {
 
     return (
       <div>
-        <h2>Schools</h2>
-        {schoolTable}
+        <h2>List of Schools</h2>
+        <div className="schoolsListContainer">
+          <style jsx>{`
+            .schoolsListContainer {
+              height: 180px;
+              overflow-x: scroll;
+              background: #f1f1f1;
+            }
+          `}</style>
+          {schoolTable}
+        </div>
       </div>
     );
   }

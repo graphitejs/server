@@ -3,21 +3,20 @@ import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 
 import Formsy from 'formsy-react';
-import Input from '../components/Input';
 import Select from '../components/Select';
-import { create } from '../graphql/schools';
+import { remove } from '../graphql/students';
 import { all as studentsAll } from '../graphql/students';
 
-class SchoolCreate extends Component {
+class StudentRemove extends Component {
   static propTypes = {
     data: PropTypes.shape({
-      students: PropTypes.array,
+      schools: PropTypes.array,
     }),
   }
 
   static defaultProps = {
     data: {
-      students: [],
+      schools: [],
     },
   }
 
@@ -35,11 +34,9 @@ class SchoolCreate extends Component {
 
     return (
       <div>
-        <h2>Create school</h2>
+        <h2>Delete student</h2>
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
-          <Input name="name" title="Name" validationError="This is not a valid name" required />
-          <Input name="street" title="Street" validationError="This is not a valid street" required />
-          <Select multiple name= {'student'} title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
+          <Select name= {'students'} title= {'Choose student'} items={students}  keyLabel={'name'} keyValue={'_id'} required />
           <button type="submit" disabled={!canSubmit}>Submit</button>
         </Formsy.Form>
       </div>
@@ -56,13 +53,13 @@ class SchoolCreate extends Component {
 
   async submit(model) {
     try {
-      const { data } = await this.props.mutate({ variables: { newSchool: model }});
+      const { data } = await this.props.mutate({ variables: { id: model.students[0] }});
     } catch (e) {
     }
   }
 }
 
 export default compose(
-  graphql(create),
+  graphql(remove),
   graphql(studentsAll)
-)(SchoolCreate);
+)(StudentRemove);

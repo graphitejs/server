@@ -26,3 +26,19 @@ export const create = gql `
     }
   }
 `;
+
+export const remove = gql `
+  mutation removeSchool($id: String) {
+    removeSchool(id: $id) {
+      school {
+        _id
+        name
+        street
+      }
+      errors {
+        key
+        message
+      }
+    }
+  }
+`;
