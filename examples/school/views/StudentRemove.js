@@ -34,7 +34,7 @@ class StudentRemove extends Component {
 
     return (
       <div>
-        <h2>Delete school</h2>
+        <h2>Delete student</h2>
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Select name= {'students'} title= {'Choose student'} items={students}  keyLabel={'name'} keyValue={'_id'} required />
           <button type="submit" disabled={!canSubmit}>Submit</button>
