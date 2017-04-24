@@ -2,6 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import Table from '../components/Table';
+import SchoolRemove from './SchoolRemove';
 import { all } from '../graphql/schools';
 
 export class SchoolList extends Component {
@@ -27,8 +28,13 @@ export class SchoolList extends Component {
   render() {
     const { data: { loading, error, schools } } = this.props;
 
+    const actions = {
+      name: 'Actions',
+      elements: (<SchoolRemove />),
+    };
+
     const schoolTable = !loading && !error ? (
-      <Table items= {schools} omit={['__typename', 'active']} />
+      <Table items= {schools} actions={actions} omit={['__typename', 'active']} />
     ) : null;
 
     return (
