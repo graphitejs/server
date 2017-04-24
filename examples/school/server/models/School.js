@@ -24,6 +24,10 @@ class School {
     }
   }
 
+  constructor() {
+    console.log("this ddddddeefgggg->", this);
+  }
+
   @query()
   @allow((_, todo, {}) => true)
   schools() {
@@ -42,17 +46,19 @@ class School {
       const modules = new DynRequire(__dirname);
 
       const schoolCreated = await this.Model.create(school);
+      const updateItem = {};
+      updateItem[this.nameClass.toLowerCase()] = schoolCreated._id;
 
       keysHasMany.forEach(async (keyHasMany) => {
         const modelModule = modules.require(capitalize(keyHasMany));
         const arrItems = schoolCreated[keyHasMany];
-        await modelModule.default.Model.update({ _id: { $in: arrItems }}, { $set: { school: schoolCreated._id }}, { multi: true });
+        await modelModule.default.Model.update({ _id: { $in: arrItems }}, { $set: updateItem }, { multi: true });
       });
 
       keysHasOne.forEach(async (keyHasOne) => {
         const modelModule = modules.require(capitalize(keyHasOne));
         const item = schoolCreated[keyHasOne];
-        await modelModule.default.Model.update({ _id: item }, { $set: { school: schoolCreated._id }});
+        await modelModule.default.Model.update({ _id: item }, { $set: updateItem });
       });
 
       return schoolCreated;
@@ -79,7 +85,30 @@ class School {
   @mutation()
   async removeSchool(_, { id }) {
     try {
-      return await this.Model.findByIdAndRemove(id);
+      const keysHasMany = keys(this.hasMany);
+      const keysHasOne = keys(this.hasOne);
+
+      const DynRequire = require('dyn-require');
+      const modules = new DynRequire(__dirname);
+
+      const schoolRemoved = await this.Model.findByIdAndRemove(id);
+      const removeItemHasMany = {};
+      removeItemHasMany[this.nameClass.toLowerCase()] = { _id: schoolCreated._id };
+
+      const removeItemHasOne = {};
+      removeItemHasOne[this.nameClass.toLowerCase()] = null;
+
+      keysHasMany.forEach(async (keyHasMany) => {
+        const modelModule = modules.require(capitalize(keyHasMany));
+        await modelModule.default.Model.update({ _id: { $in: schoolRemoved.student }},  { $pull: removeItemHasMany }, { multi: true });
+      });
+
+      keysHasOne.forEach(async (keyHasOne) => {
+        const modelModule = modules.require(capitalize(keyHasOne));
+        await modelModule.default.Model.update({ _id: schoolRemoved.student }, { $set: removeItemHasOne });
+      });
+
+      return schoolRemoved;
     } catch (err) {
       return null;
     }
