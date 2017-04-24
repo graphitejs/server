@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { keys, pullAll, values, omit as omitKeys } from 'lodash';
 
 export default class Table extends Component {

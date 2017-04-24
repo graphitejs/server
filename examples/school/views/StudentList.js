@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import List from '../components/List';
 import { all } from '../graphql/students';
@@ -29,7 +30,16 @@ export class StudentList extends Component {
     return (
       <div>
         <h2>List of students</h2>
-        <List items= {items} />
+        <div className="studentsListContainer">
+          <style jsx>{`
+            .studentsListContainer {
+              height: 180px;
+              overflow-x: scroll;
+              background: #f1f1f1;
+            }
+          `}</style>
+          <List items= {items} />
+        </div>
       </div>
     );
   }
