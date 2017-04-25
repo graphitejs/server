@@ -4,7 +4,7 @@ import Nav from './Nav';
 import withData from '../lib/withData';
 
 const items = [{
-  name: 'Students',
+  name: 'Student',
   href: '/student',
 }, {
   name: 'School',

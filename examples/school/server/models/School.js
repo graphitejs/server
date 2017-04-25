@@ -24,10 +24,6 @@ class School {
     }
   }
 
-  constructor() {
-    console.log("this ddddddeefgggg->", this);
-  }
-
   @query()
   @allow((_, todo, {}) => true)
   schools() {

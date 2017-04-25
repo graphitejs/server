@@ -50,6 +50,7 @@ class Student {
   @mutation()
   async updateStudent(_, { id, student }) {
     try {
+      console.log("student ",student);
       return await this.Model.findByIdAndUpdate(id, student, { 'new': true });
     } catch (err) {
       return null;

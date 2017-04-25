@@ -8,6 +8,7 @@ import Formsy from 'formsy-react';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 import { edit, update } from '../../graphql/students';
+import { get } from 'lodash';
 
 class StudentUpdate extends Component {
   static propTypes = {
@@ -40,6 +41,7 @@ class StudentUpdate extends Component {
     const { canSubmit } = this.state;
     const { data: { students = [], schools } } = this.props;
     const editedStudent = students.filter(student => student._id === Router.query.id)[0] || {};
+    const defaultSchool = get(editedStudent.school, '_id', undefined);
     return (
       <div>
       <style jsx>{`
@@ -57,15 +59,15 @@ class StudentUpdate extends Component {
         `}
         </style>
         <div className="title">
-          <h2>Edit school</h2>
-          <Link href="/school">
-            <a>view schools</a>
+          <h2>Edit student</h2>
+          <Link href="/student">
+            <a>view students</a>
           </Link>
         </div>
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required value={editedStudent.name}/>
           <Input name="street" title="Street" validationError="This is not a valid street" required value={editedStudent.street}/>
-          <Select name= {'school'} title= {'Choose school'} items={schools}  keyLabel={'name'} keyValue={'_id'}/>
+          <Select name= {'school'} defaultDisplay= {defaultSchool} title= {'Choose school'} items={schools}  keyLabel={'name'} keyValue={'_id'}/>
           <button type="submit" disabled={!canSubmit}>Save</button>
         </Formsy.Form>
       </div>
@@ -82,18 +84,19 @@ class StudentUpdate extends Component {
 
   async submit(model) {
     try {
-      const { data } = await this.props.mutate({ variables: { 
-        id: this.state.id, 
-        updateSchool: {
+      const { data } = await this.props.mutate({ variables: {
+        id: this.state.id,
+        updateStudent: {
           ...model,
-          school: model.school[0] }},
+          school: model.school }},
       });
     } catch (e) {
     }
   }
 }
 
+const options = { pollInterval: 300 };
 export default compose(
-  graphql(edit),
+  graphql(edit, { options }),
   graphql(update)
 )(StudentUpdate);
