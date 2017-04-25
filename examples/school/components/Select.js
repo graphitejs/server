@@ -30,26 +30,21 @@ class Select extends Component {
 
   constructor(props) {
     super();
-    const { defaultDisplay } = props;
-
-    this.state = {
-      defaultDisplay,
-    };
+    const { defaultDisplay, setValue } = props;
+    setValue([defaultDisplay]);
   }
 
   componentWillReceiveProps(nextProps) {
     const { defaultDisplay } = this.props;
 
     if (nextProps.defaultDisplay !== defaultDisplay) {
-      this.props.setValue(nextProps.defaultDisplay);
-      this.setState({ defaultDisplay: nextProps.defaultDisplay });
+      this.props.setValue([nextProps.defaultDisplay]);
     }
   }
 
   render() {
     const { props } = this;
-    const { defaultDisplay } = this.state;
-    const { items, multiple } = this.props;
+    const { items, multiple, getValue } = this.props;
     const addClassName = get(props, 'className', '');
     const className = `form-group + ${addClassName}`;
     const defaultLabel = get(this.props, 'keyLabel', 'label');
@@ -62,8 +57,8 @@ class Select extends Component {
           name={props.name}
           onChange={this.changeValue.bind(this)}
           multiple={multiple}
-          value={defaultDisplay}>
-          { !defaultDisplay ? <option defaultValue hidden>Choose here</option> : null }
+          value={getValue()}>
+          { !!getValue() ? <option defaultValue hidden>Choose here</option> : null }
           { items.map((item, key) => {
             return <option key= {key} value= {item[defaultValue]}> {item[defaultLabel]} </option>;
           })}
@@ -74,9 +69,9 @@ class Select extends Component {
 
   changeValue(event) {
     const { setValue } = this.props;
-    const selected = event.target.value;
-    this.setState({ defaultDisplay: selected });
-    setValue(selected);
+    const selected = event.target;
+    const values = [...selected.options].filter(option => option.selected).map(option => option.value);
+    setValue(values);
   }
 }
 
