@@ -29,7 +29,7 @@ export default class List extends Component {
         <ul>
           {items.map((item, key) => {
             return <li key= { key }>
-                      <Link href= {item.href}> "Model" </Link>
+                      <Link href= {item.href}><a>Model {item.name}</a></Link>
                    </li>;
           })}
         </ul>

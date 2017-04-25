@@ -2,9 +2,9 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 import Formsy from 'formsy-react';
-import { remove } from '../graphql/schools';
+import { remove } from '../../graphql/students';
 
-class SchoolRemove extends Component {
+class StudentRemove extends Component {
   static propTypes = {
     id: PropTypes.string,
     mutate: PropTypes.func,
@@ -46,4 +46,4 @@ class SchoolRemove extends Component {
 
 export default compose(
   graphql(remove)
-)(SchoolRemove);
+)(StudentRemove);

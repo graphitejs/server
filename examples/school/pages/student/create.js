@@ -1,8 +1,8 @@
 import Layout from '../../components/Layout.js';
-import SchoolCreate from '../../views/schools/SchoolCreate';
+import StudentCreate from '../../views/students/StudentCreate';
 
 export default () => (
     <Layout>
-      <SchoolCreate />
+      <StudentCreate />
     </Layout>
 );

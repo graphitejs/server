@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-import Table from '../components/Table';
+import Table from '../../components/Table';
 import SchoolActions from './SchoolActions';
-import { all } from '../graphql/schools';
+import { all } from '../../graphql/schools';
 
 export class SchoolList extends Component {
   static propTypes = {
