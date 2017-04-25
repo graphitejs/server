@@ -88,7 +88,7 @@ class StudentUpdate extends Component {
         id: this.state.id,
         updateStudent: {
           ...model,
-          school: model.school }},
+          school: model.school[0] }},
       });
     } catch (e) {
     }

@@ -8,6 +8,7 @@ import Formsy from 'formsy-react';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 import { edit, update } from '../../graphql/schools';
+import { get } from 'lodash';
 
 class SchoolUpdate extends Component {
   static propTypes = {
@@ -28,6 +29,7 @@ class SchoolUpdate extends Component {
 
     this.state = {
       canSubmit: false,
+      students: [],
       id: '',
     };
   }
@@ -36,10 +38,17 @@ class SchoolUpdate extends Component {
     this.setState({ id: Router.query.id });
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ students: get(nextProps.data, 'students', []) });
+  }
+
   render() {
     const { canSubmit } = this.state;
-    const { data: { students, schools = [] } } = this.props;
+    const { data: { schools = [] } } = this.props;
+    const { students } = this.state;
     const editedSchool = schools.filter(school => school._id === Router.query.id)[0] || {};
+    const studentsSelected = [];
+
     return (
       <div>
       <style jsx>{`
@@ -65,11 +74,25 @@ class SchoolUpdate extends Component {
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required value={editedSchool.name}/>
           <Input name="street" title="Street" validationError="This is not a valid street" required value={editedSchool.street}/>
-          <Select multiple name= {'student'} title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
+          <Select ref={'student'} multiple name= {'student'} title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
+          <button onClick={this.addItem.bind(this)}>Add</button>
+          <Select multiple name= {'student'} title= {'Students Selected'} items={studentsSelected}  keyLabel={'name'} keyValue={'_id'} />
+          <button onClick={this.removeItem.bind(this)}>Remove</button>
           <button type="submit" disabled={!canSubmit}>Save</button>
         </Formsy.Form>
       </div>
     );
+  }
+
+  addItem(event) {
+    debugger
+    const { student } = this.refs;
+    const selected = event.target;
+    const values = [...selected.options].filter(option => option.selected).map(option => option.value);
+  }
+
+  removeItem(event) {
+
   }
 
   disableButton() {
@@ -87,8 +110,8 @@ class SchoolUpdate extends Component {
     }
   }
 }
-
+const options = { pollInterval: 300 };
 export default compose(
-  graphql(edit),
-  graphql(update)
+  graphql(edit, { options }),
+  graphql(update, { options })
 )(SchoolUpdate);
