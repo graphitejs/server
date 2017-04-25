@@ -1,12 +1,8 @@
 import Layout from '../components/Layout.js';
-import StudentList from '../views/StudentList';
-import StudentCreate from '../views/StudentCreate';
-import StudentRemove from '../views/StudentRemove';
+import StudentList from '../views/students/StudentList';
 
 export default () => (
   <Layout>
     <StudentList />
-    <StudentCreate />
-    <StudentRemove />
   </Layout>
 );

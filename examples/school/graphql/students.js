@@ -43,3 +43,41 @@ export const remove = gql `
     }
   }
 `;
+
+export const edit = gql `
+  query listStudents {
+    students {
+      _id
+      name
+      street
+      school {
+        _id
+        name
+        active
+        street
+      }
+    }
+    schools {
+      _id
+      name
+      street
+      active
+    }
+  }
+`;
+
+export const update = gql `
+  mutation updateStudent($id: String, $updateStudent: updateStudent) {
+    updateStudent(id: $id, student: $updateStudent) {
+      student {
+        _id
+        name
+        street
+      }
+      errors {
+        key
+        message
+      }
+    }
+  }
+`;

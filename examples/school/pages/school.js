@@ -1,5 +1,5 @@
 import Layout from '../components/Layout.js';
-import SchoolList from '../views/SchoolList';
+import SchoolList from '../views/schools/SchoolList';
 
 export default () => (
   <Layout>

@@ -29,7 +29,10 @@ const Layout = withData(props => (
 ));
 
 Layout.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.object,
+  ]),
 };
 
 export default Layout;

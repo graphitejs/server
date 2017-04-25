@@ -1,10 +1,10 @@
+import Link from 'next/link';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-
-import Table from '../components/Table';
-
-import { all } from '../graphql/students';
+import Table from '../../components/Table';
+import StudentActions from './StudentActions';
+import { all } from '../../graphql/students';
 
 export class StudentList extends Component {
   static propTypes = {
@@ -29,13 +29,33 @@ export class StudentList extends Component {
   render() {
     const { data: { loading, error, students } } = this.props;
 
+    const actions = {
+      name: 'Actions',
+      elements: (<StudentActions />),
+    };
+
     const studentTable = !loading && !error ? (
-      <Table items= {students} omit={['__typename', 'active']} />
+      <Table items= {students} actions={actions} omit={['__typename', 'active']} />
     ) : null;
 
     return (
       <div>
-        <h2>List of students</h2>
+        <style jsx>{`
+          h2 {
+            float: left;
+          }
+          a {
+            float: right;
+            padding: 30px;
+          }
+        `}
+        </style>
+        <div>
+          <h2>Students</h2>
+          <Link href="/student/create">
+            <a>Add student</a>
+          </Link>
+        </div>
         {studentTable}
       </div>
     );
