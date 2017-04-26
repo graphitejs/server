@@ -61,6 +61,11 @@ export const edit = gql `
       name
       street
       active
+      school {
+        _id
+        name
+        street
+      }
     }
   }
 `;

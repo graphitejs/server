@@ -8,6 +8,7 @@ import Formsy from 'formsy-react';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 import { edit, update } from '../../graphql/schools';
+import { update as updateStudent } from '../../graphql/students';
 import { get } from 'lodash';
 
 class SchoolUpdate extends Component {
@@ -15,6 +16,8 @@ class SchoolUpdate extends Component {
     data: PropTypes.shape({
       students: PropTypes.array,
     }),
+    updateSchool: React.PropTypes.func.isRequired,
+    updateStudent: React.PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -47,8 +50,7 @@ class SchoolUpdate extends Component {
     const { data: { schools = [] } } = this.props;
     const { students } = this.state;
     const editedSchool = schools.filter(school => school._id === Router.query.id)[0] || {};
-    const studentsSelected = [];
-
+    const schoolStudents = students.filter(option => option.school && option.school._id === editedSchool._id);
     return (
       <div>
       <style jsx>{`
@@ -74,25 +76,52 @@ class SchoolUpdate extends Component {
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required value={editedSchool.name}/>
           <Input name="street" title="Street" validationError="This is not a valid street" required value={editedSchool.street}/>
+          <button type="submit" disabled={!canSubmit}>Save</button>
           <Select ref={'student'} multiple name= {'student'} title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
           <button onClick={this.addItem.bind(this)}>Add</button>
-          <Select multiple name= {'student'} title= {'Students Selected'} items={studentsSelected}  keyLabel={'name'} keyValue={'_id'} />
+          <Select ref={'studentDeletion'} multiple name= {'student'} title= {'Students Selected'} items={schoolStudents}  keyLabel={'name'} keyValue={'_id'} />
           <button onClick={this.removeItem.bind(this)}>Remove</button>
-          <button type="submit" disabled={!canSubmit}>Save</button>
         </Formsy.Form>
       </div>
     );
   }
 
-  addItem(event) {
-    debugger
+  addItem() {
+    const { students } = this.state;
     const { student } = this.refs;
-    const selected = event.target;
-    const values = [...selected.options].filter(option => option.selected).map(option => option.value);
+    const selected = student.getValue();
+
+    students.forEach(value => {
+      selected.forEach(selection => {
+        if (value._id === selection) {
+          const id = value._id;
+          const variable = { ...value, school: this.state.id };
+          delete variable._id;
+          delete variable.__typename;
+
+          this.props.updateStudent({ variables: { id, updateStudent: variable } });
+        }
+      });
+    });
   }
 
-  removeItem(event) {
+  removeItem() {
+    const { students } = this.state;
+    const { studentDeletion } = this.refs;
+    const selected = studentDeletion.getValue();
 
+    students.forEach(value => {
+      selected.forEach(selection => {
+        if (value._id === selection) {
+          const id = value._id;
+          const variable = { ...value, school: '' };
+          delete variable._id;
+          delete variable.__typename;
+
+          this.props.updateStudent({ variables: { id, updateStudent: variable } });
+        }
+      });
+    });
   }
 
   disableButton() {
@@ -105,7 +134,11 @@ class SchoolUpdate extends Component {
 
   async submit(model) {
     try {
-      const { data } = await this.props.mutate({ variables: { id: this.state.id, updateSchool: model } });
+      const variable = { ...model};
+      delete variable.student;
+
+      const { data } = await this.props.updateSchool(
+        { variables: { id: this.state.id, updateSchool: variable } });
     } catch (e) {
     }
   }
@@ -113,5 +146,6 @@ class SchoolUpdate extends Component {
 const options = { pollInterval: 300 };
 export default compose(
   graphql(edit, { options }),
-  graphql(update, { options })
+  graphql(update, { ...options, name: 'updateSchool' }),
+  graphql(updateStudent, { ...options, name: 'updateStudent' })
 )(SchoolUpdate);
