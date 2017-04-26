@@ -134,11 +134,8 @@ class SchoolUpdate extends Component {
 
   async submit(model) {
     try {
-      const variable = { ...model};
-      delete variable.student;
-
       const { data } = await this.props.updateSchool(
-        { variables: { id: this.state.id, updateSchool: variable } });
+        { variables: { id: this.state.id, updateSchool: model } });
     } catch (e) {
     }
   }
