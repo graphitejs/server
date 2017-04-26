@@ -68,6 +68,7 @@ class StudentUpdate extends Component {
           <Input name="name" title="Name" validationError="This is not a valid name" required value={editedStudent.name}/>
           <Input name="street" title="Street" validationError="This is not a valid street" required value={editedStudent.street}/>
           <Select name= {'school'} defaultDisplay= {defaultSchool} title= {'Choose school'} items={schools}  keyLabel={'name'} keyValue={'_id'}/>
+          <Input type= {'checkbox'} name= {'active'} title="Active" value= {editedStudent.active} checked= {editedStudent.active}/>
           <button type="submit" disabled={!canSubmit}>Save</button>
         </Formsy.Form>
       </div>

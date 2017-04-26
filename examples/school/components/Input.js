@@ -16,10 +16,6 @@ class Input extends Component {
     getValue: PropTypes.func,
   }
 
-  constructor() {
-    super();
-  }
-
   render() {
     const { props } = this;
     const { showRequired, showError, getErrorMessage, getValue } = this.props;
