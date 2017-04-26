@@ -28,9 +28,8 @@ class Select extends Component {
     mutliple: false,
   }
 
-  constructor(props) {
-    super();
-    const { defaultDisplay, setValue } = props;
+  componentDidMount() {
+    const { defaultDisplay, setValue } = this.props;
     setValue([defaultDisplay]);
   }
 

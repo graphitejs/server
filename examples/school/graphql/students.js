@@ -50,6 +50,7 @@ export const edit = gql `
       _id
       name
       street
+      active
       school {
         _id
         name
@@ -61,7 +62,6 @@ export const edit = gql `
       _id
       name
       street
-      active
     }
   }
 `;
@@ -73,6 +73,7 @@ export const update = gql `
         _id
         name
         street
+        active
       }
       errors {
         key
