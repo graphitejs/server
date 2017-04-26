@@ -9,7 +9,7 @@ import Input from '../../components/Input';
 import Select from '../../components/Select';
 import { edit, update } from '../../graphql/schools';
 import { update as updateStudent } from '../../graphql/students';
-import { get } from 'lodash';
+import { get, differenceBy } from 'lodash';
 
 class SchoolUpdate extends Component {
   static propTypes = {
@@ -50,7 +50,9 @@ class SchoolUpdate extends Component {
     const { data: { schools = [] } } = this.props;
     const { students } = this.state;
     const editedSchool = schools.filter(school => school._id === Router.query.id)[0] || {};
-    const schoolStudents = students.filter(option => option.school && option.school._id === editedSchool._id);
+    const selectedItem = get(editedSchool, 'student', []);
+    const differenceItems = differenceBy(students, selectedItem, '_id');
+
     return (
       <div>
       <style jsx>{`
@@ -76,11 +78,25 @@ class SchoolUpdate extends Component {
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required value={editedSchool.name}/>
           <Input name="street" title="Street" validationError="This is not a valid street" required value={editedSchool.street}/>
+          <fieldset>
+            <Select ref={'student'}
+              multiple name= {'student'}
+              title= {'Choose students'}
+              items={differenceItems}
+              keyLabel={'name'}
+              keyValue={'_id'} />
+            <button onClick={this.addItem.bind(this)}>Add</button>
+
+            <Select ref={'studentDeletion'}
+              multiple name= {'student'}
+              title= {'Students Selected'}
+              items={selectedItem}
+              keyLabel={'name'}
+              keyValue={'_id'} />
+            <button onClick={this.removeItem.bind(this)}>Remove</button>
+          </fieldset>
+
           <button type="submit" disabled={!canSubmit}>Save</button>
-          <Select ref={'student'} multiple name= {'student'} title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
-          <button onClick={this.addItem.bind(this)}>Add</button>
-          <Select ref={'studentDeletion'} multiple name= {'student'} title= {'Students Selected'} items={schoolStudents}  keyLabel={'name'} keyValue={'_id'} />
-          <button onClick={this.removeItem.bind(this)}>Remove</button>
         </Formsy.Form>
       </div>
     );
