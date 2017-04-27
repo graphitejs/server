@@ -13,7 +13,7 @@ export default class Table extends Component {
   }
 
   static defaultProps = {
-    items: [{}],
+    items: [],
     omit: '',
   }
 
@@ -23,10 +23,13 @@ export default class Table extends Component {
 
   render() {
     const { items, omit, actions } = this.props;
-    const keyItems = pullAll(keys(items[0]), omit);
+    let keyItems = [];
+    if (items && items.length > 0) {
+      keyItems = pullAll(keys(items[0]), omit);
 
-    if (actions) {
-      keyItems.push(actions.name);
+      if (actions) {
+        keyItems.push(actions.name);
+      }
     }
 
     return (
@@ -67,27 +70,28 @@ export default class Table extends Component {
             vertical-align: middle;
           }
         `}</style>
-
-        <table>
-          <thead>
-            <tr>
-              { keyItems.map((item, key) => {
-                return <th key= {key}> {item} </th>;
-              })}
+       { items && items.length > 0 ?
+         <table>
+           <thead>
+             <tr>
+               { keyItems.map((item, key) => {
+                 return <th key= {key}> {item} </th>;
+               })}
             </tr>
-          </thead>
-          <tbody>
-                {items.map((item, keyRow) => {
-                  return <tr key={keyRow}>
-                    {(values(omitKeys(item, omit))).map((i, keyCell) => {
-                      return <td key={`${keyRow}-${keyCell}`}>{i}</td>;
-                    })}
-                    { actions ?
-                      <td>{React.cloneElement(actions.elements, { item: item })}</td> : null }
-                  </tr>;
-                })}
-          </tbody>
-        </table>
+             </thead>
+             <tbody>
+               {items.map((item, keyRow) => {
+                 return <tr key={keyRow}>
+                     {(values(omitKeys(item, omit))).map((i, keyCell) => {
+                       return <td key={`${keyRow}-${keyCell}`}>{i}</td>;
+                     })}
+                     { actions ?
+                       <td>{React.cloneElement(actions.elements, { item: item })}</td> : null }
+                       </tr>;
+               })}
+              </tbody>
+         </table>
+        : null }
       </div>
     );
   }

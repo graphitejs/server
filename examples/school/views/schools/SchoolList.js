@@ -27,7 +27,7 @@ export class SchoolList extends Component {
   }
 
   render() {
-    const { data: { loading, error, schools } } = this.props;
+    const { data: { loading, error, schools = [] } } = this.props;
 
     const actions = {
       name: 'Actions',
