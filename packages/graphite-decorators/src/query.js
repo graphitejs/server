@@ -6,23 +6,23 @@ const query = function(params) {
     const singularKey = pluralize(key, 1);
 
     switch (typeof params) {
-      case 'string':
-        target.Query = `${target.Query || ''} \n ${key}(${params}): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
-        break;
-      case 'object':
-        const fields = get(params, 'fields', undefined);
-        const parseFields = fields ? `(${fields})` : '';
-        target.Query = `${target.Query || ''} \n ${key}${parseFields}: [${get(params, 'responseType', '')}],`;
-        break;
-      default:
-        target.Query = `${target.Query || ''} \n ${key}: [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+    case 'string':
+      target.Query = `${target.Query || ''} \n ${key}(${params}): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+      break;
+    case 'object':
+      const fields = get(params, 'fields', undefined);
+      const parseFields = fields ? `(${fields})` : '';
+      target.Query = `${target.Query || ''} \n ${key}${parseFields}: [${get(params, 'responseType', '')}],`;
+      break;
+    default:
+      target.Query = `${target.Query || ''} \n ${key}: [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
     }
 
     target.Resolvers = Object.assign({}, target.Resolvers);
     target.Resolvers.Query = Object.assign({}, target.Resolvers.Query);
     target.Resolvers.Query[key] = async function() {
-    try {
-        const isAllow = get(target[key], 'allow', function() { return true });
+      try {
+        const isAllow = get(target[key], 'allow', function() { return true; });
         if (isAllow.bind(target)(...arguments)) {
           return await descriptor.value.bind(target)(...arguments);
         }

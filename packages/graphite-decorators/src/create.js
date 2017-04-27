@@ -1,10 +1,8 @@
-import {
-  capitalize,
-} from 'lodash';
+import { lowerFirst } from 'lodash';
 
 const create = function(target, key) {
-  target.create = (name) => {
-    return `${key}(${name.toLowerCase()}: create${capitalize(name)}): response${capitalize(name)}`;
+  target.create = (nameClass) => {
+    return `${key}(${lowerFirst(nameClass)}: create${nameClass}): response${nameClass}`;
   };
 };
 

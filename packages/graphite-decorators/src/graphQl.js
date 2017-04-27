@@ -14,7 +14,6 @@ const graphQl = function(target) {
   const typesAttr = get(target.prototype, 'Types', '');
   target.prototype.nameClass = nameClass;
 
-
   target.prototype.Types = `
     type ${nameClass} {
       _id: String,
@@ -28,6 +27,8 @@ const graphQl = function(target) {
 
     ${get(target.prototype, 'oTypes', '')}
   `;
+
+  target.prototype.Resolvers = Object.assign({}, target.prototype.Resolvers);
 
   if (target.prototype.hasOne) {
     const hasOne = {};

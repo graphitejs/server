@@ -1,6 +1,6 @@
 import Mongoose from 'mongoose';
 import { database } from './config/default';
-import { mongoose } from './decorators';
+import { mongoose, crud } from './decorators';
 import debug from 'debug';
 
 class Mongodb {
@@ -33,4 +33,4 @@ class Mongodb {
   }
 }
 
-export default { Mongodb, mongoose };
+export default { Mongodb, mongoose, crud };

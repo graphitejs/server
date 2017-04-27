@@ -11,7 +11,7 @@ const mutation = function(params) {
     target.Resolvers.Mutation = Object.assign({}, target.Resolvers.Mutation);
     target.Resolvers.Mutation[key] = async function() {
       try {
-        const isAllow = get(target[key], 'allow', function() { return true });
+        const isAllow = get(target[key], 'allow', function() { return true; });
         if (isAllow.bind(target)(...arguments)) {
           return await descriptor.value.bind(target)(...arguments);
         }
