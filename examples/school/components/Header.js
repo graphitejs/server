@@ -5,20 +5,22 @@ const linkStyle = {
 };
 
 const Header = () => (
-    <div>
-        <Link href="/">
-          <a style={linkStyle}>Home</a>
-        </Link>
-        <Link href="/school">
-          <a style={linkStyle}>School</a>
-        </Link>
-        <Link href="/student">
-          <a style={linkStyle}>Student</a>
-        </Link>
-        <Link href="/about">
-          <a style={linkStyle}>About</a>
-        </Link>
-    </div>
+    <header>
+      <style jsx>{`
+        header {
+          margin: 20px;
+          padding: 20px;
+          border: 1px solid #DDD;
+        }
+      `}
+      </style>
+      <Link href="/">
+        <a style={linkStyle}>Home</a>
+      </Link>
+      <Link href="/about">
+        <a style={linkStyle}>About</a>
+      </Link>
+    </header>
 );
 
 export default Header;

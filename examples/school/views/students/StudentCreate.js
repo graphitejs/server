@@ -1,12 +1,13 @@
-import { Component, PropTypes } from 'react';
+import Link from 'next/link';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 
 import Formsy from 'formsy-react';
-import Input from '../components/Input';
-import Select from '../components/Select';
-
-import { create } from '../graphql/students';
-import { all as schoolsAll } from '../graphql/schools';
+import Input from '../../components/Input';
+import Select from '../../components/Select';
+import { create } from '../../graphql/students';
+import { all as schoolsAll } from '../../graphql/schools';
 
 class StudentCreate extends Component {
   static propTypes = {
@@ -35,7 +36,26 @@ class StudentCreate extends Component {
 
     return (
       <div>
-        <h2>Create student</h2>
+      <style jsx>{`
+          h2 {
+            float: left;
+          }
+          a {
+            float: right;
+            padding: 30px;
+          }
+          .title {
+            float: left;
+            width: 100%;
+          }
+        `}
+        </style>
+        <div className="title">
+          <h2>Create student</h2>
+          <Link href="/student">
+            <a>view students</a>
+          </Link>
+        </div>
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required />
           <Input name="street" title="Street" validationError="This is not a valid street" required />

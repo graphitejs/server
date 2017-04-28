@@ -68,7 +68,7 @@ query listSchool {
     _id
     name
     street
-    student {
+    students {
       _id
       name
       active
@@ -152,11 +152,17 @@ mutation removeStudent($id: String) {
 }
 
 query listStudent {
-  student {
+  students {
     _id
     name
     street
     active
+    school {
+      _id
+      name
+      active
+      street
+    }
   }
 }
 

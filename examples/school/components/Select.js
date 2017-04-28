@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { HOC } from 'formsy-react';
 import { get } from 'lodash';
 
@@ -16,7 +17,8 @@ class Select extends Component {
     keyLabel: PropTypes.string,
     keyValue: PropTypes.string,
     items: PropTypes.array,
-    multiple: PropTypes.boolean,
+    multiple: PropTypes.bool,
+    defaultDisplay: PropTypes.string,
   }
 
   static defaultProps = {
@@ -26,13 +28,22 @@ class Select extends Component {
     mutliple: false,
   }
 
-  constructor() {
-    super();
+  componentDidMount() {
+    const { defaultDisplay, setValue } = this.props;
+    setValue([defaultDisplay]);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { defaultDisplay } = this.props;
+
+    if (nextProps.defaultDisplay !== defaultDisplay) {
+      this.props.setValue([nextProps.defaultDisplay]);
+    }
   }
 
   render() {
     const { props } = this;
-    const { items, multiple } = this.props;
+    const { items, multiple, getValue } = this.props;
     const addClassName = get(props, 'className', '');
     const className = `form-group + ${addClassName}`;
     const defaultLabel = get(this.props, 'keyLabel', 'label');
@@ -44,8 +55,9 @@ class Select extends Component {
         <select
           name={props.name}
           onChange={this.changeValue.bind(this)}
-          multiple={multiple}>
-          <option selected hidden>Choose here</option>
+          multiple={multiple}
+          value={getValue()}>
+          { !!getValue() ? <option defaultValue hidden>Choose here</option> : null }
           { items.map((item, key) => {
             return <option key= {key} value= {item[defaultValue]}> {item[defaultLabel]} </option>;
           })}
@@ -56,8 +68,8 @@ class Select extends Component {
 
   changeValue(event) {
     const { setValue } = this.props;
-    const select = event.target;
-    const values = [...select.options].filter(option => option.selected).map(option => option.value);
+    const selected = event.target;
+    const values = [...selected.options].filter(option => option.selected).map(option => option.value);
     setValue(values);
   }
 }

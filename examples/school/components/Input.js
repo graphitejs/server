@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { HOC } from 'formsy-react';
 import { get } from 'lodash';
 
@@ -13,10 +14,6 @@ class Input extends Component {
     showError: PropTypes.func,
     getErrorMessage: PropTypes.func,
     getValue: PropTypes.func,
-  }
-
-  constructor() {
-    super();
   }
 
   render() {

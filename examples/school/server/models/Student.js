@@ -1,7 +1,8 @@
-import { mongoose } from '@graphite/mongoose';
-import { property, mutation, graphQl, query, create, update, remove, allow, hasOne } from '@graphite/decorators';
+import { mongoose, crud } from '@graphite/mongoose';
+import { property, graphQl, hasOne } from '@graphite/decorators';
 import School  from './School';
 
+@crud()
 @mongoose
 @graphQl
 class Student {
@@ -19,49 +20,6 @@ class Student {
     try {
       return await School.Model.findOne({ _id: student.school });
     } catch (e) {
-      return null;
-    }
-  }
-
-  @query()
-  @allow((_, todo, {}) => true)
-  students() {
-    return this.Model.find();
-  }
-
-  @create
-  @mutation()
-  @allow((_, todo, {}) => true)
-  async createStudent(_, { student }) {
-    try {
-      const studentCreated =  await this.Model.create(student);
-      await School.Model.update({ _id: studentCreated.school }, { $push: { student: studentCreated._id }});
-      return studentCreated;
-    } catch (err) {
-      const errorKeys = Object.keys(err.errors);
-      return errorKeys.reduce((errorsCreate, error) => {
-        errorsCreate.push({ key: error, message: err.errors[error].message });
-        return errorsCreate;
-      }, []);
-    }
-  }
-
-  @update
-  @mutation()
-  async updateStudent(_, { id, student }) {
-    try {
-      return await this.Model.findByIdAndUpdate(id, student, { 'new': true });
-    } catch (err) {
-      return null;
-    }
-  }
-
-  @remove
-  @mutation()
-  async removeStudent(_, { id }) {
-    try {
-      return await this.Model.findByIdAndRemove(id);
-    } catch (err) {
       return null;
     }
   }

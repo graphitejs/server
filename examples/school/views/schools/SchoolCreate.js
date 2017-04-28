@@ -1,11 +1,13 @@
-import { Component, PropTypes } from 'react';
+import Link from 'next/link';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 
 import Formsy from 'formsy-react';
-import Input from '../components/Input';
-import Select from '../components/Select';
-import { create } from '../graphql/schools';
-import { all as studentsAll } from '../graphql/students';
+import Input from '../../components/Input';
+import Select from '../../components/Select';
+import { create } from '../../graphql/schools';
+import { all as studentsAll } from '../../graphql/students';
 
 class SchoolCreate extends Component {
   static propTypes = {
@@ -34,11 +36,30 @@ class SchoolCreate extends Component {
 
     return (
       <div>
-        <h2>Create school</h2>
+      <style jsx>{`
+          h2 {
+            float: left;
+          }
+          a {
+            float: right;
+            padding: 30px;
+          }
+          .title {
+            float: left;
+            width: 100%;
+          }
+        `}
+        </style>
+        <div className="title">
+          <h2>Create school</h2>
+          <Link href="/school">
+            <a>view schools</a>
+          </Link>
+        </div>
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required />
           <Input name="street" title="Street" validationError="This is not a valid street" required />
-          <Select name= {'student'} multiple title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
+          <Select multiple name= {'student'} title= {'Choose students'} items={students}  keyLabel={'name'} keyValue={'_id'} />
           <button type="submit" disabled={!canSubmit}>Submit</button>
         </Formsy.Form>
       </div>
