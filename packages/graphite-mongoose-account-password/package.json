@@ -1,6 +1,6 @@
 {
   "name": "@graphite/mongoose-account-password",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "Graphite Framework, mongoose account password",
   "main": "dist/AccountPassword.js",
   "scripts": {
@@ -28,8 +28,8 @@
   },
   "dependencies": {
     "@graphite/decorators": "^0.2.17",
-    "@graphite/mongoose": "^0.2.17",
-    "@graphite/mongoose-account": "^0.2.17",
+    "@graphite/mongoose": "^0.2.18",
+    "@graphite/mongoose-account": "^0.2.18",
     "@graphite/utils": "^0.2.17",
     "bcrypt": "^1.0.2",
     "debug": "^2.3.3",
