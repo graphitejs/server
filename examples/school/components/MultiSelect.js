@@ -32,24 +32,49 @@ export default class MultiSelect extends Component {
     const differenceItems = differenceBy(items, selectedItems, '_id');
 
     return (
-      <fieldset>
-        <Select ref={'list'}
-          multiple name= {'list'}
-          title= {'Choose students'}
-          items={differenceItems}
-          keyLabel={'name'}
-          keyValue={'_id'} />
-        <button onClick={this.addItem.bind(this)}>Add</button>
+      <div>
+        <style jsx>{`
+          select {
+            width: 300px;
+          }
+          .list {
+            float: left;
+          }
 
-        <Select ref={'selected'}
-          multiple name= {name}
-          title= {'Students Selected'}
-          items={selectedItems}
-          keyLabel={'name'}
-          keyValue={'_id'} />
-        <button onClick={this.removeItem.bind(this)}>Remove</button>
-        <button onClick={this.resetItem.bind(this)}>Reset</button>
-      </fieldset>
+          .selected {
+            float: left;
+          }
+
+          .test select {
+              width: 300px;
+          }
+        `}
+        </style>
+        <fieldset>
+          <div className={'list'}>
+            <Select ref={'list'}
+              multiple name= {'list'}
+              title= {'Choose students'}
+              items={differenceItems}
+              keyLabel={'name'}
+              keyValue={'_id'}
+              className= {'test'} />
+            <button onClick={this.addItem.bind(this)}>Add</button>
+          </div>
+
+          <div className={'selected'}>
+            <Select ref={'selected'}
+              multiple name= {name}
+              title= {'Students Selected'}
+              items={selectedItems}
+              keyLabel={'name'}
+              keyValue={'_id'} />
+            <button onClick={this.removeItem.bind(this)}>Remove</button>
+          </div>
+
+          <button onClick={this.resetItem.bind(this)}>Reset</button>
+        </fieldset>
+      </div>
     );
   }
 

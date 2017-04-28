@@ -45,7 +45,7 @@ class Select extends Component {
     const { props } = this;
     const { items, multiple, getValue } = this.props;
     const addClassName = get(props, 'className', '');
-    const className = `form-group + ${addClassName}`;
+    const className = `form-group ${addClassName}`;
     const defaultLabel = get(this.props, 'keyLabel', 'label');
     const defaultValue = get(this.props, 'keyValue', 'value');
 

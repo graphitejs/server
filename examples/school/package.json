@@ -19,7 +19,7 @@
   "dependencies": {
     "@graphite/apollo-express": "^0.2.16",
     "@graphite/decorators": "^0.2.17",
-    "@graphite/mongoose": "^0.2.17",
+    "@graphite/mongoose": "^0.2.18",
     "apollo-client": "^0.10.1",
     "debug": "^2.6.1",
     "dyn-require": "0.0.3",
@@ -31,6 +31,7 @@
     "react-apollo": "^0.13.2"
   },
   "devDependencies": {
+    "autoprefixer": "^6.7.7",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.23.1",
     "babel-istanbul": "^0.11.0",
@@ -41,6 +42,11 @@
     "babel-preset-latest": "^6.16.0",
     "chai": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "node-sass": "^4.5.2",
+    "postcss-easy-import": "^2.0.0",
+    "postcss-loader": "^1.3.3",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.3"
   }
 }
