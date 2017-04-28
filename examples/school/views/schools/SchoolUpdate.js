@@ -6,10 +6,10 @@ import { graphql, compose } from 'react-apollo';
 
 import Formsy from 'formsy-react';
 import Input from '../../components/Input';
-import Select from '../../components/Select';
+import MultiSelect from '../../components/MultiSelect';
 import { edit, update } from '../../graphql/schools';
 import { update as updateStudent } from '../../graphql/students';
-import { get, differenceBy } from 'lodash';
+import { get, differenceBy, omit } from 'lodash';
 
 class SchoolUpdate extends Component {
   static propTypes = {
@@ -75,69 +75,25 @@ class SchoolUpdate extends Component {
             <a>view schools</a>
           </Link>
         </div>
-        <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
-          <Input name="name" title="Name" validationError="This is not a valid name" required value={editedSchool.name}/>
-          <Input name="street" title="Street" validationError="This is not a valid street" required value={editedSchool.street}/>
-          <fieldset>
-            <Select ref={'student'}
-              multiple name= {'student'}
-              title= {'Choose students'}
-              items={differenceItems}
-              keyLabel={'name'}
-              keyValue={'_id'} />
-            <button onClick={this.addItem.bind(this)}>Add</button>
+        <Formsy.Form onSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
+          <Input name="name"
+                 title="Name"
+                 validationError="This is not a valid name"
+                 required value={editedSchool.name}/>
 
-            <Select ref={'studentDeletion'}
-              multiple name= {'student'}
-              title= {'Students Selected'}
-              items={selectedItem}
-              keyLabel={'name'}
-              keyValue={'_id'} />
-            <button onClick={this.removeItem.bind(this)}>Remove</button>
-          </fieldset>
+          <Input name="street"
+                 title="Street"
+                 validationError="This is not a valid street"
+                 required value={editedSchool.street}/>
+
+          <MultiSelect name="student"
+                       items={students}
+                       selectedItems={selectedItem} />
 
           <button type="submit" disabled={!canSubmit}>Save</button>
         </Formsy.Form>
       </div>
     );
-  }
-
-  addItem() {
-    const { students } = this.state;
-    const { student } = this.refs;
-    const selected = student.getValue();
-
-    students.forEach(value => {
-      selected.forEach(selection => {
-        if (value._id === selection) {
-          const id = value._id;
-          const variable = { ...value, school: this.state.id };
-          delete variable._id;
-          delete variable.__typename;
-
-          this.props.updateStudent({ variables: { id, updateStudent: variable } });
-        }
-      });
-    });
-  }
-
-  removeItem() {
-    const { students } = this.state;
-    const { studentDeletion } = this.refs;
-    const selected = studentDeletion.getValue();
-
-    students.forEach(value => {
-      selected.forEach(selection => {
-        if (value._id === selection) {
-          const id = value._id;
-          const variable = { ...value, school: '' };
-          delete variable._id;
-          delete variable.__typename;
-
-          this.props.updateStudent({ variables: { id, updateStudent: variable } });
-        }
-      });
-    });
   }
 
   disableButton() {
@@ -150,8 +106,8 @@ class SchoolUpdate extends Component {
 
   async submit(model) {
     try {
-      const { data } = await this.props.updateSchool(
-        { variables: { id: this.state.id, updateSchool: model } });
+      const variables = { id: this.state.id, updateSchool: omit(model, 'list') };
+      const { data } = await this.props.updateSchool({ variables });
     } catch (e) {
     }
   }
