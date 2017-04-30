@@ -1,6 +1,10 @@
-$primary-color: black;
+@import './variables/colors.scss';
+@import './_reset.scss';
 
 body {
+  overflow-x: hidden;
+  background-color: $body-background;
+  font-family: 'Roboto', sans-serif;
 }
 
 select {
@@ -8,6 +12,6 @@ select {
 }
 
 p {
-  font-size: xx-large;
+  font-size: 16px;
   color: $primary-color;
 }

@@ -44,25 +44,12 @@ class StudentUpdate extends Component {
     const defaultSchool = get(editedStudent.school, '_id', undefined);
     return (
       <div>
-      <style jsx>{`
-          h2 {
-            float: left;
-          }
-          a {
-            float: right;
-            padding: 30px;
-          }
-          .title {
-            float: left;
-            width: 100%;
-          }
-        `}
-        </style>
-        <div className="title">
-          <h2>Edit student</h2>
+        <div className="layout-header">
           <Link href="/student">
-            <a>view students</a>
+            <a>Students</a>
           </Link>
+          <h2>-></h2>
+          <h2>Edit student</h2>
         </div>
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required value={editedStudent.name}/>

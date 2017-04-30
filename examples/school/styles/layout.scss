@@ -1,0 +1,53 @@
+@import './variables/colors.scss';
+
+.layout {
+  width: calc(100% - 250px);
+  margin-left: 250px;
+  padding: 10px;
+
+  &-header {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+
+    h2 {
+      float: left;
+
+      &:not(.main) {
+        margin-left: 10px;
+      }
+    }
+
+    a {
+      float: left;
+      color: #777;
+    }
+  }
+
+  .btn-round {
+    background-color: #424242;
+    border-radius: 999em;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    line-height: 1;
+    font-size: 36px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    display: inline-block;
+    
+    span {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      margin-top: -22px;
+      margin-top: -18px;
+      color: #efefef;
+    }
+  }
+}

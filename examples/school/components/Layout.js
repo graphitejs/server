@@ -4,25 +4,19 @@ import Nav from './Nav';
 import withData from '../lib/withData';
 
 const items = [{
-  name: 'Student',
-  href: '/student',
-}, {
-  name: 'School',
+  name: 'Schools',
   href: '/school',
+},
+{
+  name: 'Students',
+  href: '/student',
 }];
 
 const Layout = withData(props => (
   <div>
-    <style jsx>{`
-      section {
-        float: left;
-        width: calc(100% - 200px);
-      }
-    `}
-    </style>
     <Header />
     <Nav items={items} />
-    <section>
+    <section className="layout">
       {props.children}
     </section>
   </div>
