@@ -7,7 +7,7 @@
     "coverage": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --recursive",
     "lint": "eslint -f table ./client ./server ./imports || exit 1",
     "compile": "babel src --out-dir dist",
-    "server:debug": "DEBUG=apollo-express,mongoose,mongoose-account,mongoose-account-password,mongoose-account-facebook node_modules/babel-cli/bin/babel-node.js ./server/main.js",
+    "server:debug": "DEBUG=app,apollo-express,mongoose,mongoose-account,mongoose-account-password,mongoose-account-facebook node_modules/babel-cli/bin/babel-node.js ./server/main.js",
     "mongod": "(killall -9 mongod || true) && mkdir -p ./.build/data/log && mongod --fork --quiet --logpath ./.build/data/mongodb.log --dbpath ./.build/data --port 3001",
     "mongo:reset": "rm -R ./build/data",
     "start": "npm run mongod & npm run server:debug"
@@ -24,9 +24,11 @@
     "debug": "^2.6.1",
     "dyn-require": "0.0.3",
     "formsy-react": "^0.19.2",
+    "graphql": "^0.9.5",
     "isomorphic-unfetch": "^1.0.0",
     "lodash": "^4.17.4",
     "next": "^2.2.0",
+    "node-fetch": "^1.6.3",
     "react": "^15.4.2",
     "react-apollo": "^0.13.2"
   },
@@ -41,6 +43,7 @@
     "babel-preset-env": "^1.4.0",
     "babel-preset-latest": "^6.16.0",
     "chai": "^3.5.0",
+    "debug": "^2.6.6",
     "eslint-plugin-react": "^6.10.3",
     "mocha": "^3.2.0",
     "node-sass": "^4.5.2",
