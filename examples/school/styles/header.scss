@@ -1,0 +1,21 @@
+@import './variables/colors.scss';
+
+.header {
+  height: 50px;
+  background-color: $header-background;
+
+  &-link {
+    margin-right: 15px;
+    color: #ffffff
+  }
+
+  .logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: #efefef;
+    position: absolute;
+    top: 9px;
+    left: 18px;
+  }
+}

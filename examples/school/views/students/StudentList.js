@@ -40,23 +40,15 @@ export class StudentList extends Component {
 
     return (
       <div>
-        <style jsx>{`
-          h2 {
-            float: left;
-          }
-          a {
-            float: right;
-            padding: 30px;
-          }
-        `}
-        </style>
-        <div>
-          <h2>Students</h2>
-          <Link href="/student/create">
-            <a>Add student</a>
-          </Link>
+        <div className="layout-header">
+          <h2 className="main">Students</h2>
         </div>
         {studentTable}
+        <Link href="/student/create">
+          <div className="btn-round">
+            <span>+</span>
+          </div>
+        </Link>
       </div>
     );
   }

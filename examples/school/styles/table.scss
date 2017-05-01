@@ -1,0 +1,63 @@
+table, tr {
+  display: flex;
+}
+
+thead,
+tbody {
+  display: block;
+}
+
+table {
+  flex-flow: column;
+  width: 100%;
+}
+
+table th,
+table td {
+  flex: 1;
+}
+
+td {
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+}
+
+tbody {
+  overflow-y: auto;
+  height: 400px;
+  width: 100%;
+
+  td {
+    min-height: 32px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 0px;
+    border-left: 0px;
+  }
+
+  td:first-child {
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+  }
+}
+
+thead {
+  tr {
+    min-height: 30px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  th {
+    align-self: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    line-height: 30px;
+
+    &:last-child {
+      border-right: 0px;
+    }
+  }
+}

@@ -34,42 +34,6 @@ export default class Table extends Component {
 
     return (
       <div>
-        <style jsx>{`
-          table, tr {
-            display: flex;
-          }
-
-          thead,
-          tbody {
-            display: block;
-          }
-
-          table {
-            flex-flow: column;
-            width: 100%;
-          }
-
-          table th,
-          table td {
-            flex: 1;
-          }
-
-          thead {
-            width: calc(100% - 1rem);
-          }
-
-          tbody {
-            overflow-y: auto;
-            height: 400px;
-            width: 100%;
-          }
-
-          td {
-            height: 30px;
-            line-height: 30px;
-            vertical-align: middle;
-          }
-        `}</style>
        { items && items.length > 0 ?
          <table>
            <thead>

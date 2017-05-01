@@ -36,26 +36,14 @@ class SchoolCreate extends Component {
 
     return (
       <div>
-      <style jsx>{`
-          h2 {
-            float: left;
-          }
-          a {
-            float: right;
-            padding: 30px;
-          }
-          .title {
-            float: left;
-            width: 100%;
-          }
-        `}
-        </style>
-        <div className="title">
-          <h2>Create school</h2>
+        <div className="layout-header">
           <Link href="/school">
-            <a>view schools</a>
+            <a>Schools</a>
           </Link>
+          <h2>-></h2>
+          <h2>Create school</h2>
         </div>
+
         <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
           <Input name="name" title="Name" validationError="This is not a valid name" required />
           <Input name="street" title="Street" validationError="This is not a valid street" required />

@@ -40,23 +40,15 @@ export class SchoolList extends Component {
 
     return (
       <div>
-        <style jsx>{`
-          h2 {
-            float: left;
-          }
-          a {
-            float: right;
-            padding: 30px;
-          }
-        `}
-        </style>
-        <div>
-          <h2>Schools</h2>
-          <Link href="/school/create">
-            <a>Add school</a>
-          </Link>
+        <div className="layout-header">
+          <h2 className="main">Schools</h2>
         </div>
         {schoolTable}
+        <Link href="/school/create">
+          <div className="btn-round">
+            <span>+</span>
+          </div>
+        </Link>
       </div>
     );
   }
