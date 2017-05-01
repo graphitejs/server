@@ -18,8 +18,8 @@ export default class List extends Component {
 
 List.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
+    label: PropTypes.any,
+    value: PropTypes.any,
   })),
   onClick: PropTypes.func,
 };

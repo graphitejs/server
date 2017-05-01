@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 
 export default class List extends Component {
   static propTypes = {
@@ -29,7 +30,7 @@ export default class List extends Component {
         <ul>
           {items.map((item, key) => {
             return <li key= { key }>
-                      <Link href= {item.href}><a>{item.name}</a></Link>
+                      <Link prefetch as={item.name} href= {{ pathname: item.href }}><a>{item.name}</a></Link>
                    </li>;
           })}
         </ul>

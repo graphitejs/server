@@ -1,30 +1,37 @@
-import Link from 'next/link';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import Table from '../../components/Table';
-import StudentActions from './StudentActions';
+import apollo from '../lib/apollo';
+import gql from 'graphql-tag';
+import Layout from '../components/Layout.js';
+import Link from 'next/link';
+import Table from '../components/Table';
+import StudentActions from '../views/students/StudentActions';
 
-export default class StudentList extends Component {
+export default class View extends Component {
+
   static propTypes = {
-    mutate: PropTypes.func,
-    data: PropTypes.shape({
-      loading: PropTypes.boolean,
-      error: PropTypes.object,
-    }),
-  }
-
-  static defaultProps = {
-    loading: true,
-    data: {
-      students: [],
-    },
+    items: PropTypes.array,
   }
 
   constructor() {
     super();
   }
 
+  static async getInitialProps({ query }) {
+    try {
+      const data = await apollo.query({
+        query: gql`${query.all}`,
+      });
+
+      return { ...data, ...query };
+    } catch (e) {
+      console.log("Error ",e);
+      return {};
+    }
+  }
+
   render() {
+    const { items } = this.props;
     const { data: { loading, error, students }, model } = this.props;
 
     const actions = {
@@ -37,6 +44,7 @@ export default class StudentList extends Component {
     ) : null;
 
     return (
+      <Layout items={JSON.parse(items)} >
       <div>
         <style jsx>{`
           h2 {
@@ -56,6 +64,7 @@ export default class StudentList extends Component {
         </div>
         {studentTable}
       </div>
+      </Layout>
     );
   }
 }
