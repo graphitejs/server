@@ -14,5 +14,8 @@
     "eslint-plugin-react": "^6.10.3",
     "lerna": "2.0.0-rc.2",
     "pre-push": "^0.1.1"
+  },
+  "dependencies": {
+    "redux": "^3.6.0"
   }
 }
