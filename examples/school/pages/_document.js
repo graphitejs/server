@@ -5,6 +5,7 @@ import stylesheet from '../styles/index.scss';
 import header from '../styles/header.scss';
 import nav from '../styles/nav.scss';
 import layout from '../styles/layout.scss';
+import table from '../styles/table.scss';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
@@ -21,6 +22,7 @@ export default class MyDocument extends Document {
          <style dangerouslySetInnerHTML={{ __html: header }} />
          <style dangerouslySetInnerHTML={{ __html: nav }} />
          <style dangerouslySetInnerHTML={{ __html: layout }} />
+         <style dangerouslySetInnerHTML={{ __html: table }} />
        </Head>
        <body className="custom_class">
          {this.props.customValue}
