@@ -11,9 +11,9 @@ import { get } from 'lodash';
 class View extends Component {
 
   static propTypes = {
-    data: {
+    data: PropTypes.shape({
       loading: PropTypes.bool,
-    },
+    }),
     items: PropTypes.array,
     model: PropTypes.string,
   }
