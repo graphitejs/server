@@ -14,7 +14,6 @@ export default (Component) => (
       ctx.store = store;
       ctx.client = client;
 
-      console.log("ctx.query ",ctx);
       store.dispatch({
         type: 'ADD_STORE',
         props: ctx.query,
