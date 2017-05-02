@@ -8,7 +8,6 @@ class Index extends Component {
     items: PropTypes.array,
   }
 
-
   static contextTypes = {
     store: PropTypes.object,
   }
@@ -19,19 +18,18 @@ class Index extends Component {
 
   constructor() {
     super();
-    //threre are store and props
-    console.log("this ", this);
   }
 
-  static async getInitialProps({ query }) {
-    return { ...query };
+  static async getInitialProps({ store }) {
+    const { adminGraphite } = store.getState();
+    return { items: adminGraphite.items };
   }
 
   render() {
     const { items } = this.props;
 
     return (
-      <Layout items={JSON.parse(items)} >
+      <Layout items={items} >
         <h1>Home</h1>
       </Layout>
     );

@@ -11,7 +11,7 @@ import { buildClientSchema } from 'graphql/utilities/buildClientSchema';
 import { printSchema } from 'graphql/utilities/schemaPrinter';
 import { lowerFirst } from 'lodash';
 import debug from 'debug';
-import gql from 'graphql-tag';
+import pluralize from 'pluralize';
 const logger = debug('app');
 
 const mongoose = new Mongodb(database);
@@ -46,36 +46,14 @@ const getSchema = async function() {
 };
 
 app.prepare().then(async () => {
-  graphQLServer.get('/p/:id', (req, res) => {
-    const actualPage = '/post';
-    const queryParams = { id: req.params.id };
-    app.render(req, res, actualPage, queryParams);
+  const items = [ School, Student, Teacher ].map(model => {
+    return { name: lowerFirst(model.nameClass), href: '/View', query: { model: pluralize(lowerFirst(model.nameClass), 2) }};
   });
-
-  graphQLServer.get('/about', (req, res) => {
-    const actualPage = '/about';
-    app.render(req, res, actualPage);
-  });
-
-  const items = JSON.stringify([ School, Student, Teacher ].map(model => {
-    return { name: lowerFirst(model.nameClass), href: '/View' };
-  }));
-
-  const all = `
-    query listStudent {
-      students {
-        _id
-        name
-        street
-        active
-      }
-    }
-  `;
 
   const getQuery = (model) => {
     return `
       query list${model} {
-        ${lowerFirst(model)}s {
+        ${pluralize(lowerFirst(model), 2)} {
           _id
           name
           street
@@ -85,24 +63,31 @@ app.prepare().then(async () => {
     `;
   };
 
+  const graphqlQuerys = [ School, Student, Teacher ].map(model => {
+    const obj = {};
+    obj[pluralize(lowerFirst(model.nameClass), 2)] = getQuery(model.nameClass);
+    return obj;
+  });
+
+  graphQLServer.get('/p/:id', (req, res) => {
+    const actualPage = '/post';
+    const queryParams = { id: req.params.id };
+    app.render(req, res, actualPage, queryParams);
+  });
+
+  graphQLServer.get('/about', (req, res) => {
+    const actualPage = '/about';
+    app.render(req, res, actualPage, { items, graphql: { query: graphqlQuerys } });
+  });
 
   graphQLServer.get('/', (req, res) => {
     const actualPage = '/index';
-    app.render(req, res, actualPage, { items, all });
+    app.render(req, res, actualPage, { items, graphql: { query: graphqlQuerys } });
   });
 
   [ School, Student, Teacher ].forEach(model => {
     graphQLServer.get('/' + model.nameClass, (req, res) => {
-      const newQuery = getQuery(model.nameClass);
-      app.render(req, res, '/View', { items, all: newQuery, model: model.nameClass });
-    });
-  });
-
-  [ School, Student, Teacher ].forEach(model => {
-    console.log("'/api/' + model.nameClass ",'/api/' + model.nameClass);
-    graphQLServer.get('/api/' + model.nameClass, (req, res) => {
-      const newQuery = getQuery(model.nameClass);
-      res.json({ items, all: newQuery, model: model.nameClass });
+      app.render(req, res, '/View', { items, graphql: { query: graphqlQuerys }, model: pluralize(lowerFirst(model.nameClass), 2) } );
     });
   });
 

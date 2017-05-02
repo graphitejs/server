@@ -30,7 +30,7 @@ export default class List extends Component {
         <ul>
           {items.map((item, key) => {
             return <li key= { key }>
-                      <Link prefetch as={item.name} href= {{ pathname: item.href }}><a>{item.name}</a></Link>
+                      <Link prefetch as={item.name} href= {{ pathname: item.href, query: item.query }}><a>{item.name}</a></Link>
                    </li>;
           })}
         </ul>

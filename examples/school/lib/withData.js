@@ -8,8 +8,17 @@ export default (Component) => (
   class extends React.Component {
     static async getInitialProps(ctx) {
       const headers = ctx.req ? ctx.req.headers : {};
+      ctx.isServer = true;
       const client = initClient(headers);
       const store = initStore(client, client.initialState);
+      ctx.store = store;
+      ctx.client = client;
+
+      console.log("ctx.query ",ctx);
+      store.dispatch({
+        type: 'ADD_STORE',
+        props: ctx.query,
+      });
 
       const props = {
         url: { query: ctx.query, pathname: ctx.pathname },
@@ -33,7 +42,6 @@ export default (Component) => (
           apollo: {
             data: client.getInitialState().data,
           },
-          llalal: 'hola',
         },
         headers,
         ...props,
