@@ -9,7 +9,7 @@ import Teacher from './models/Teacher';
 import { introspectionQuery } from 'graphql/utilities/introspectionQuery';
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema';
 import { printSchema } from 'graphql/utilities/schemaPrinter';
-import { lowerFirst } from 'lodash';
+import { lowerFirst, get, intersection, without } from 'lodash';
 import debug from 'debug';
 import pluralize from 'pluralize';
 const logger = debug('app');
@@ -50,22 +50,27 @@ app.prepare().then(async () => {
     return { name: lowerFirst(model.nameClass), href: '/View', query: { model: pluralize(lowerFirst(model.nameClass), 2) }};
   });
 
-  const getQuery = (model) => {
+  const getQuery = (model, fields) => {
     return `
       query list${model} {
         ${pluralize(lowerFirst(model), 2)} {
-          _id
-          name
-          street
-          active
+          ${fields}
         }
       }
     `;
   };
 
   const graphqlQuerys = [ School, Student, Teacher ].map(model => {
+    const schemaModel = Object.keys(model.schema);
+    schemaModel.unshift('_id');
+    const hasManyKeys = Object.keys(get(model, 'hasMany', {}) );
+    const hasOneKeys = Object.keys(get(model, 'hasOne', {}) );
+    const hasManyDiffKeys = intersection(schemaModel, hasManyKeys);
+    const hasOneDiffKeys = intersection(schemaModel, hasOneKeys);
+    const newSchema = without(schemaModel, ...hasManyDiffKeys, ...hasOneDiffKeys);
+    const fields = newSchema.join(' ');
     const obj = {};
-    obj[pluralize(lowerFirst(model.nameClass), 2)] = getQuery(model.nameClass);
+    obj[pluralize(lowerFirst(model.nameClass), 2)] = getQuery(model.nameClass, fields);
     return obj;
   });
 
