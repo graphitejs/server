@@ -2,9 +2,8 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import Nav from './Nav';
-import withData from '../lib/withData';
 
-class Layout extends Component {
+export default class Layout extends Component {
 
   static propTypes = {
     children: PropTypes.oneOfType([
@@ -42,5 +41,3 @@ class Layout extends Component {
     );
   }
 }
-
-export default withData(Layout);
