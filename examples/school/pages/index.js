@@ -1,26 +1,26 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import Layout from '../components/Layout.js';
+import withData from '../lib/withData';
 
-export default class Index extends Component {
+class Index extends Component {
   static propTypes = {
-    url: {
-      query: {
-        items: PropTypes.array,
-      },
-    },
+    items: PropTypes.array,
+  }
+
+
+  static contextTypes = {
+    store: PropTypes.object,
   }
 
   static defaultProps = {
-    url: {
-      query: {
-        items: [],
-      },
-    },
+    items: [],
   }
 
   constructor() {
     super();
+    //threre are store and props
+    console.log("this ", this);
   }
 
   static async getInitialProps({ query }) {
@@ -37,3 +37,5 @@ export default class Index extends Component {
     );
   }
 }
+
+export default withData(Index);

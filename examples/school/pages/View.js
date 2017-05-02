@@ -6,15 +6,21 @@ import Layout from '../components/Layout.js';
 import Link from 'next/link';
 import Table from '../components/Table';
 import StudentActions from '../views/students/StudentActions';
+import withData from '../lib/withData';
 
-export default class View extends Component {
+class View extends Component {
 
   static propTypes = {
     items: PropTypes.array,
   }
 
+  static contextTypes = {
+    store: PropTypes.object,
+  }
+
   constructor() {
     super();
+    console.log("thissss ", this);
   }
 
   static async getInitialProps({ query }) {
@@ -68,3 +74,5 @@ export default class View extends Component {
     );
   }
 }
+
+export default withData(View);
