@@ -20,6 +20,7 @@
     "@graphite/apollo-express": "^0.2.16",
     "@graphite/decorators": "^0.2.17",
     "@graphite/mongoose": "^0.2.18",
+    "@graphite/utils": "^0.2.17",
     "apollo-client": "^0.10.1",
     "debug": "^2.6.1",
     "dyn-require": "0.0.3",

@@ -7,6 +7,7 @@ import Table from '../components/Table';
 import StudentActions from '../views/students/StudentActions';
 import withData from '../lib/withData';
 import { get } from 'lodash';
+import pluralize from 'pluralize';
 
 class View extends Component {
 
@@ -18,16 +19,11 @@ class View extends Component {
     model: PropTypes.string,
   }
 
-  static contextTypes = {
-    store: PropTypes.object,
-  }
-
   static defaultProps = {
     data: {
       loading: true,
     },
     items: [],
-    model: 'students',
   }
 
   constructor() {
@@ -85,7 +81,7 @@ class View extends Component {
             </style>
             <div>
               <h2>{model}</h2>
-              <Link href="/{model}/create">
+              <Link as={`/${pluralize(model, 1)}/create`} href= {{ pathname: '/Create', query: { model: pluralize(model, 2) } }}>
                 <a>Add {model}</a>
               </Link>
             </div>

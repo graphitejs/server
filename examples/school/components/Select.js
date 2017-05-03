@@ -59,7 +59,7 @@ class Select extends Component {
           value={getValue()}>
           { !!getValue() ? <option defaultValue hidden>Choose here</option> : null }
           { items.map((item, key) => {
-            return <option key= {key} value= {item[defaultValue]}> {item[defaultLabel]} </option>;
+            return <option key= {key} value= {item[defaultValue]}> {item[defaultLabel] ? item[defaultLabel] : item[defaultValue] } </option>;
           })}
         </select>
       </div>

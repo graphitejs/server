@@ -3,13 +3,14 @@ import fetch from 'node-fetch';
 import { database, graphql } from './config/default';
 import { Graphite } from '@graphite/apollo-express';
 import { Mongodb } from '@graphite/mongoose';
+import { functionName } from '@graphite/utils';
 import School from './models/School';
 import Student from './models/Student';
 import Teacher from './models/Teacher';
 import { introspectionQuery } from 'graphql/utilities/introspectionQuery';
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema';
 import { printSchema } from 'graphql/utilities/schemaPrinter';
-import { lowerFirst, get, intersection, without } from 'lodash';
+import { lowerFirst, upperFirst, get, intersection, without, forEach as forEachObject, omit } from 'lodash';
 import debug from 'debug';
 import pluralize from 'pluralize';
 const logger = debug('app');
@@ -52,7 +53,7 @@ app.prepare().then(async () => {
 
   const getQuery = (model, fields) => {
     return `
-      query list${model} {
+      query list${upperFirst(model)} {
         ${pluralize(lowerFirst(model), 2)} {
           ${fields}
         }
@@ -84,9 +85,33 @@ app.prepare().then(async () => {
     const hasManyDiffKeys = intersection(schemaModel, hasManyKeys);
     const hasOneDiffKeys = intersection(schemaModel, hasOneKeys);
     const newSchema = without(schemaModel, ...hasManyDiffKeys, ...hasOneDiffKeys);
+    console.log("newSchema ",newSchema);
     const fields = newSchema.join(' ');
     const obj = {};
+
+    forEachObject(model.schema, data => {
+      if (data.type) {
+        data.type = functionName(data.type);
+      }
+    });
+    const avoidRelationKeys = omit(model.schema, ...hasManyKeys, ...hasOneKeys);
+
+    hasManyKeys.forEach(key => {
+      avoidRelationKeys[key] = {
+        type: 'hasMany',
+        queryResolver: getQuery(key, '_id'),
+      };
+    });
+
+    hasOneKeys.forEach(key => {
+      avoidRelationKeys[key] = {
+        type: 'hasOne',
+        queryResolver: getQuery(key, '_id'),
+      };
+    });
+
     obj[pluralize(lowerFirst(model.nameClass), 2)] = {};
+    obj[pluralize(lowerFirst(model.nameClass), 2)].schema = avoidRelationKeys;
     obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, fields);
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getRemove(model.nameClass, fields);
@@ -112,6 +137,10 @@ app.prepare().then(async () => {
   [ School, Student, Teacher ].forEach(model => {
     graphQLServer.get('/' + model.nameClass, (req, res) => {
       app.render(req, res, '/View', { items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );
+    });
+
+    graphQLServer.get('/' + model.nameClass.toLowerCase() + '/create', (req, res) => {
+      app.render(req, res, '/Create', { items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );
     });
   });
 
