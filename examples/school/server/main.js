@@ -60,6 +60,22 @@ app.prepare().then(async () => {
     `;
   };
 
+  const getRemove = (model, fields) => {
+    return `
+      mutation remove${model}($id: String) {
+        remove${model}(id: $id) {
+          ${pluralize(lowerFirst(model), 1)} {
+            ${fields}
+          }
+          errors {
+            key
+            message
+          }
+        }
+      }
+    `;
+  };
+
   const graphqlQuerys = [ School, Student, Teacher ].map(model => {
     const schemaModel = Object.keys(model.schema);
     schemaModel.unshift('_id');
@@ -70,7 +86,10 @@ app.prepare().then(async () => {
     const newSchema = without(schemaModel, ...hasManyDiffKeys, ...hasOneDiffKeys);
     const fields = newSchema.join(' ');
     const obj = {};
-    obj[pluralize(lowerFirst(model.nameClass), 2)] = getQuery(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)] = {};
+    obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation = {};
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getRemove(model.nameClass, fields);
     return obj;
   });
 
@@ -82,17 +101,17 @@ app.prepare().then(async () => {
 
   graphQLServer.get('/about', (req, res) => {
     const actualPage = '/about';
-    app.render(req, res, actualPage, { items, graphql: { query: graphqlQuerys } });
+    app.render(req, res, actualPage, { items, graphql: graphqlQuerys });
   });
 
   graphQLServer.get('/', (req, res) => {
     const actualPage = '/index';
-    app.render(req, res, actualPage, { items, graphql: { query: graphqlQuerys } });
+    app.render(req, res, actualPage, { items, graphql: graphqlQuerys });
   });
 
   [ School, Student, Teacher ].forEach(model => {
     graphQLServer.get('/' + model.nameClass, (req, res) => {
-      app.render(req, res, '/View', { items, graphql: { query: graphqlQuerys }, model: pluralize(lowerFirst(model.nameClass), 2) } );
+      app.render(req, res, '/View', { items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );
     });
   });
 

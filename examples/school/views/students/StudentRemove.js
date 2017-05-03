@@ -1,13 +1,18 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { graphql, compose } from 'react-apollo';
 import Formsy from 'formsy-react';
-import { remove } from '../../graphql/students';
+import gql from 'graphql-tag';
 
-class StudentRemove extends Component {
+export default class StudentRemove extends Component {
   static propTypes = {
     id: PropTypes.string,
     mutate: PropTypes.func,
+    url: PropTypes.object,
+  }
+
+  static contextTypes = {
+    store: PropTypes.object,
+    client: PropTypes.object,
   }
 
   constructor() {
@@ -37,13 +42,27 @@ class StudentRemove extends Component {
 
   async submit() {
     try {
+      const { client, store } = this.context;
       const { item: { _id } } = this.props;
-      const { data } = await this.props.mutate({ variables: { id: _id }});
+      const { model } = this.props.url.query;
+      const { adminGraphite } = store.getState();
+
+      const removeModel = adminGraphite.graphql.reduce((acum, value) => {
+        if (value[model]) {
+          /* eslint-disable no-param-reassign */
+          acum = value[model].mutation.remove;
+          /* eslint-enable no-param-reassign */
+        }
+
+        return acum;
+      }, '');
+
+      const data = await client.mutate({
+        mutation: gql`${removeModel}`,
+        variables: { id: _id },
+      });
     } catch (e) {
+      console.log("error ",e);
     }
   }
 }
-
-export default compose(
-  graphql(remove)
-)(StudentRemove);

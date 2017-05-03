@@ -20,7 +20,7 @@ export default (Component) => (
       });
 
       const props = {
-        url: { query: ctx.query, pathname: ctx.pathname },
+        url: { ...ctx.query, pathname: ctx.pathname },
         ...await (Component.getInitialProps ? Component.getInitialProps(ctx) : {}),
       };
 

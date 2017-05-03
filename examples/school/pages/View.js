@@ -40,12 +40,18 @@ class View extends Component {
   static async getInitialProps({ store, query, client }) {
     const model = query.model;
     const { adminGraphite } = store.getState();
-    const querys = get(adminGraphite, 'graphql.query', {});
-    const findQuery = querys.find(value => value[model]);
-    const graphqlQuery = Object.values(findQuery)[0];
+    const queryModel = adminGraphite.graphql.reduce((acum, value) => {
+      if (value[model]) {
+        /* eslint-disable no-param-reassign */
+        acum = value[model].query;
+        /* eslint-enable no-param-reassign */
+      }
+
+      return acum;
+    }, '');
 
     const data = await client.query({
-      query: gql`${graphqlQuery}`,
+      query: gql`${queryModel}`,
     });
 
     return { ...data, model, items: adminGraphite.items };
@@ -57,7 +63,7 @@ class View extends Component {
 
     const actions = {
       name: 'Actions',
-      elements: (<StudentActions />),
+      elements: (<StudentActions {...this.props} />),
     };
 
     const studentTable = !loading && !error ? (
