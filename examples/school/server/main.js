@@ -95,6 +95,24 @@ app.prepare().then(async () => {
     `;
   };
 
+  const getMutationUpdate = (model, fields) => {
+    const nameModelUppper = pluralize(upperFirst(model), 1);
+    const nameModelLower = pluralize(lowerFirst(model), 1);
+    return `
+      mutation update${nameModelUppper}($id: String, $update${nameModelUppper}: update${nameModelUppper}) {
+        update${nameModelUppper}(${nameModelLower}: $update${nameModelUppper}) {
+          ${nameModelLower} {
+            ${fields}
+          }
+          errors {
+            key
+            message
+          }
+        }
+      }
+    `;
+  };
+
 
   const graphqlQuerys = [ School, Student, Teacher ].map(model => {
     const schemaModel = Object.keys(model.schema);
@@ -134,6 +152,7 @@ app.prepare().then(async () => {
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getMutationRemove(model.nameClass, fields);
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.create = getMutationCreate(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.create = getMutationUpdate(model.nameClass, fields);
     return obj;
   });
 
@@ -160,6 +179,10 @@ app.prepare().then(async () => {
 
     graphQLServer.get('/' + model.nameClass.toLowerCase() + '/create', (req, res) => {
       app.render(req, res, '/Create', { items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );
+    });
+
+    graphQLServer.get('/' + model.nameClass.toLowerCase() + '/:id', (req, res) => {
+      app.render(req, res, '/Update', { items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );
     });
   });
 
