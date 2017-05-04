@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import pluralize from 'pluralize';
 
 export default class StudentEdit extends Component {
   static propTypes = {
@@ -12,7 +13,7 @@ export default class StudentEdit extends Component {
   }
 
   render() {
-    const { item: { _id } } = this.props;
+    const { item: { _id }, model } = this.props;
     return (
       <div>
         <style jsx>{`
@@ -26,7 +27,7 @@ export default class StudentEdit extends Component {
           }
         `}</style>
 
-        <Link href={`/student/edit?id=${_id}`}>
+        <Link as={`/${pluralize(model, 1)}/${_id}`} href= {{ pathname: '/Update', query: { model: pluralize(model, 2) } }}>
           <button>Edit</button>
         </Link>
       </div>
