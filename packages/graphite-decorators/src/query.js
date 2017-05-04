@@ -7,15 +7,15 @@ const query = function(params) {
 
     switch (typeof params) {
     case 'string':
-      target.Query = `${target.Query || ''} \n ${key}(${params}): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+      target.Query = `${target.Query || ''} \n ${key}(${params})(_id: String, skip: Int, limit: Int, sort: String): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
       break;
     case 'object':
       const fields = get(params, 'fields', undefined);
       const parseFields = fields ? `(${fields})` : '';
-      target.Query = `${target.Query || ''} \n ${key}${parseFields}: [${get(params, 'responseType', '')}],`;
+      target.Query = `${target.Query || ''} \n ${key}${parseFields}(_id: String, skip: Int, limit: Int, sort: String): [${get(params, 'responseType', '')}],`;
       break;
     default:
-      target.Query = `${target.Query || ''} \n ${key}: [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
+      target.Query = `${target.Query || ''} \n ${key}(_id: String, skip: Int, limit: Int, sort: String): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
     }
 
     target.Resolvers = Object.assign({}, target.Resolvers);
