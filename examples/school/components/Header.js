@@ -1,6 +1,8 @@
 const Header = () => (
     <header className="header">
-      <div className="logo"/>
+      <div className="logo">
+        <h1 className="before">graphitejs</h1>
+      </div>
     </header>
 );
 

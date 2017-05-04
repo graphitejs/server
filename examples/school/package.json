@@ -18,19 +18,24 @@
   ],
   "dependencies": {
     "@graphite/apollo-express": "^0.2.16",
-    "@graphite/decorators": "^0.2.17",
-    "@graphite/mongoose": "^0.2.18",
+    "@graphite/decorators": "^0.2.19",
+    "@graphite/mongoose": "^0.2.19",
+    "@graphite/utils": "^0.2.17",
     "apollo-client": "^0.10.1",
     "debug": "^2.6.1",
     "dyn-require": "0.0.3",
     "formsy-react": "^0.19.2",
     "graphql": "^0.9.5",
+    "isomorphic-fetch": "^2.2.1",
     "isomorphic-unfetch": "^1.0.0",
     "lodash": "^4.17.4",
     "next": "^2.2.0",
     "node-fetch": "^1.6.3",
+    "pluralize": "^4.0.0",
+    "qs": "^6.4.0",
     "react": "^15.4.2",
-    "react-apollo": "^0.13.2"
+    "react-apollo": "^0.13.2",
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",

@@ -1,32 +1,37 @@
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import Nav from './Nav';
-import withData from '../lib/withData';
 
-const items = [{
-  name: 'Schools',
-  href: '/school',
-},
-{
-  name: 'Students',
-  href: '/student',
-}];
 
-const Layout = withData(props => (
-  <div>
-    <Header />
-    <Nav items={items} />
-    <section className="layout">
-      {props.children}
-    </section>
-  </div>
-));
+export default class Layout extends Component {
 
-Layout.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.object,
-  ]),
-};
+  static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.element),
+      PropTypes.object,
+    ]),
+    items: PropTypes.array,
+  }
 
-export default Layout;
+  static defaultProps = {
+    items: [],
+  }
+
+  constructor() {
+    super();
+  }
+
+  render() {
+    const { items, children } = this.props;
+    return (
+      <div>
+        <Header />
+        <Nav items={items} />
+        <section className="layout">
+          {children}
+        </section>
+      </div>
+    );
+  }
+}

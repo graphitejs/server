@@ -9,6 +9,10 @@ export default class MultiSelect extends Component {
     items: PropTypes.array,
   }
 
+  static defaultProps = {
+    items: [],
+  }
+
   constructor() {
     super();
     this.state = {

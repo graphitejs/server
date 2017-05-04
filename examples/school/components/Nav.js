@@ -25,7 +25,7 @@ export default class List extends Component {
 
   componentDidMount() {
     let pathname = Router.pathname;
-    if (pathname === '/') pathname = '/home'
+    if (pathname === '/') pathname = '/home';
 
     this.setState({ pathname });
   }
@@ -35,17 +35,17 @@ export default class List extends Component {
 
     return (
       <nav className="nav">
-        <Link href="/">
+        <Link as="/" href="/Index">
           <a className={this.linkClassNames({href: '/home'})}>Home</a>
         </Link>
-        <Link href="/about">
+        <Link as="/about" href="/About">
           <a className={this.linkClassNames({href: '/about'})}>About</a>
         </Link>
 
         <div className="nav-model-container">
           {items.map((item, key) => {
             return (
-              <Link key= { key } href= {item.href}>
+              <Link key= { key } as={item.name} href= {{ pathname: item.href, query: item.query }}>
                 <a className={this.linkClassNames(item)}>
                   {item.name}
                 </a>

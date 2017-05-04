@@ -59,7 +59,7 @@ class Select extends Component {
           value={getValue()}>
           { !!getValue() ? <option defaultValue hidden>Choose here</option> : null }
           { items.map((item, key) => {
-            return <option key= {key} value= {item[defaultValue]}> {item[defaultLabel]} </option>;
+            return <option key= {key} value= {item[defaultValue]}> {item[defaultLabel] ? item[defaultLabel] : item[defaultValue] } </option>;
           })}
         </select>
       </div>
@@ -67,10 +67,15 @@ class Select extends Component {
   }
 
   changeValue(event) {
+    const hasMultiple = get(event.target.attributes, 'multiple', false);
     const { setValue } = this.props;
     const selected = event.target;
     const values = [...selected.options].filter(option => option.selected).map(option => option.value);
-    setValue(values);
+    if (!hasMultiple) {
+      setValue(values[0]);
+    } else {
+      setValue(values);
+    }
   }
 }
 

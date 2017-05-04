@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import StudentEdit from './StudentEdit';
-import StudentRemove from './StudentRemove';
+import LinkUpdate from './LinkUpdate';
+import Remove from './Remove';
 
-export default class StudentWrapEditRemove extends Component {
+export default class Actions extends Component {
   constructor() {
     super();
   }
@@ -16,8 +16,8 @@ export default class StudentWrapEditRemove extends Component {
           }
         `}</style>
 
-        <StudentEdit  { ...this.props } />
-        <StudentRemove { ...this.props } />
+      <LinkUpdate { ...this.props } />
+      <Remove { ...this.props } />
       </div>
     );
   }
