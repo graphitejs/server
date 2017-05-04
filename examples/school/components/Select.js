@@ -67,10 +67,15 @@ class Select extends Component {
   }
 
   changeValue(event) {
+    const hasMultiple = get(event.target.attributes, 'multiple', false);
     const { setValue } = this.props;
     const selected = event.target;
     const values = [...selected.options].filter(option => option.selected).map(option => option.value);
-    setValue(values);
+    if (!hasMultiple) {
+      setValue(values[0]);
+    } else {
+      setValue(values);
+    }
   }
 }
 
