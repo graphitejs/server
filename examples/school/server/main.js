@@ -61,6 +61,16 @@ app.prepare().then(async () => {
     `;
   };
 
+  const getQueryOne = (model, fields) => {
+    return  `
+      query list${upperFirst(model)}($id: String) {
+        ${pluralize(lowerFirst(model), 2)}(_id: $id) {
+          ${fields}
+        }
+      }
+    `;
+  };
+
   const getMutationRemove = (model, fields) => {
     return `
       mutation remove${pluralize(upperFirst(model), 1)}($id: String) {
@@ -100,7 +110,7 @@ app.prepare().then(async () => {
     const nameModelLower = pluralize(lowerFirst(model), 1);
     return `
       mutation update${nameModelUppper}($id: String, $update${nameModelUppper}: update${nameModelUppper}) {
-        update${nameModelUppper}(${nameModelLower}: $update${nameModelUppper}) {
+        update${nameModelUppper}(id: $id, ${nameModelLower}: $update${nameModelUppper}) {
           ${nameModelLower} {
             ${fields}
           }
@@ -149,26 +159,21 @@ app.prepare().then(async () => {
     obj[pluralize(lowerFirst(model.nameClass), 2)] = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].schema = avoidRelationKeys;
     obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].queryOne = getQueryOne(model.nameClass, fields);
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getMutationRemove(model.nameClass, fields);
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.create = getMutationCreate(model.nameClass, fields);
-    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.create = getMutationUpdate(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.update = getMutationUpdate(model.nameClass, fields);
     return obj;
   });
 
-  graphQLServer.get('/p/:id', (req, res) => {
-    const actualPage = '/post';
-    const queryParams = { id: req.params.id };
-    app.render(req, res, actualPage, queryParams);
-  });
-
   graphQLServer.get('/about', (req, res) => {
-    const actualPage = '/about';
+    const actualPage = '/About';
     app.render(req, res, actualPage, { items, graphql: graphqlQuerys });
   });
 
   graphQLServer.get('/', (req, res) => {
-    const actualPage = '/index';
+    const actualPage = '/Index';
     app.render(req, res, actualPage, { items, graphql: graphqlQuerys });
   });
 
@@ -182,7 +187,8 @@ app.prepare().then(async () => {
     });
 
     graphQLServer.get('/' + model.nameClass.toLowerCase() + '/:id', (req, res) => {
-      app.render(req, res, '/Update', { items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );
+      const id = get(req.params, 'id', '');
+      app.render(req, res, '/Update', { id, items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );
     });
   });
 

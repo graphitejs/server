@@ -10,6 +10,7 @@ import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
 import { get, upperFirst, pick } from 'lodash';
+import Router from 'next/router';
 
 class Update extends Component {
   static propTypes = {
@@ -41,6 +42,7 @@ class Update extends Component {
   }
 
   static async getInitialProps({ store, query, client }) {
+    const modelID = query.id;
     const model = query.model;
     const { adminGraphite } = store.getState();
     const dataModel = adminGraphite.graphql.reduce((acum, value) => {
@@ -63,7 +65,13 @@ class Update extends Component {
       }
     });
 
-    return { model, items: adminGraphite.items, dataModel };
+    const dataCurrentModel = await client.query({
+      query: gql`${dataModel.queryOne}`,
+      variables: { id: modelID },
+    });
+
+    dataModel.currentData = dataCurrentModel.data[model][0];
+    return { model, items: adminGraphite.items, dataModel, modelID };
   }
 
   render() {
@@ -103,9 +111,9 @@ class Update extends Component {
                 }
                 switch (schema[attr].type) {
                 case 'String':
-                  return <Input key={attr} name={attr} title={attr} validationError="This is not a valid name" required />;
+                  return <Input key={attr} value={dataModel.currentData[attr]} name={attr} title={attr} validationError="This is not a valid name" required />;
                 case 'Boolean':
-                  return <Input key={attr} type={'checkbox'} name={attr} title={attr} />;
+                  return <Input key={attr} value={dataModel.currentData[attr]} type={'checkbox'} name={attr} title={attr} />;
                 case 'hasOne':
                   return <Select key={attr} name={attr} title={attr} items={itemsSafe}  keyLabel={'name'} keyValue={'_id'} />;
                 case 'hasMany':
@@ -132,21 +140,25 @@ class Update extends Component {
 
   async submit(dataForm) {
     try {
+      debugger
       const { client } = this.context;
-      const { model } = this.props;
-      const { create } = this.props.dataModel.mutation;
+      const { model, modelID } = this.props;
+      const { update } = this.props.dataModel.mutation;
       const { schema } = this.props.dataModel;
       const keysSchema = Object.keys(schema);
 
       const nameModelUppper = pluralize(upperFirst(model), 1);
-      const variables = {};
-      variables[`new${nameModelUppper}`] = pick(dataForm, ...keysSchema);
-
+      const variables = { id: modelID };
+      variables[`update${nameModelUppper}`] = pick(dataForm, ...keysSchema);
+      console.log("update ",update);
       const data = await client.mutate({
-        mutation: gql`${create}`,
+        mutation: gql`${update}`,
         variables,
       });
+
+      console.log("data ",data);
     } catch (e) {
+      console.log("e ",e);
     }
   }
 }

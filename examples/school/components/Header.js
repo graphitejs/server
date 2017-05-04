@@ -14,10 +14,10 @@ const Header = () => (
         }
       `}
       </style>
-      <Link href="/">
+      <Link as="/" href="/Index">
         <a style={linkStyle}>Home</a>
       </Link>
-      <Link href="/about">
+      <Link as="/about" href="/About">
         <a style={linkStyle}>About</a>
       </Link>
     </header>

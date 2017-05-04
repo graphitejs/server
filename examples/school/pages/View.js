@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import Layout from '../components/Layout.js';
 import Link from 'next/link';
 import Table from '../components/Table';
-import StudentActions from '../views/students/StudentActions';
+import Actions from '../views/Actions';
 import withData from '../lib/withData';
 import { get } from 'lodash';
 import pluralize from 'pluralize';
@@ -59,7 +59,7 @@ class View extends Component {
 
     const actions = {
       name: 'Actions',
-      elements: (<StudentActions {...this.props} />),
+      elements: (<Actions {...this.props} />),
     };
 
     const studentTable = !loading && !error ? (

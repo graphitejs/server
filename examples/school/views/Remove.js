@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Formsy from 'formsy-react';
 import gql from 'graphql-tag';
 
-export default class StudentRemove extends Component {
+export default class Remove extends Component {
   static propTypes = {
     id: PropTypes.string,
     mutate: PropTypes.func,
