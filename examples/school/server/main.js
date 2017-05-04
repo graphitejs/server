@@ -61,9 +61,9 @@ app.prepare().then(async () => {
     `;
   };
 
-  const getRemove = (model, fields) => {
+  const getMutationRemove = (model, fields) => {
     return `
-      mutation remove${model}($id: String) {
+      mutation remove${pluralize(upperFirst(model), 1)}($id: String) {
         remove${model}(id: $id) {
           ${pluralize(lowerFirst(model), 1)} {
             ${fields}
@@ -77,6 +77,25 @@ app.prepare().then(async () => {
     `;
   };
 
+  const getMutationCreate = (model, fields) => {
+    const nameModelUppper = pluralize(upperFirst(model), 1);
+    const nameModelLower = pluralize(lowerFirst(model), 1);
+    return `
+      mutation create${nameModelUppper}($new${nameModelUppper}: create${nameModelUppper}) {
+        create${nameModelUppper}(${nameModelLower}: $new${nameModelUppper}) {
+          ${nameModelLower} {
+            ${fields}
+          }
+          errors {
+            key
+            message
+          }
+        }
+      }
+    `;
+  };
+
+
   const graphqlQuerys = [ School, Student, Teacher ].map(model => {
     const schemaModel = Object.keys(model.schema);
     schemaModel.unshift('_id');
@@ -85,7 +104,6 @@ app.prepare().then(async () => {
     const hasManyDiffKeys = intersection(schemaModel, hasManyKeys);
     const hasOneDiffKeys = intersection(schemaModel, hasOneKeys);
     const newSchema = without(schemaModel, ...hasManyDiffKeys, ...hasOneDiffKeys);
-    console.log("newSchema ",newSchema);
     const fields = newSchema.join(' ');
     const obj = {};
 
@@ -114,7 +132,8 @@ app.prepare().then(async () => {
     obj[pluralize(lowerFirst(model.nameClass), 2)].schema = avoidRelationKeys;
     obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, fields);
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation = {};
-    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getRemove(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getMutationRemove(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.create = getMutationCreate(model.nameClass, fields);
     return obj;
   });
 

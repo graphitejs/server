@@ -9,6 +9,7 @@ import Formsy from 'formsy-react';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
+import { get, upperFirst, pick } from 'lodash';
 
 class Create extends Component {
   static propTypes = {
@@ -17,6 +18,11 @@ class Create extends Component {
     }),
     items: PropTypes.array,
     model: PropTypes.string,
+    dataModel: PropTypes.object,
+  }
+
+  static contextTypes = {
+    client: PropTypes.object,
   }
 
   static defaultProps = {
@@ -47,7 +53,7 @@ class Create extends Component {
       return acum;
     }, '');
 
-    Object.keys(dataModel.schema).forEach(async attr => {
+    await Object.keys(dataModel.schema).forEach(async attr => {
       if (dataModel.schema[attr].type === 'hasMany' || dataModel.schema[attr].type === 'hasOne') {
         const data = await client.query({
           query: gql`${dataModel.schema[attr].queryResolver}`,
@@ -91,15 +97,19 @@ class Create extends Component {
             <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
 
               { Object.keys(schema).map(attr => {
+                let itemsSafe = [];
+                if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
+                  itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
+                }
                 switch (schema[attr].type) {
                 case 'String':
                   return <Input key={attr} name={attr} title={attr} validationError="This is not a valid name" required />;
                 case 'Boolean':
                   return <Input key={attr} type={'checkbox'} name={attr} title={attr} />;
                 case 'hasOne':
-                  return <Select key={attr} name={attr} title={attr} items={schema[attr].data[pluralize(attr, 2)]}  keyLabel={'name'} keyValue={'_id'} />;
+                  return <Select key={attr} name={attr} title={attr} items={itemsSafe}  keyLabel={'name'} keyValue={'_id'} />;
                 case 'hasMany':
-                  return <MultiSelect key={attr} name={attr} items={schema[attr].data[pluralize(attr, 2)]} selectedItems={[]} />;
+                  return <MultiSelect key={attr} name={attr} items={itemsSafe} selectedItems={[]} />;
                 default:
                   return null;
                 }
@@ -120,10 +130,22 @@ class Create extends Component {
     this.setState({ canSubmit: true });
   }
 
-  async submit(model) {
+  async submit(dataForm) {
     try {
-      //console.log("model submit",model);
-      //const { data } = await this.props.mutate({ variables: { newStudent: model }});
+      const { client } = this.context;
+      const { model } = this.props;
+      const { create } = this.props.dataModel.mutation;
+      const { schema } = this.props.dataModel;
+      const keysSchema = Object.keys(schema);
+
+      const nameModelUppper = pluralize(upperFirst(model), 1);
+      const variables = {};
+      variables[`new${nameModelUppper}`] = pick(dataForm, ...keysSchema);
+
+      const data = await client.mutate({
+        mutation: gql`${create}`,
+        variables,
+      });
     } catch (e) {
     }
   }
