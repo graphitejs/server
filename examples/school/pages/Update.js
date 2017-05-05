@@ -54,7 +54,7 @@ class Update extends Component {
       return acum;
     }, '');
 
-    await Object.keys(dataModel.schema).forEach(async attr => {
+    Object.keys(dataModel.schema).forEach(async attr => {
       if (dataModel.schema[attr].type === 'hasMany' || dataModel.schema[attr].type === 'hasOne') {
         const data = await client.query({
           query: gql`${dataModel.schema[attr].queryResolver}`,
