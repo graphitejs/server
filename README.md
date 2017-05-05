@@ -12,6 +12,8 @@
     <a href="https://codecov.io/gh/graphitejs/graphitejs"><img alt="Codecov Status" src="https://codecov.io/gh/graphitejs/graphitejs/branch/master/graph/badge.svg"></a>
 </p>
 
+<br />
+
 [GraphiteJS](http://graphitejs.com) is a NODE.JS Framework for building GraphQL schemas/types fast, easily and scalability.
 This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
 
