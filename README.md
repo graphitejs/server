@@ -2,8 +2,9 @@
   <img alt="GraphiteJS" src="https://github.com/graphitejs/graphitejs/blob/master/images/graphite.png" width="334">
 </p>
 
-
-# [GraphiteJS](http://graphitejs.com) ![GraphiteJS](https://img.shields.io/badge/GraphiteJS-Beta-yellow.svg) [![CircleCI Status](https://circleci.com/gh/graphitejs/graphitejs.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/graphitejs/graphitejs) [![codecov](https://codecov.io/gh/graphitejs/graphitejs/branch/master/graph/badge.svg)](https://codecov.io/gh/graphitejs/graphitejs)
+<p align="center">
+![GraphiteJS](https://img.shields.io/badge/GraphiteJS-Beta-yellow.svg) [![CircleCI Status](https://circleci.com/gh/graphitejs/graphitejs.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/graphitejs/graphitejs) [![codecov](https://codecov.io/gh/graphitejs/graphitejs/branch/master/graph/badge.svg)](https://codecov.io/gh/graphitejs/graphitejs)
+</p>
 
 [GraphiteJS](http://graphitejs.com) is a NODE.JS Framework for building GraphQL schemas/types fast, easily and scalability.
 This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
