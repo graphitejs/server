@@ -20,7 +20,6 @@ table td {
 }
 
 td {
-  height: 30px;
   line-height: 30px;
   vertical-align: middle;
 }
@@ -32,7 +31,6 @@ tbody {
 
   td {
     min-height: 32px;
-    display: flex;
     justify-content: center;
     border: 1px solid $primary-shadow-color;
     border-top: 0px;
