@@ -51,11 +51,12 @@ app.prepare().then(async () => {
     return { name: lowerFirst(model.nameClass), href: '/View', query: { model: pluralize(lowerFirst(model.nameClass), 2) }};
   });
 
-  const getQuery = (model, fields) => {
+  const getQuery = (model, fields, fieldsRealtions) => {
     return `
       query list${upperFirst(model)} {
         ${pluralize(lowerFirst(model), 2)} {
           ${fields}
+          ${fieldsRealtions}
         }
       }
     `;
@@ -163,7 +164,7 @@ app.prepare().then(async () => {
 
     obj[pluralize(lowerFirst(model.nameClass), 2)] = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].schema = avoidRelationKeys;
-    obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, fields, fieldsRealtions);
     obj[pluralize(lowerFirst(model.nameClass), 2)].queryOne = getQueryOne(model.nameClass, fields, fieldsRealtions);
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getMutationRemove(model.nameClass, fields);
