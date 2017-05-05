@@ -12,6 +12,7 @@
     margin-bottom: 10px;
 
     h2 {
+      text-transform: capitalize;
       float: left;
 
       &:not(.main) {
@@ -20,17 +21,18 @@
     }
 
     a {
+      text-transform: capitalize;
       float: left;
-      color: #777;
+      color: $accent-text-color;
     }
   }
 
   .btn-round {
-    background-color: #424242;
+    background-color: $default-primary-color;
     border-radius: 999em;
     width: 56px;
     height: 56px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    box-shadow: 0 2px 5px 0 $secondary-shadow-color;
     line-height: 1;
     font-size: 36px;
     position: absolute;
@@ -48,7 +50,7 @@
       text-align: center;
       margin-top: -22px;
       margin-top: -18px;
-      color: #efefef;
+      color: $light-primary-text-color;
     }
   }
 }

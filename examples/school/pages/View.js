@@ -67,27 +67,19 @@ class View extends Component {
     ) : null;
 
     return (
-      <Layout items={items} >
+      <Layout items={items} model={model} >
         <div>
-          <style jsx>{`
-              h2 {
-                float: left;
-              }
-              a {
-                float: right;
-                padding: 30px;
-              }
-              `}
-            </style>
-            <div>
-              <h2>{model}</h2>
-              <Link as={`/${pluralize(model, 1)}/create`} href= {{ pathname: '/Create', query: { model: pluralize(model, 2) } }}>
-                <a>Add {model}</a>
-              </Link>
-            </div>
-            {studentTable}
+          <div className="layout-header">
+            <h2 className="main">{model}</h2>
           </div>
-        </Layout>
+          {studentTable}
+          <Link as={`/${pluralize(model, 1)}/create`} href= {{ pathname: '/Create', query: { model: pluralize(model, 2) } }}>
+            <div className="btn-round">
+              <span title="Create new">+</span>
+            </div>
+          </Link>
+        </div>
+      </Layout>
     );
   }
 }

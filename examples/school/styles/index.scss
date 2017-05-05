@@ -3,8 +3,8 @@
 @import './font/stylesheet.scss';
 
 body {
-  overflow-x: hidden;
-  background-color: $body-background;
+  overflow: hidden;
+  background-color: $light-primary-color;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -14,5 +14,5 @@ select {
 
 p {
   font-size: 16px;
-  color: $primary-color;
+  color: $secondary-text-color;
 }

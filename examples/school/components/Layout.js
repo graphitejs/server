@@ -12,6 +12,7 @@ export default class Layout extends Component {
       PropTypes.object,
     ]),
     items: PropTypes.array,
+    model: PropTypes.string,
   }
 
   static defaultProps = {
@@ -23,11 +24,11 @@ export default class Layout extends Component {
   }
 
   render() {
-    const { items, children } = this.props;
+    const { items, children, model } = this.props;
     return (
       <div>
         <Header />
-        <Nav items={items} />
+        <Nav items={items} model={model}/>
         <section className="layout">
           {children}
         </section>
