@@ -3,7 +3,9 @@
 </p>
 
 <p align="center">
-![GraphiteJS](https://img.shields.io/badge/GraphiteJS-Beta-yellow.svg) [![CircleCI Status](https://circleci.com/gh/graphitejs/graphitejs.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/graphitejs/graphitejs) [![codecov](https://codecov.io/gh/graphitejs/graphitejs/branch/master/graph/badge.svg)](https://codecov.io/gh/graphitejs/graphitejs)
+    <a href="http://graphitejs.com"><img alt="graphitejs" src="https://img.shields.io/badge/GraphiteJS-Beta-yellow.svg"></a>
+    <a href="https://circleci.com/gh/graphitejs/graphitejs"><img alt="CircleCI Status" src="https://circleci.com/gh/graphitejs/graphitejs.svg?style=shield&circle-token=:circle-token"></a>
+    <a href="https://codecov.io/gh/graphitejs/graphitejs"><img alt="Codecov Status" src="https://codecov.io/gh/graphitejs/graphitejs/branch/master/graph/badge.svg"></a>
 </p>
 
 [GraphiteJS](http://graphitejs.com) is a NODE.JS Framework for building GraphQL schemas/types fast, easily and scalability.
