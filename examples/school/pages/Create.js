@@ -72,53 +72,39 @@ class Create extends Component {
     const { schema } = dataModel;
 
     return (
-      <Layout items={items} >
+      <Layout items={items} model={model} >
         <div>
-          <style jsx>{`
-              h2 {
-                float: left;
-              }
-              a {
-                float: right;
-                padding: 30px;
-              }
-              .title {
-                float: left;
-                width: 100%;
-              }
-              `}
-            </style>
-            <div className="title">
-              <h2>Create {model}</h2>
-              <Link as={`/${pluralize(model, 1)}`} href= {{ pathname: '/View', query: { model: pluralize(model, 2) } }}>
-                <a>view {pluralize(model, 2)}</a>
-              </Link>
-            </div>
-            <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
-
-              { Object.keys(schema).map(attr => {
-                let itemsSafe = [];
-                if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
-                  itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
-                }
-                switch (schema[attr].type) {
-                case 'String':
-                  return <Input key={attr} name={attr} title={attr} validationError="This is not a valid name" required />;
-                case 'Boolean':
-                  return <Input key={attr} type={'checkbox'} name={attr} title={attr} />;
-                case 'hasOne':
-                  return <Select key={attr} name={attr} title={attr} items={itemsSafe}  keyLabel={'name'} keyValue={'_id'} />;
-                case 'hasMany':
-                  return <MultiSelect key={attr} name={attr} items={itemsSafe} selectedItems={[]} />;
-                default:
-                  return null;
-                }
-              })}
-
-              <button type="submit" disabled={!canSubmit}>Submit</button>
-            </Formsy.Form>
+          <div className="layout-header">
+            <Link as={`/${pluralize(model, 1)}`} href= {{ pathname: '/View', query: { model: pluralize(model, 2) } }}>
+              <a>{pluralize(model, 2)}</a>
+            </Link>
+            <h2>-></h2>
+            <h2>Create {model}</h2>
           </div>
-        </Layout>
+          <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
+            { Object.keys(schema).map(attr => {
+              let itemsSafe = [];
+              if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
+                itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
+              }
+              switch (schema[attr].type) {
+              case 'String':
+                return <Input key={attr} name={attr} title={attr} validationError="This is not a valid name" required />;
+              case 'Boolean':
+                return <Input key={attr} type={'checkbox'} name={attr} title={attr} />;
+              case 'hasOne':
+                return <Select key={attr} name={attr} title={attr} items={itemsSafe}  keyLabel={'name'} keyValue={'_id'} />;
+              case 'hasMany':
+                return <MultiSelect key={attr} name={attr} items={itemsSafe} selectedItems={[]} />;
+              default:
+                return null;
+              }
+            })}
+
+            <button type="submit" disabled={!canSubmit}>Submit</button>
+          </Formsy.Form>
+        </div>
+      </Layout>
     );
   }
 

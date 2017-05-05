@@ -1,3 +1,5 @@
+@import './variables/colors.scss';
+
 table, tr {
   display: flex;
 }
@@ -32,28 +34,28 @@ tbody {
     min-height: 32px;
     display: flex;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid $primary-shadow-color;
     border-top: 0px;
     border-left: 0px;
   }
 
   td:first-child {
-    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    border-left: 1px solid $primary-shadow-color;
   }
 }
 
 thead {
   tr {
     min-height: 30px;
-    background-color: white;
+    background-color: $light-primary-color;
     display: flex;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid $primary-shadow-color;
   }
 
   th {
     align-self: center;
-    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    border-right: 1px solid $primary-shadow-color;
     line-height: 30px;
 
     &:last-child {

@@ -10,7 +10,6 @@ import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
 import { get, upperFirst, pick } from 'lodash';
-import Router from 'next/router';
 
 class Update extends Component {
   static propTypes = {
@@ -80,27 +79,14 @@ class Update extends Component {
     const { schema } = dataModel;
 
     return (
-      <Layout items={items} >
+      <Layout items={items} model={model} >
         <div>
-          <style jsx>{`
-              h2 {
-                float: left;
-              }
-              a {
-                float: right;
-                padding: 30px;
-              }
-              .title {
-                float: left;
-                width: 100%;
-              }
-              `}
-            </style>
-            <div className="title">
-              <h2>Update {model}</h2>
+            <div className="layout-header">
               <Link as={`/${pluralize(model, 1)}`} href= {{ pathname: '/View', query: { model: pluralize(model, 2) } }}>
-                <a>view {pluralize(model, 2)}</a>
+                <a>{pluralize(model, 2)}</a>
               </Link>
+              <h2>-></h2>
+              <h2>Update {model}</h2>
             </div>
             <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
 
@@ -140,7 +126,6 @@ class Update extends Component {
 
   async submit(dataForm) {
     try {
-      debugger
       const { client } = this.context;
       const { model, modelID } = this.props;
       const { update } = this.props.dataModel.mutation;

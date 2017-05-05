@@ -2,38 +2,67 @@
 
 .header {
   height: 50px;
-  background-color: $header-background;
+  background-color: $default-primary-color;
 
   &-link {
     margin-right: 15px;
-    color: #ffffff
+    color: $light-primary-text-color
+  }
+
+  .name {
+    font-size: 13.5px;
+    position: absolute;
+    left: 10px;
+    line-height: 50px;
+
+    h1 {
+      color: $light-primary-text-color;
+      font-family: 'presidencia_finaregular';
+      font-size: 2em;
+      display: flex;
+
+      span {
+        display: flex;
+        align-self: flex-end;
+        font-size: 0.5em;
+        line-height: 58px;
+        margin-left: 5px;
+        color: $light-secondary-text-color;
+        font-family: 'presidencia_finaregular';
+      }
+    }
   }
 
   .logo {
     font-size: 13.5px;
     position: absolute;
-    right: 38px;
+    right: 10px;
     top: 5px;
 
     h1 {
-      color: #ffffff;
+      color: $light-primary-text-color;
       font-family: 'presidencia_finaregular';
       font-size: 2em;
       display: flex;
     }
 
     h1.before::before {
-      content: url("/static/graphitejs.svg");
+      content: url("/static/graphitejs_white.svg");
       display: inline-block;
       width: (70/30) * 1em;
       margin-right: (5/30) * 1em;
     }
 
     h1.after::after {
-      content: url("/static/graphitejs.svg");
+      content: url("/static/graphitejs_white.svg");
       display: inline-block;
       width: (70/30) * 1em;
       margin-left: (5/30) * 1em;
+    }
+
+    span {
+      color: $light-secondary-text-color;
+      font-family: 'presidencia_finaregular';
     }
   }
 }

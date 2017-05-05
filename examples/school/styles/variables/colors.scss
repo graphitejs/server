@@ -1,5 +1,19 @@
-$body-background: #efefef;
-$header-background: #424242;
-$nav-background: #ffffff;
+// Background
+$dark-primary-color: #666666;
+$default-primary-color: #0097a7;
+$light-primary-color: #ffffff;
+$accent-color: #999999;
 
-$primary-color: black;
+// Color
+$primary-text-color: #666666;
+$secondary-text-color: #000000;
+$light-primary-text-color: #ffffff;
+$light-secondary-text-color: #99d5db;
+$accent-text-color: #0097a7;
+
+// Border
+$divider-color: #f1f1f1;
+
+// Shadow
+$primary-shadow-color: rgba(0, 0, 0, 0.08);
+$secondary-shadow-color: rgba(0, 0, 0, 0.26);
