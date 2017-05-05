@@ -27,7 +27,7 @@ export default class LinkUpdate extends Component {
           }
         `}</style>
 
-      <Link as={`/${pluralize(model, 1)}/${_id}`} href= {{ pathname: '/Update', query: { model: pluralize(model, 2), id: _id } }}>
+        <Link as={`/${pluralize(model, 1)}/${_id}`} href= {{ pathname: '/Update', query: { model: pluralize(model, 2), id: _id } }}>
           <button>Edit</button>
         </Link>
       </div>
