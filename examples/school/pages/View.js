@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Table from '../components/Table';
 import Actions from '../views/Actions';
 import withData from '../lib/withData';
-import { get } from 'lodash';
+import { get, isArray, isObject } from 'lodash';
 import pluralize from 'pluralize';
 
 class View extends Component {
@@ -57,13 +57,46 @@ class View extends Component {
     const { data: { loading, error }, items, model } = this.props;
     const graphqlData = get(this.props.data, model, []);
 
+    const reduceData = graphqlData.reduce((acum, item) => {
+      const keys = Object.keys(item);
+
+      const valuesWithRelations = keys.reduce((acum2, key) => {
+        if (isArray(item[key])) {
+          const obj = {};
+          const value = item[key].map((i, j) => {
+            return (
+
+              <div>
+                    <Link key={j} as={`/${pluralize(key, 1)}/${i._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: i._id } }}><a>{i._id}</a></Link>
+                    <br />
+</div>
+            );
+          });
+
+          obj[key] = value;
+          return Object.assign(acum2, obj);
+        }
+
+        if (isObject(item[key])) {
+          const obj = {};
+          obj[key] = (<Link as={`/${pluralize(key, 1)}/${item[key]._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: item[key]._id } }}><a>{item[key]._id}</a></Link>);
+          return Object.assign(acum2, obj);
+        }
+
+        return acum2;
+      }, {});
+
+      acum.push(Object.assign({}, item, valuesWithRelations));
+      return acum;
+    }, []);
+
     const actions = {
       name: 'Actions',
       elements: (<Actions {...this.props} />),
     };
 
     const studentTable = !loading && !error ? (
-      <Table items= {graphqlData} actions={actions} omit={['__typename', 'active']} />
+      <Table items= {reduceData} actions={actions} omit={['__typename', 'active']} />
     ) : null;
 
     return (
