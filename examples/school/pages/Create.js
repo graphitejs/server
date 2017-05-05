@@ -81,6 +81,7 @@ class Create extends Component {
             <h2>-></h2>
             <h2>Create {model}</h2>
           </div>
+
           <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
             { Object.keys(schema).map(attr => {
               let itemsSafe = [];
