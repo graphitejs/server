@@ -8,16 +8,18 @@ export default (Component) => (
   class extends React.Component {
     static async getInitialProps(ctx) {
       const headers = ctx.req ? ctx.req.headers : {};
-      ctx.isServer = true;
+      ctx.isServer = !!ctx.req;
       const client = initClient(headers);
       const store = initStore(client, client.initialState);
       ctx.store = store;
       ctx.client = client;
 
-      store.dispatch({
-        type: 'ADD_STORE',
-        props: ctx.query,
-      });
+      if (ctx.isServer) {
+        store.dispatch({
+          type: 'ADD_STORE',
+          props: ctx.query,
+        });
+      }
 
       const props = {
         url: { ...ctx.query, pathname: ctx.pathname },
