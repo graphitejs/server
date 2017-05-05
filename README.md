@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+    Framework NodeJS for GraphQl
+</p>
+
+<p align="center">
     <a href="http://graphitejs.com"><img alt="graphitejs" src="https://img.shields.io/badge/GraphiteJS-Beta-yellow.svg"></a>
     <a href="https://circleci.com/gh/graphitejs/graphitejs"><img alt="CircleCI Status" src="https://circleci.com/gh/graphitejs/graphitejs.svg?style=shield&circle-token=:circle-token"></a>
     <a href="https://codecov.io/gh/graphitejs/graphitejs"><img alt="Codecov Status" src="https://codecov.io/gh/graphitejs/graphitejs/branch/master/graph/badge.svg"></a>
