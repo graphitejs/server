@@ -6,6 +6,7 @@ import header from '../styles/header.scss';
 import nav from '../styles/nav.scss';
 import layout from '../styles/layout.scss';
 import table from '../styles/table.scss';
+import font from '../styles/font/stylesheet.scss';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
@@ -18,6 +19,7 @@ export default class MyDocument extends Document {
     return (
      <html>
        <Head>
+         <style dangerouslySetInnerHTML={{ __html: font }} />
          <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
          <style dangerouslySetInnerHTML={{ __html: header }} />
          <style dangerouslySetInnerHTML={{ __html: nav }} />
