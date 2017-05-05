@@ -1,5 +1,5 @@
 import { mongoose, crud } from '@graphite/mongoose';
-import { property,  graphQl, hasMany } from '@graphite/decorators';
+import { property, graphQl, hasMany } from '@graphite/decorators';
 import Student from './Student';
 
 @crud()
