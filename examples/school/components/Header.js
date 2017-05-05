@@ -4,7 +4,7 @@ const Header = () => (
         <h1>Admin Panel<span>beta v1.0</span></h1>
       </div>
       <div className="logo">
-        <h1 className="before">graphite<span>js</span></h1>
+        <h1>graphite<span>js</span></h1>
       </div>
     </header>
 );
