@@ -92,7 +92,16 @@ class Update extends Component {
 
               { Object.keys(schema).map(attr => {
                 let itemsSafe = [];
+                let selectedItems = [];
+                let selectValue = null;
                 if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
+                  const getValueSelected = get(dataModel.currentData, pluralize(attr, 1), []);
+                  if (getValueSelected !== null) {
+                    selectValue = getValueSelected._id;
+                  }
+                  if (schema[attr].type === 'hasMany') {
+                    selectedItems = get(dataModel.currentData, pluralize(attr, 1), []).map(i => ({ _id: i._id }));
+                  }
                   itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
                 }
                 switch (schema[attr].type) {
@@ -101,9 +110,9 @@ class Update extends Component {
                 case 'Boolean':
                   return <Input key={attr} value={dataModel.currentData[attr]} type={'checkbox'} name={attr} title={attr} />;
                 case 'hasOne':
-                  return <Select key={attr} name={attr} title={attr} items={itemsSafe}  keyLabel={'name'} keyValue={'_id'} />;
+                  return <Select key={attr} value={selectValue} name={attr} title={attr} items={itemsSafe}  keyLabel={'name'} keyValue={'_id'} />;
                 case 'hasMany':
-                  return <MultiSelect key={attr} name={attr} items={itemsSafe} selectedItems={[]} />;
+                  return <MultiSelect key={attr} name={attr} items={itemsSafe} selectedItems={selectedItems} />;
                 default:
                   return null;
                 }
@@ -135,15 +144,12 @@ class Update extends Component {
       const nameModelUppper = pluralize(upperFirst(model), 1);
       const variables = { id: modelID };
       variables[`update${nameModelUppper}`] = pick(dataForm, ...keysSchema);
-      console.log("update ",update);
       const data = await client.mutate({
         mutation: gql`${update}`,
         variables,
       });
 
-      console.log("data ",data);
     } catch (e) {
-      console.log("e ",e);
     }
   }
 }

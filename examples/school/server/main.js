@@ -61,11 +61,12 @@ app.prepare().then(async () => {
     `;
   };
 
-  const getQueryOne = (model, fields) => {
+  const getQueryOne = (model, fields = '', fieldsRealtions = '') => {
     return  `
       query list${upperFirst(model)}($id: String) {
         ${pluralize(lowerFirst(model), 2)}(_id: $id) {
           ${fields}
+          ${fieldsRealtions}
         }
       }
     `;
@@ -142,6 +143,10 @@ app.prepare().then(async () => {
     });
     const avoidRelationKeys = omit(model.schema, ...hasManyKeys, ...hasOneKeys);
 
+    const fieldsRealtions = [...hasManyKeys, ...hasOneKeys].map(key => {
+      return `${key} { _id }`;
+    }).join(' ');
+
     hasManyKeys.forEach(key => {
       avoidRelationKeys[key] = {
         type: 'hasMany',
@@ -159,7 +164,7 @@ app.prepare().then(async () => {
     obj[pluralize(lowerFirst(model.nameClass), 2)] = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].schema = avoidRelationKeys;
     obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, fields);
-    obj[pluralize(lowerFirst(model.nameClass), 2)].queryOne = getQueryOne(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].queryOne = getQueryOne(model.nameClass, fields, fieldsRealtions);
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getMutationRemove(model.nameClass, fields);
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.create = getMutationCreate(model.nameClass, fields);

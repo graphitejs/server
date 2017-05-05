@@ -19,6 +19,7 @@ class Select extends Component {
     items: PropTypes.array,
     multiple: PropTypes.bool,
     defaultDisplay: PropTypes.string,
+    value: PropTypes.string,
   }
 
   static defaultProps = {
@@ -29,8 +30,12 @@ class Select extends Component {
   }
 
   componentDidMount() {
-    const { defaultDisplay, setValue } = this.props;
-    setValue([defaultDisplay]);
+    const { defaultDisplay, setValue, value } = this.props;
+    if (value) {
+      setValue(value);
+    } else {
+      setValue([defaultDisplay]);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
