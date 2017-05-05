@@ -46,7 +46,7 @@ export default class Nav extends Component {
         <Link as="/" href="/Index">
           <a className={this.linkClassNames({href: '/index'})}>Home</a>
         </Link>
-        <Link as="/about" href="/about">
+        <Link as="/about" href="/About">
           <a className={this.linkClassNames({href: '/about'})}>About</a>
         </Link>
 
