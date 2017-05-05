@@ -51,7 +51,7 @@ app.prepare().then(async () => {
     return { name: lowerFirst(model.nameClass), href: '/View', query: { model: pluralize(lowerFirst(model.nameClass), 2) }};
   });
 
-  const getQuery = (model, fields, fieldsRealtions) => {
+  const getQuery = (model, fields = '', fieldsRealtions = '') => {
     return `
       query list${upperFirst(model)} {
         ${pluralize(lowerFirst(model), 2)} {
