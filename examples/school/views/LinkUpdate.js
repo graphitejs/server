@@ -6,6 +6,7 @@ import pluralize from 'pluralize';
 export default class LinkUpdate extends Component {
   static propTypes = {
     item: PropTypes.object,
+    model: PropTypes.object,
   }
 
   constructor() {
