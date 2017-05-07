@@ -7,6 +7,7 @@ import nav from '../styles/nav.scss';
 import layout from '../styles/layout.scss';
 import table from '../styles/table.scss';
 import font from '../styles/font/stylesheet.scss';
+import graphiql from '../styles/graphiql.scss';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
@@ -25,6 +26,8 @@ export default class MyDocument extends Document {
          <style dangerouslySetInnerHTML={{ __html: nav }} />
          <style dangerouslySetInnerHTML={{ __html: layout }} />
          <style dangerouslySetInnerHTML={{ __html: table }} />
+         <style dangerouslySetInnerHTML={{ __html: graphiql }} />
+
        </Head>
        <body className="custom_class">
          {this.props.customValue}

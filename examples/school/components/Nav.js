@@ -50,6 +50,10 @@ export default class Nav extends Component {
           <a className={this.linkClassNames({href: '/about'})}>About</a>
         </Link>
 
+        <Link as="/graphiql-view" href="/GraphiqlView">
+          <a className={this.linkClassNames({href: '/graphiql-view'})}>Graphiql</a>
+        </Link>
+
         <div className="nav-model-container">
           {items.map((item, key) => {
             return (

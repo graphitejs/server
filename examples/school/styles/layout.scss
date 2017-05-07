@@ -1,9 +1,11 @@
 @import './variables/colors.scss';
 
 .layout {
-  width: calc(100% - 270px);
   margin-left: 250px;
   padding: 10px;
+  height: 100%;
+  position: absolute;
+  width: calc(100% - 270px);
 
   &-header {
     float: left;

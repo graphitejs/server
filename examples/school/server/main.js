@@ -183,6 +183,11 @@ app.prepare().then(async () => {
     app.render(req, res, actualPage, { items, graphql: graphqlQuerys });
   });
 
+  graphQLServer.get('/graphiql-view', (req, res) => {
+    const actualPage = '/GraphiqlView';
+    app.render(req, res, actualPage, { items, graphql: graphqlQuerys });
+  });
+
   [ School, Student, Teacher ].forEach(model => {
     graphQLServer.get('/' + model.nameClass, (req, res) => {
       app.render(req, res, '/View', { items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );

@@ -9,6 +9,7 @@ export default (Component) => (
     static async getInitialProps(ctx) {
       const headers = ctx.req ? ctx.req.headers : {};
       ctx.isServer = !!ctx.req;
+      console.log("ctx.isServer ",ctx.isServer);
       const client = initClient(headers);
       const store = initStore(client, client.initialState);
       ctx.store = store;

@@ -25,6 +25,7 @@
     "debug": "^2.6.1",
     "dyn-require": "0.0.3",
     "formsy-react": "^0.19.2",
+    "graphiql": "^0.10.2",
     "graphql": "^0.9.5",
     "isomorphic-fetch": "^2.2.1",
     "isomorphic-unfetch": "^1.0.0",
@@ -35,6 +36,7 @@
     "qs": "^6.4.0",
     "react": "^15.4.2",
     "react-apollo": "^0.13.2",
+    "react-no-ssr": "^1.1.0",
     "redux": "^3.6.0"
   },
   "devDependencies": {
