@@ -23,6 +23,8 @@ class School {
       return null;
     }
   }
+
+  listDisplay = ['name'];
 }
 
 export default new School();
