@@ -143,8 +143,8 @@ app.prepare().then(async () => {
       }
     });
     const avoidRelationKeys = omit(model.schema, ...hasManyKeys, ...hasOneKeys);
-
-    const fieldsRealtions = [...hasManyKeys, ...hasOneKeys].map(key => {
+    const keysFilter = model.listDisplay ? intersection(model.listDisplay, [...hasManyKeys, ...hasOneKeys]) : [...hasManyKeys, ...hasOneKeys];
+    const fieldsRealtions = keysFilter.map(key => {
       return `${key} { _id }`;
     }).join(' ');
 
