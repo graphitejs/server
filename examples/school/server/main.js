@@ -10,7 +10,7 @@ import Teacher from './models/Teacher';
 import { introspectionQuery } from 'graphql/utilities/introspectionQuery';
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema';
 import { printSchema } from 'graphql/utilities/schemaPrinter';
-import { lowerFirst, upperFirst, get, intersection, without, forEach as forEachObject, omit } from 'lodash';
+import { lowerFirst, upperFirst, get, intersection, without, forEach as forEachObject, omit, union } from 'lodash';
 import debug from 'debug';
 import pluralize from 'pluralize';
 const logger = debug('app');
@@ -128,20 +128,13 @@ app.prepare().then(async () => {
 
   const graphqlQuerys = [ School, Student, Teacher ].map(model => {
     const schemaModel = Object.keys(model.schema);
-    console.log("schemaModel.listDisplay ", model.listDisplay);
     schemaModel.unshift('_id');
     const hasManyKeys = Object.keys(get(model, 'hasMany', {}) );
     const hasOneKeys = Object.keys(get(model, 'hasOne', {}) );
     const hasManyDiffKeys = intersection(schemaModel, hasManyKeys);
     const hasOneDiffKeys = intersection(schemaModel, hasOneKeys);
     const newSchema = without(schemaModel, ...hasManyDiffKeys, ...hasOneDiffKeys);
-    console.log("newSchema ",newSchema);
-    if(model.listDisplay) {
-      console.log("entro");
-      console.log("intersection(newSchema, model.listDisplay).join(' ') ",intersection(newSchema, model.listDisplay));
-    }
-    const fields = model.listDisplay ? intersection(newSchema, model.listDisplay) : newSchema.join(' ');
-    console.log("fields ",fields);
+    const fields = model.listDisplay ? union(['_id'], intersection(model.listDisplay, newSchema)).join(' ') : newSchema.join(' ');
     const obj = {};
 
     forEachObject(model.schema, data => {
