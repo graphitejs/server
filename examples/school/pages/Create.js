@@ -85,8 +85,17 @@ class Create extends Component {
           <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
             { Object.keys(schema).map(attr => {
               let itemsSafe = [];
+              let itemWithTemplate = [];
               if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
                 itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
+                itemWithTemplate = itemsSafe.reduce((acum, value) => {
+                  let template = schema[attr].template;
+                  Object.keys(value).forEach(x => {
+                    template = template.replace(`{${x}}`, value[x]);
+                  });
+                  acum.push(Object.assign({}, value, { template }));
+                  return acum;
+                }, []);
               }
               switch (schema[attr].type) {
               case 'String':
@@ -94,9 +103,9 @@ class Create extends Component {
               case 'Boolean':
                 return <Input key={attr} type={'checkbox'} name={attr} title={attr} />;
               case 'hasOne':
-                return <Select key={attr} name={attr} title={attr} items={itemsSafe}  keyLabel={'name'} keyValue={'_id'} />;
+                return <Select key={attr} name={attr} title={attr} items={itemWithTemplate}  keyLabel={'template'} keyValue={'_id'} />;
               case 'hasMany':
-                return <MultiSelect key={attr} name={attr} items={itemsSafe} selectedItems={[]} />;
+                return <MultiSelect key={attr} name={attr} items={itemWithTemplate} selectedItems={[]} />;
               default:
                 return null;
               }

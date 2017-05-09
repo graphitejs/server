@@ -101,8 +101,8 @@ class View extends Component {
         if (isObject(item[key])) {
           let template = schema[key].template;
           const obj = {};
-          Object.keys(item).forEach(x => {
-            template = template.replace(`{${x}}`, item[x]);
+          Object.keys(item[key]).forEach(x => {
+            template = template.replace(`{${x}}`, item[key][x]);
           });
 
           template = isEmpty(template) ? item._id : template;

@@ -155,17 +155,25 @@ app.prepare().then(async () => {
 
 
     hasManyKeys.forEach(key => {
+      let defaultKey = '_id';
+      if (get(model, `__admin__.${key}`, false)) {
+        defaultKey = defaultKey + ' ' + get(model, `__admin__.${key}.fields`, []).join(' ');
+      }
       avoidRelationKeys[key] = {
         type: 'hasMany',
-        queryResolver: getQuery(key, '_id'),
+        queryResolver: getQuery(key, defaultKey),
         template: get(model.__admin__, `${key}.template`, ''),
       };
     });
 
     hasOneKeys.forEach(key => {
+      let defaultKey = '_id';
+      if (get(model, `__admin__.${key}`, false)) {
+        defaultKey = defaultKey + ' ' + get(model, `__admin__.${key}.fields`, []).join(' ');
+      }
       avoidRelationKeys[key] = {
         type: 'hasOne',
-        queryResolver: getQuery(key, '_id'),
+        queryResolver: getQuery(key, defaultKey),
         template: get(model.__admin__, `${key}.template`, ''),
       };
     });

@@ -92,7 +92,9 @@ class Update extends Component {
 
               { Object.keys(schema).map(attr => {
                 let itemsSafe = [];
+                let itemWithTemplate = [];
                 let selectedItems = [];
+                let selectedItemsWithTemplate = [];
                 let selectValue = null;
                 if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
                   const getValueSelected = get(dataModel.currentData, pluralize(attr, 1), []);
@@ -100,9 +102,25 @@ class Update extends Component {
                     selectValue = getValueSelected._id;
                   }
                   if (schema[attr].type === 'hasMany') {
-                    selectedItems = get(dataModel.currentData, pluralize(attr, 1), []).map(i => ({ _id: i._id }));
+                    selectedItems = get(dataModel.currentData, pluralize(attr, 1), []).map(i => (i));
+                    selectedItemsWithTemplate = selectedItems.reduce((acum, value) => {
+                      let template = schema[attr].template;
+                      Object.keys(value).forEach(x => {
+                        template = template.replace(`{${x}}`, value[x]);
+                      });
+                      acum.push(Object.assign({}, value, { template }));
+                      return acum;
+                    }, []);
                   }
                   itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
+                  itemWithTemplate = itemsSafe.reduce((acum, value) => {
+                    let template = schema[attr].template;
+                    Object.keys(value).forEach(x => {
+                      template = template.replace(`{${x}}`, value[x]);
+                    });
+                    acum.push(Object.assign({}, value, { template }));
+                    return acum;
+                  }, []);
                 }
                 switch (schema[attr].type) {
                 case 'String':
@@ -110,9 +128,9 @@ class Update extends Component {
                 case 'Boolean':
                   return <Input key={attr} value={dataModel.currentData[attr]} type={'checkbox'} name={attr} title={attr} />;
                 case 'hasOne':
-                  return <Select key={attr} value={selectValue} name={attr} title={attr} items={itemsSafe}  keyLabel={'name'} keyValue={'_id'} />;
+                  return <Select key={attr} value={selectValue} name={attr} title={attr} items={itemWithTemplate}  keyLabel={'name'} keyValue={'_id'} />;
                 case 'hasMany':
-                  return <MultiSelect key={attr} name={attr} items={itemsSafe} selectedItems={selectedItems} />;
+                  return <MultiSelect key={attr} name={attr} items={itemWithTemplate} selectedItems={selectedItemsWithTemplate} />;
                 default:
                   return null;
                 }

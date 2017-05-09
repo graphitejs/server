@@ -60,7 +60,7 @@ export default class MultiSelect extends Component {
               multiple name= {'list'}
               title= {'Choose students'}
               items={differenceItems}
-              keyLabel={'name'}
+              keyLabel={'template'}
               keyValue={'_id'}
               className= {'test'} />
             <button onClick={this.addItem.bind(this)}>Add</button>
@@ -71,7 +71,7 @@ export default class MultiSelect extends Component {
               multiple name= {name}
               title= {'Students Selected'}
               items={selectedItems}
-              keyLabel={'name'}
+              keyLabel={'template'}
               keyValue={'_id'} />
             <button onClick={this.removeItem.bind(this)}>Remove</button>
           </div>
