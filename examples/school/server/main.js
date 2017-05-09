@@ -125,7 +125,6 @@ app.prepare().then(async () => {
     `;
   };
 
-
   const graphqlQuerys = [ School, Student, Teacher ].map(model => {
     const schemaModel = Object.keys(model.schema);
     schemaModel.unshift('_id');
@@ -134,7 +133,7 @@ app.prepare().then(async () => {
     const hasManyDiffKeys = intersection(schemaModel, hasManyKeys);
     const hasOneDiffKeys = intersection(schemaModel, hasOneKeys);
     const newSchema = without(schemaModel, ...hasManyDiffKeys, ...hasOneDiffKeys);
-    const fields = model.listDisplay ? union(['_id'], intersection(model.listDisplay, newSchema)).join(' ') : newSchema.join(' ');
+    const fields = get(model, '__admin__.listDisplay', false) ? union(['_id'], intersection(model.__admin__.listDisplay, newSchema)).join(' ') : newSchema.join(' ');
     const obj = {};
 
     forEachObject(model.schema, data => {
@@ -143,15 +142,23 @@ app.prepare().then(async () => {
       }
     });
     const avoidRelationKeys = omit(model.schema, ...hasManyKeys, ...hasOneKeys);
-    const keysFilter = model.listDisplay ? intersection(model.listDisplay, [...hasManyKeys, ...hasOneKeys]) : [...hasManyKeys, ...hasOneKeys];
+    const keysFilter = get(model, '__admin__.listDisplay', false) ? intersection(model.__admin__.listDisplay, [...hasManyKeys, ...hasOneKeys]) : [...hasManyKeys, ...hasOneKeys];
+
     const fieldsRealtions = keysFilter.map(key => {
-      return `${key} { _id }`;
+      let defaultKey = '_id';
+      if (get(model, `__admin__.${key}`, false)) {
+        defaultKey = defaultKey + ' ' + get(model, `__admin__.${key}.fields`, []).join(' ');
+      }
+
+      return `${key} { ${defaultKey} }`;
     }).join(' ');
+
 
     hasManyKeys.forEach(key => {
       avoidRelationKeys[key] = {
         type: 'hasMany',
         queryResolver: getQuery(key, '_id'),
+        template: get(model.__admin__, `${key}.template`, ''),
       };
     });
 
@@ -159,6 +166,7 @@ app.prepare().then(async () => {
       avoidRelationKeys[key] = {
         type: 'hasOne',
         queryResolver: getQuery(key, '_id'),
+        template: get(model.__admin__, `${key}.template`, ''),
       };
     });
 
@@ -190,6 +198,7 @@ app.prepare().then(async () => {
 
   [ School, Student, Teacher ].forEach(model => {
     graphQLServer.get('/' + model.nameClass, (req, res) => {
+      res.setHeader('Content-Type', 'application/json');
       app.render(req, res, '/View', { items, graphql: graphqlQuerys, model: pluralize(lowerFirst(model.nameClass), 2) } );
     });
 
