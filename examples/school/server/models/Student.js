@@ -23,6 +23,13 @@ class Student {
       return null;
     }
   }
+
+  __admin__ = {
+    school: {
+      fields: ['name'],
+      template: '{name}',
+    },
+  }
 }
 
 export default new Student();

@@ -24,7 +24,15 @@ class School {
     }
   }
 
-  listDisplay = ['name'];
+  __admin__ = {
+    listDisplay: ['name', 'student'],
+
+    student: {
+      fields: ['name', 'street'],
+      template: 'The name is: {name}, street: {street}',
+    },
+  }
+
 }
 
 export default new School();
