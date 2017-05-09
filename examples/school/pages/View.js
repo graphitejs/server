@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Table from '../components/Table';
 import Actions from '../views/Actions';
 import withData from '../lib/withData';
-import { get, isArray, isObject } from 'lodash';
+import { get, isArray, isObject, isEmpty } from 'lodash';
 import pluralize from 'pluralize';
 
 class View extends Component {
@@ -17,6 +17,7 @@ class View extends Component {
     }),
     items: PropTypes.array,
     model: PropTypes.string,
+    schema: PropTypes.object,
   }
 
   static defaultProps = {
@@ -50,11 +51,24 @@ class View extends Component {
       query: gql`${queryModel}`,
     });
 
-    return { ...data, model, items: adminGraphite.items };
+    const getCurrentSchema = (adminData)  => {
+      return adminData.graphql.reduce((acum, value) => {
+        if (value[model]) {
+          /* eslint-disable no-param-reassign */
+          acum = Object.assign({}, value[model].schema);
+          /* eslint-enable no-param-reassign */
+        }
+        return acum;
+      }, {});
+    };
+
+    const schema = getCurrentSchema(adminGraphite);
+    return { ...data, model, items: adminGraphite.items, schema };
   }
 
+
   render() {
-    const { data: { loading, error }, items, model } = this.props;
+    const { data: { loading, error }, items, model, schema } = this.props;
     const graphqlData = get(this.props.data, model, []);
 
     const reduceData = graphqlData.reduce((acum, item) => {
@@ -64,12 +78,19 @@ class View extends Component {
         if (isArray(item[key])) {
           const obj = {};
           const value = item[key].map((i, j) => {
-            return (
+            let template = schema[key].template;
 
+            Object.keys(i).forEach(x => {
+              template = template.replace(`{${x}}`, i[x]);
+            });
+
+            template = isEmpty(template) ? i._id : template;
+
+            return (
               <div>
-                    <Link key={j} as={`/${pluralize(key, 1)}/${i._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: i._id } }}><a>{i._id}</a></Link>
-                    <br />
-</div>
+                  <Link key={i._id} as={`/${pluralize(key, 1)}/${i._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: i._id } }}><a>{template}</a></Link>
+                  <br />
+              </div>
             );
           });
 
@@ -78,8 +99,14 @@ class View extends Component {
         }
 
         if (isObject(item[key])) {
+          let template = schema[key].template;
           const obj = {};
-          obj[key] = (<Link as={`/${pluralize(key, 1)}/${item[key]._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: item[key]._id } }}><a>{item[key]._id}</a></Link>);
+          Object.keys(item).forEach(x => {
+            template = template.replace(`{${x}}`, item[x]);
+          });
+
+          template = isEmpty(template) ? item._id : template;
+          obj[key] = (<Link key={item._id} as={`/${pluralize(key, 1)}/${item[key]._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: item[key]._id } }}><a>{template}</a></Link>);
           return Object.assign(acum2, obj);
         }
 
