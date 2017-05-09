@@ -39,21 +39,21 @@ export default class Table extends Component {
            <thead>
              <tr>
                { keyItems.map((item, key) => {
-                 return <th key= {key}> {item} </th>;
+                 return <th key= {`thead-${key}`}> {item} </th>;
                })}
-            </tr>
-             </thead>
-             <tbody>
-               {items.map((item, keyRow) => {
-                 return <tr key={keyRow}>
-                     {(values(omitKeys(item, omit))).map((i, keyCell) => {
-                       return <td key={`${keyRow}-${keyCell}`}>{i}</td>;
-                     })}
-                     { actions ?
-                       <td>{React.cloneElement(actions.elements, { item: item })}</td> : null }
-                       </tr>;
-               })}
-              </tbody>
+             </tr>
+           </thead>
+           <tbody>
+             {items.map((item, keyRow) => {
+               return <tr key={`tr-${keyRow}`}>
+                         {(values(omitKeys(item, omit))).map((i, keyCell) => {
+                           return <td key={`${keyRow}-${keyCell}`}>{i}</td>;
+                         })}
+                         { actions ?
+                           <td key={`${keyRow}-actions`}>{React.cloneElement(actions.elements, { item: item })}</td> : null }
+                      </tr>;
+             })}
+            </tbody>
          </table>
         : null }
       </div>
