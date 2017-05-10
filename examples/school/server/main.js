@@ -125,25 +125,46 @@ app.prepare().then(async () => {
     `;
   };
 
-  const graphqlQuerys = [ School, Student, Teacher ].map(model => {
+  const getFieldSchema = (model) => {
     const schemaModel = Object.keys(model.schema);
     schemaModel.unshift('_id');
-    const hasManyKeys = Object.keys(get(model, 'hasMany', {}) );
-    const hasOneKeys = Object.keys(get(model, 'hasOne', {}) );
+    const hasManyKeys = getKeysHasMany(model);
+    const hasOneKeys = getKeysHasOne(model);
     const hasManyDiffKeys = intersection(schemaModel, hasManyKeys);
     const hasOneDiffKeys = intersection(schemaModel, hasOneKeys);
-    const newSchema = without(schemaModel, ...hasManyDiffKeys, ...hasOneDiffKeys);
-    const fields = get(model, '__admin__.listDisplay', false) ? union(['_id'], intersection(model.__admin__.listDisplay, newSchema)).join(' ') : newSchema.join(' ');
-    const obj = {};
+    return without(schemaModel, ...hasManyDiffKeys, ...hasOneDiffKeys);
+  };
 
+  const getKeysHasMany = (model) => {
+    return Object.keys(get(model, 'hasMany', {}) );
+  };
+
+  const getKeysHasOne = (model) => {
+    return Object.keys(get(model, 'hasOne', {}) );
+  };
+
+  const changeAttFunctionForString = (model) => {
     forEachObject(model.schema, data => {
       if (data.type) {
         data.type = functionName(data.type);
       }
     });
-    const avoidRelationKeys = omit(model.schema, ...hasManyKeys, ...hasOneKeys);
-    const keysFilter = get(model, '__admin__.listDisplay', false) ? intersection(model.__admin__.listDisplay, [...hasManyKeys, ...hasOneKeys]) : [...hasManyKeys, ...hasOneKeys];
+  };
 
+  const getFieldsForView = (model) => {
+    const newSchema = getFieldSchema(model);
+    return get(model, '__admin__.listDisplay', false) ? union(['_id'], intersection(model.__admin__.listDisplay, newSchema)).join(' ') : newSchema.join(' ');
+  };
+
+  const getFieldsForMutation = (model) => {
+    const newSchema = getFieldSchema(model);
+    return newSchema.join(' ');
+  };
+
+  const keyFilterForView = (model) => {
+    const hasManyKeys = getKeysHasMany(model);
+    const hasOneKeys = getKeysHasOne(model);
+    const keysFilter = get(model, '__admin__.listDisplay', false) ? intersection(model.__admin__.listDisplay, [...hasManyKeys, ...hasOneKeys]) : [...hasManyKeys, ...hasOneKeys];
     const fieldsRealtions = keysFilter.map(key => {
       let defaultKey = '_id';
       if (get(model, `__admin__.${key}`, false)) {
@@ -153,6 +174,32 @@ app.prepare().then(async () => {
       return `${key} { ${defaultKey} }`;
     }).join(' ');
 
+    return fieldsRealtions;
+  };
+
+  const keyFilterForMutation = (model) => {
+    let defaultKey = '_id';
+    const hasManyKeys = getKeysHasMany(model);
+    const hasOneKeys = getKeysHasOne(model);
+    const keysFilter = [...hasManyKeys, ...hasOneKeys];
+    const fieldsRealtions = keysFilter.map(key => {
+      if (get(model, `__admin__.${key}`, false)) {
+        defaultKey = defaultKey + ' ' + get(model, `__admin__.${key}.fields`, []).join(' ');
+      }
+      return `${key} { ${defaultKey} }`;
+    }).join(' ');
+
+    return fieldsRealtions;
+  };
+
+  const graphqlQuerys = [ School, Student, Teacher ].map(model => {
+    const hasManyKeys = getKeysHasMany(model);
+    const hasOneKeys = getKeysHasOne(model);
+    const obj = {};
+
+    changeAttFunctionForString(model);
+
+    const avoidRelationKeys = omit(model.schema, ...hasManyKeys, ...hasOneKeys);
 
     hasManyKeys.forEach(key => {
       let defaultKey = '_id';
@@ -180,12 +227,12 @@ app.prepare().then(async () => {
 
     obj[pluralize(lowerFirst(model.nameClass), 2)] = {};
     obj[pluralize(lowerFirst(model.nameClass), 2)].schema = avoidRelationKeys;
-    obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, fields, fieldsRealtions);
-    obj[pluralize(lowerFirst(model.nameClass), 2)].queryOne = getQueryOne(model.nameClass, fields, fieldsRealtions);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].query = getQuery(model.nameClass, getFieldsForView(model), keyFilterForView(model));
+    obj[pluralize(lowerFirst(model.nameClass), 2)].queryOne = getQueryOne(model.nameClass, getFieldsForMutation(model), keyFilterForMutation(model));
     obj[pluralize(lowerFirst(model.nameClass), 2)].mutation = {};
-    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getMutationRemove(model.nameClass, fields);
-    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.create = getMutationCreate(model.nameClass, fields);
-    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.update = getMutationUpdate(model.nameClass, fields);
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.remove = getMutationRemove(model.nameClass, getFieldsForView(model));
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.create = getMutationCreate(model.nameClass, getFieldsForView(model));
+    obj[pluralize(lowerFirst(model.nameClass), 2)].mutation.update = getMutationUpdate(model.nameClass, getFieldsForView(model));
     return obj;
   });
 

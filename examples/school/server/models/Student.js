@@ -15,6 +15,19 @@ class Student {
   @property('String | required')
   street
 
+  // @property('String | required')
+  // human = {
+  //   default: 'MALE',
+  //   options: [{
+  //     value: 'MALE',
+  //     label: 'Male',
+  //   },
+  //   {
+  //     value: 'FEMALE',
+  //     label: 'female',
+  //   }],
+  // }
+
   @hasOne
   async school(student) {
     try {

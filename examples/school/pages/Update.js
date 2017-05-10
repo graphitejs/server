@@ -44,32 +44,43 @@ class Update extends Component {
     const modelID = query.id;
     const model = query.model;
     const { adminGraphite } = store.getState();
-    const dataModel = adminGraphite.graphql.reduce((acum, value) => {
-      if (value[model]) {
-        /* eslint-disable no-param-reassign */
-        acum = value[model];
-        /* eslint-enable no-param-reassign */
-      }
 
-      return acum;
-    }, '');
+    const getDataModel = (graphqlData) => {
+      return graphqlData.graphql.reduce((acum, value) => {
+        if (value[model]) {
+          /* eslint-disable no-param-reassign */
+          acum = value[model];
+          /* eslint-enable no-param-reassign */
+        }
 
-    Object.keys(dataModel.schema).forEach(async attr => {
-      if (dataModel.schema[attr].type === 'hasMany' || dataModel.schema[attr].type === 'hasOne') {
-        const data = await client.query({
-          query: gql`${dataModel.schema[attr].queryResolver}`,
-        });
+        return acum;
+      }, '');
+    };
 
-        dataModel.schema[attr] = { ...dataModel.schema[attr], ...data };
-      }
-    });
+    const getAllItemRelationsData = async (currentModel) => {
+      Object.keys(currentModel.schema).forEach(async attr => {
+        if (currentModel.schema[attr].type === 'hasMany' || currentModel.schema[attr].type === 'hasOne') {
+          const data = await client.query({
+            query: gql`${currentModel.schema[attr].queryResolver}`,
+          });
+          currentModel.schema[attr] = { ...currentModel.schema[attr], ...data };
+        }
+      });
+    };
 
-    const dataCurrentModel = await client.query({
-      query: gql`${dataModel.queryOne}`,
-      variables: { id: modelID },
-    });
+    const getItemData = async (currentModel, id) => {
+      const dataCurrentModel = await client.query({
+        query: gql`${currentModel.queryOne}`,
+        variables: { id: id },
+      });
 
-    dataModel.currentData = dataCurrentModel.data[model][0];
+      return dataCurrentModel.data[model][0];
+    };
+
+    const dataModel = getDataModel(adminGraphite);
+    getAllItemRelationsData(dataModel);
+    dataModel.currentData = await getItemData(dataModel, modelID);
+
     return { model, items: adminGraphite.items, dataModel, modelID };
   }
 

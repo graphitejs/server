@@ -24,9 +24,13 @@ export default class MultiSelect extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { items, selectedItems } = nextProps;
+    const { selected } = this.refs;
+
     if (isEmpty(this.state.initial)) {
-      const { items, selectedItems } = nextProps;
       this.setState({ initial: items, initialSelectedItems: selectedItems, items, selectedItems });
+      const ids = selectedItems.map(i => i._id);
+      selected.setValue(ids);
     }
   }
 
