@@ -33,6 +33,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  height: calc(100% - 72px);
 }
 
 .graphiql-container .editorWrap {
@@ -207,9 +208,9 @@
 }
 
 .graphiql-container .query-editor {
-  -webkit-box-flex: 0.89;
-      -ms-flex: 0.89;
-          flex: 0.89;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   position: relative;
 }
 
