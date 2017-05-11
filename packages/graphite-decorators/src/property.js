@@ -66,7 +66,20 @@ const property = function(prop) {
     }, attrEquals);
 
     if (isFunction(descriptor.initializer) && !isUndefined(descriptor.initializer())) {
-      obj[key] = Object.assign({}, obj[key], { default: descriptor.initializer() });
+      const isObject = typeof descriptor.initializer() === 'object';
+      const data = descriptor.initializer();
+
+      if (isObject) {
+        if (data.default) {
+          obj[key] = Object.assign({}, obj[key], { default: data.default });
+        }
+
+        if (data.options) {
+          obj[key] = Object.assign({}, obj[key], { enum: data.options });
+        }
+      } else {
+        obj[key] = Object.assign({}, obj[key], { default: data });
+      }
     }
 
     target.schema = Object.assign({}, target.schema, obj);
