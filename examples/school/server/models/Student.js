@@ -15,18 +15,17 @@ class Student {
   @property('String | required')
   street
 
-  // @property('String | required')
-  // human = {
-  //   default: 'MALE',
-  //   options: [{
-  //     value: 'MALE',
-  //     label: 'Male',
-  //   },
-  //   {
-  //     value: 'FEMALE',
-  //     label: 'female',
-  //   }],
-  // }
+  @property('String | required')
+  gender = {
+    default: 'MALE',
+    options: ['MALE', 'FEMALE'],
+  }
+
+  @property('[String] | required')
+  interests = {
+    default: 'SPORTS',
+    options: ['SPORTS', 'TRAVEL', 'GAMES', 'Tech Hobbies'],
+  }
 
   @hasOne
   async school(student) {

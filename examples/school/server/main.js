@@ -10,7 +10,7 @@ import Teacher from './models/Teacher';
 import { introspectionQuery } from 'graphql/utilities/introspectionQuery';
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema';
 import { printSchema } from 'graphql/utilities/schemaPrinter';
-import { lowerFirst, upperFirst, get, intersection, without, forEach as forEachObject, omit, union } from 'lodash';
+import { lowerFirst, upperFirst, get, intersection, without, forEach as forEachObject, omit, union, isArray } from 'lodash';
 import debug from 'debug';
 import pluralize from 'pluralize';
 const logger = debug('app');
@@ -146,7 +146,12 @@ app.prepare().then(async () => {
   const changeAttFunctionForString = (model) => {
     forEachObject(model.schema, data => {
       if (data.type) {
-        data.type = functionName(data.type);
+        const nameFunction = functionName(data.type);
+        if (isArray(data.type)) {
+          data.type = `[${nameFunction}]`;
+        } else {
+          data.type = nameFunction;
+        }
       }
     });
   };

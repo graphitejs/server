@@ -81,7 +81,7 @@ class View extends Component {
             let template = schema[key].template;
 
             Object.keys(i).forEach(x => {
-              template = template.replace(`{${x}}`, i[x]);
+              template = template ? template.replace(`{${x}}`, i[x]) : '';
             });
 
             template = isEmpty(template) ? i._id : template;

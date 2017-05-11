@@ -16,9 +16,22 @@ class Input extends Component {
     getValue: PropTypes.func,
   }
 
+  constructor() {
+    super();
+
+    this.state = {
+      init: true,
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ init: false });
+  }
+
   render() {
     const { props } = this;
-    const { showRequired, showError, getErrorMessage, getValue } = this.props;
+    const { showRequired, showError, getErrorMessage, getValue, checked } = this.props;
+    const { init } = this.state;
     const addClassName = get(props, 'className', '');
     const classesValidations = showRequired() ? 'required' : showError() ? 'error' : null;
     const className = `form-group + ${addClassName} ${classesValidations}`;
@@ -28,10 +41,10 @@ class Input extends Component {
         <label htmlFor={props.name}>{props.title}</label>
         <input
           type={props.type || 'text'}
-          name={props.name}
           onChange={this.changeValue.bind(this)}
           value={getValue()}
-          checked={props.type === 'checkbox' && getValue() ? 'checked' : null}
+          name={props.name}
+          checked={(props.type === 'checkbox' || props.type === 'radio') && checked && init ? 'checked' : null }
         />
       <span className="validation-error">{errorMessage}</span>
       </div>
@@ -39,8 +52,12 @@ class Input extends Component {
   }
 
   changeValue(event) {
-    const { setValue } = this.props;
-    setValue(event.currentTarget[this.props.type === 'checkbox' ? 'checked' : 'value']);
+    this.setState({ init: false });
+    const { setValue, type } = this.props;
+    const target = event.currentTarget;
+    if (type !== 'checkbox') {
+      setValue(target.value);
+    }
   }
 }
 

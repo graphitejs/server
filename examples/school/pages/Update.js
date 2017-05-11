@@ -9,7 +9,7 @@ import Formsy from 'formsy-react';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
-import { get, upperFirst, pick } from 'lodash';
+import { get, upperFirst, pick, isString, isArray } from 'lodash';
 
 class Update extends Component {
   static propTypes = {
@@ -135,7 +135,42 @@ class Update extends Component {
                 }
                 switch (schema[attr].type) {
                 case 'String':
+                  if (schema[attr].enum) {
+                    const options = schema[attr].enum.map((option, i) => {
+                      return (
+                        <label>{option}  <Input key={attr} type={'radio'} name={`${attr}[${i}]`} value={option} checked={ dataModel.currentData[attr] === option } /> </label>
+                      );
+                    });
+
+                    return (
+                      <fieldset>
+                        <legend>{attr}</legend>
+                        {options}
+                      </fieldset>
+                    );
+                  }
                   return <Input key={attr} value={dataModel.currentData[attr]} name={attr} title={attr} validationError="This is not a valid name" required />;
+                case '[String]':
+
+                  if (schema[attr].enum) {
+                    const options = schema[attr].enum.map((option, i) => {
+                      let checked = false;
+                      const optionsChecked = dataModel.currentData[attr];
+                      checked = optionsChecked.indexOf(option) > -1 ? true : false;
+
+                      return (
+                        <label>{option}  <Input key={attr} type={'checkbox'} name={`${attr}[${i}]`} value={option} checked={ checked } /> </label>
+                      );
+                    });
+
+                    return (
+                      <fieldset>
+                        <legend>{attr}</legend>
+                        {options}
+                      </fieldset>
+                    );
+                  }
+                  return <p>Not options.</p>;
                 case 'Boolean':
                   return <Input key={attr} value={dataModel.currentData[attr]} type={'checkbox'} name={attr} title={attr} />;
                 case 'hasOne':

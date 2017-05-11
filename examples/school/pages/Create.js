@@ -9,7 +9,7 @@ import Formsy from 'formsy-react';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
-import { get, upperFirst, pick } from 'lodash';
+import { get, upperFirst, pick, isArray, isString } from 'lodash';
 
 class Create extends Component {
   static propTypes = {
@@ -97,9 +97,48 @@ class Create extends Component {
                   return acum;
                 }, []);
               }
+
               switch (schema[attr].type) {
               case 'String':
+                if (schema[attr].enum) {
+                  const options = schema[attr].enum.map((option, i) => {
+                    return (
+                      <label>{option}  <Input key={attr} type={'radio'} name={attr} value={option} checked={ schema[attr].default === option } /> </label>
+                    );
+                  });
+
+                  return (
+                    <fieldset>
+                      <legend>{attr}</legend>
+                      {options}
+                    </fieldset>
+                  );
+                }
                 return <Input key={attr} name={attr} title={attr} validationError="This is not a valid name" required />;
+              case '[String]':
+                if (schema[attr].enum) {
+                  const options = schema[attr].enum.map((option, i) => {
+                    let checked = false;
+                    if (isString(schema[attr].default)) {
+                      checked = schema[attr].default === option;
+                    }
+
+                    if (isArray(schema[attr].default)) {
+                      checked = schema[attr].default.indexOf(option) > -1 ? true : false;
+                    }
+                    return (
+                      <label>{option}  <Input key={attr} type={'checkbox'} name={`${attr}[${i}]`} value={option} checked={ checked } /> </label>
+                    );
+                  });
+
+                  return (
+                    <fieldset>
+                      <legend>{attr}</legend>
+                      {options}
+                    </fieldset>
+                  );
+                }
+                return <p>Not options.</p>;
               case 'Boolean':
                 return <Input key={attr} type={'checkbox'} name={attr} title={attr} />;
               case 'hasOne':
