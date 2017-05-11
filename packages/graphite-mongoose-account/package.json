@@ -1,6 +1,6 @@
 {
   "name": "@graphite/mongoose-account",
-  "version": "0.2.19",
+  "version": "0.2.20",
   "description": "Graphite Framework, mongoose account",
   "main": "dist/account.js",
   "scripts": {
@@ -28,8 +28,8 @@
     "sinon-stub-promise": "^4.0.0"
   },
   "dependencies": {
-    "@graphite/decorators": "^0.2.19",
-    "@graphite/mongoose": "^0.2.19",
+    "@graphite/decorators": "^0.2.20",
+    "@graphite/mongoose": "^0.2.20",
     "jsonwebtoken": "^7.3.0"
   },
   "publishConfig": {
