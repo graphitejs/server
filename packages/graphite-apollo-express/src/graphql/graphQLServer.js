@@ -53,7 +53,7 @@ export default class GraphQLServer {
     const pattern = /\s+/g;
     let formatText = text.replace(pattern, '');
     formatText = formatText.replace(/type/g, 'type ');
-    formatText = formatText.replace(/scalar/g, 'scalar ');
+    formatText = formatText.replace(/scalar/g, '\nscalar ');
     formatText = formatText.replace(/input/g, 'input ');
     formatText = formatText.replace(/:/g, ': ');
     formatText = formatText.replace(/,/g, ',\n\t');
