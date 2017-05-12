@@ -4,6 +4,7 @@ import { database, graphql } from './config/default';
 import { Graphite } from '@graphite/apollo-express';
 import { Mongodb } from '@graphite/mongoose';
 import { functionName } from '@graphite/utils';
+import scalars from '@graphite/scalars';
 import School from './models/School';
 import Student from './models/Student';
 import Teacher from './models/Teacher';
@@ -21,7 +22,7 @@ mongoose.connect();
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const graphQLServer =  Graphite.graphQLServer({ graphql }, [ School, Student, Teacher ]);
+const graphQLServer =  Graphite.graphQLServer({ graphql }, [ School, Student, Teacher ], scalars);
 
 
 const getSchema = async function() {

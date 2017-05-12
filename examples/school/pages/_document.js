@@ -8,6 +8,7 @@ import layout from '../styles/layout.scss';
 import table from '../styles/table.scss';
 import font from '../styles/font/stylesheet.scss';
 import graphiql from '../styles/graphiql.scss';
+import datepicker from '../styles/datepicker.css';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
@@ -27,6 +28,7 @@ export default class MyDocument extends Document {
          <style dangerouslySetInnerHTML={{ __html: layout }} />
          <style dangerouslySetInnerHTML={{ __html: table }} />
          <style dangerouslySetInnerHTML={{ __html: graphiql }} />
+         <style dangerouslySetInnerHTML={{ __html: datepicker }} />
 
        </Head>
        <body className="custom_class">

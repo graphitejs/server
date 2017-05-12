@@ -10,7 +10,9 @@ import FRC from 'formsy-react-components';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
+import DatepickerInput from '../components/DatepickerInput';
 import { get, upperFirst, pick } from 'lodash';
+import moment from 'moment';
 
 const { Checkbox, CheckboxGroup, RadioGroup } = FRC;
 
@@ -194,6 +196,15 @@ class Update extends Component {
                             name={attr}
                             value={dataModel.currentData[attr]}
                             label={attr} />;
+                case 'Date':
+                  return <DatepickerInput
+                            name={attr}
+                            selected={moment(dataModel.currentData[attr])}
+                            placeholder={moment(dataModel.currentData[attr]).format('DD/MM/YYYY')}
+                            format="DD/MM/YYYY"
+                            dayPickerProps={{
+                              enableOutsideDays: true,
+                            }} />;
 
                 case 'hasOne':
                   return <Select key={attr} value={selectValue} name={attr} title={attr} items={itemWithTemplate}  keyLabel={'name'} keyValue={'_id'} />;

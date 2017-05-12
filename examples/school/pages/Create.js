@@ -10,6 +10,7 @@ import FRC from 'formsy-react-components';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
+import DatepickerInput from '../components/DatepickerInput';
 import { get, upperFirst, pick } from 'lodash';
 
 const { Checkbox, CheckboxGroup, RadioGroup } = FRC;
@@ -155,6 +156,15 @@ class Create extends Component {
                           value={schema[attr].default}
                           label={attr}
                           valueLabel="" />;
+
+              case 'Date':
+                return <DatepickerInput
+                          name={attr}
+                          placeholder="DD/MM/YYYY"
+                          format="DD/MM/YYYY"
+                          dayPickerProps={{
+                            enableOutsideDays: true,
+                          }} />;
 
               case 'hasOne':
                 return <Select key={attr} name={attr} title={attr} items={itemWithTemplate}  keyLabel={'template'} keyValue={'_id'} />;

@@ -27,6 +27,9 @@ class Student {
     options: ['SPORTS', 'TRAVEL', 'GAMES', 'Tech Hobbies'],
   }
 
+  @property('Date')
+  born
+
   @hasOne
   async school(student) {
     try {
