@@ -6,10 +6,13 @@ import pluralize from 'pluralize';
 import PropTypes from 'prop-types';
 import withData from '../lib/withData';
 import Formsy from 'formsy-react';
+import FRC from 'formsy-react-components';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
-import { get, upperFirst, pick, isString, isArray } from 'lodash';
+import { get, upperFirst, pick } from 'lodash';
+
+const { Checkbox, CheckboxGroup, RadioGroup } = FRC;
 
 class Update extends Component {
   static propTypes = {
@@ -84,6 +87,46 @@ class Update extends Component {
     return { model, items: adminGraphite.items, dataModel, modelID };
   }
 
+  getItemsWithTemplate(schema, attr, dataModel) {
+    const items = {
+      itemWithTemplate: [],
+      selectedItemsWithTemplate: [],
+      selectValue: null,
+    };
+
+    let itemsSafe = [];
+    let selectedItems = [];
+
+    if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
+      const getValueSelected = get(dataModel.currentData, pluralize(attr, 1), []);
+      if (getValueSelected !== null) {
+        items.selectValue = getValueSelected._id;
+      }
+      if (schema[attr].type === 'hasMany') {
+        selectedItems = get(dataModel.currentData, pluralize(attr, 1), []).map(i => (i));
+        items.selectedItemsWithTemplate = selectedItems.reduce((acum, value) => {
+          let template = schema[attr].template;
+          Object.keys(value).forEach(x => {
+            template = template.replace(`{${x}}`, value[x]);
+          });
+          acum.push(Object.assign({}, value, { template }));
+          return acum;
+        }, []);
+      }
+      itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
+      items.itemWithTemplate = itemsSafe.reduce((acum, value) => {
+        let template = schema[attr].template;
+        Object.keys(value).forEach(x => {
+          template = template.replace(`{${x}}`, value[x]);
+        });
+        acum.push(Object.assign({}, value, { template }));
+        return acum;
+      }, []);
+    }
+
+    return items;
+  }
+
   render() {
     const { items, model, dataModel } = this.props;
     const { canSubmit } = this.state;
@@ -99,84 +142,65 @@ class Update extends Component {
               <h2>-></h2>
               <h2>Update {model}</h2>
             </div>
-            <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
+            <Formsy.Form ref="formUpdate" onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
 
               { Object.keys(schema).map(attr => {
-                let itemsSafe = [];
-                let itemWithTemplate = [];
-                let selectedItems = [];
-                let selectedItemsWithTemplate = [];
-                let selectValue = null;
-                if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
-                  const getValueSelected = get(dataModel.currentData, pluralize(attr, 1), []);
-                  if (getValueSelected !== null) {
-                    selectValue = getValueSelected._id;
-                  }
-                  if (schema[attr].type === 'hasMany') {
-                    selectedItems = get(dataModel.currentData, pluralize(attr, 1), []).map(i => (i));
-                    selectedItemsWithTemplate = selectedItems.reduce((acum, value) => {
-                      let template = schema[attr].template;
-                      Object.keys(value).forEach(x => {
-                        template = template.replace(`{${x}}`, value[x]);
-                      });
-                      acum.push(Object.assign({}, value, { template }));
-                      return acum;
-                    }, []);
-                  }
-                  itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
-                  itemWithTemplate = itemsSafe.reduce((acum, value) => {
-                    let template = schema[attr].template;
-                    Object.keys(value).forEach(x => {
-                      template = template.replace(`{${x}}`, value[x]);
-                    });
-                    acum.push(Object.assign({}, value, { template }));
-                    return acum;
-                  }, []);
-                }
+                const { itemWithTemplate, selectedItemsWithTemplate, selectValue } = this.getItemsWithTemplate(schema, attr, dataModel);
+
                 switch (schema[attr].type) {
                 case 'String':
                   if (schema[attr].enum) {
-                    const options = schema[attr].enum.map((option, i) => {
-                      return (
-                        <label>{option}  <Input key={attr} type={'radio'} name={`${attr}[${i}]`} value={option} checked={ dataModel.currentData[attr] === option } /> </label>
-                      );
+                    const options = schema[attr].enum.map(option => {
+                      return {
+                        value: option,
+                        label: option,
+                      };
                     });
 
                     return (
-                      <fieldset>
-                        <legend>{attr}</legend>
-                        {options}
-                      </fieldset>
+                      <RadioGroup
+                          name={attr}
+                          value={dataModel.currentData[attr]}
+                          label={attr}
+                          help=""
+                          options={options} />
                     );
                   }
                   return <Input key={attr} value={dataModel.currentData[attr]} name={attr} title={attr} validationError="This is not a valid name" required />;
+
                 case '[String]':
-
                   if (schema[attr].enum) {
-                    const options = schema[attr].enum.map((option, i) => {
-                      let checked = false;
-                      const optionsChecked = dataModel.currentData[attr];
-                      checked = optionsChecked.indexOf(option) > -1 ? true : false;
-
-                      return (
-                        <label>{option}  <Input key={attr} type={'checkbox'} name={`${attr}[${i}]`} value={option} checked={ checked } /> </label>
-                      );
+                    const options = schema[attr].enum.map(option => {
+                      return {
+                        value: option,
+                        label: option,
+                      };
                     });
 
                     return (
-                      <fieldset>
-                        <legend>{attr}</legend>
-                        {options}
-                      </fieldset>
+                      <CheckboxGroup
+                          name={attr}
+                          value={dataModel.currentData[attr]}
+                          label={attr}
+                          help=""
+                          options={options} />
                     );
                   }
                   return <p>Not options.</p>;
+
                 case 'Boolean':
-                  return <Input key={attr} value={dataModel.currentData[attr]} type={'checkbox'} name={attr} title={attr} />;
+                  return <Checkbox
+                            key={attr}
+                            name={attr}
+                            value={dataModel.currentData[attr]}
+                            label={attr} />;
+
                 case 'hasOne':
                   return <Select key={attr} value={selectValue} name={attr} title={attr} items={itemWithTemplate}  keyLabel={'name'} keyValue={'_id'} />;
+
                 case 'hasMany':
                   return <MultiSelect key={attr} name={attr} items={itemWithTemplate} selectedItems={selectedItemsWithTemplate} />;
+
                 default:
                   return null;
                 }
@@ -204,7 +228,6 @@ class Update extends Component {
       const { update } = this.props.dataModel.mutation;
       const { schema } = this.props.dataModel;
       const keysSchema = Object.keys(schema);
-
       const nameModelUppper = pluralize(upperFirst(model), 1);
       const variables = { id: modelID };
       variables[`update${nameModelUppper}`] = pick(dataForm, ...keysSchema);

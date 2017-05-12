@@ -6,10 +6,13 @@ import pluralize from 'pluralize';
 import PropTypes from 'prop-types';
 import withData from '../lib/withData';
 import Formsy from 'formsy-react';
+import FRC from 'formsy-react-components';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import MultiSelect from '../components/MultiSelect';
-import { get, upperFirst, pick, isArray, isString } from 'lodash';
+import { get, upperFirst, pick } from 'lodash';
+
+const { Checkbox, CheckboxGroup, RadioGroup } = FRC;
 
 class Create extends Component {
   static propTypes = {
@@ -66,6 +69,24 @@ class Create extends Component {
     return { model, items: adminGraphite.items, dataModel };
   }
 
+  getItemsWithTemplate(schema, attr) {
+    let itemWithTemplate = [];
+
+    if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
+      const itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
+      itemWithTemplate = itemsSafe.reduce((acum, value) => {
+        let template = schema[attr].template;
+        Object.keys(value).forEach(x => {
+          template = template.replace(`{${x}}`, value[x]);
+        });
+        acum.push(Object.assign({}, value, { template }));
+        return acum;
+      }, []);
+    }
+
+    return itemWithTemplate;
+  }
+
   render() {
     const { items, model, dataModel } = this.props;
     const { canSubmit } = this.state;
@@ -84,67 +105,63 @@ class Create extends Component {
 
           <Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} >
             { Object.keys(schema).map(attr => {
-              let itemsSafe = [];
-              let itemWithTemplate = [];
-              if (schema[attr].type === 'hasOne' || schema[attr].type === 'hasMany') {
-                itemsSafe = get(schema[attr].data, pluralize(attr, 2), []);
-                itemWithTemplate = itemsSafe.reduce((acum, value) => {
-                  let template = schema[attr].template;
-                  Object.keys(value).forEach(x => {
-                    template = template.replace(`{${x}}`, value[x]);
-                  });
-                  acum.push(Object.assign({}, value, { template }));
-                  return acum;
-                }, []);
-              }
+              const itemWithTemplate = this.getItemsWithTemplate(schema, attr);
 
               switch (schema[attr].type) {
               case 'String':
                 if (schema[attr].enum) {
-                  const options = schema[attr].enum.map((option, i) => {
-                    return (
-                      <label>{option}  <Input key={attr} type={'radio'} name={attr} value={option} checked={ schema[attr].default === option } /> </label>
-                    );
+                  const options = schema[attr].enum.map(option => {
+                    return {
+                      value: option,
+                      label: option,
+                    };
                   });
 
                   return (
-                    <fieldset>
-                      <legend>{attr}</legend>
-                      {options}
-                    </fieldset>
+                    <RadioGroup
+                        name={attr}
+                        value={schema[attr].default}
+                        label={attr}
+                        help=""
+                        options={options} />
                   );
                 }
                 return <Input key={attr} name={attr} title={attr} validationError="This is not a valid name" required />;
+
               case '[String]':
                 if (schema[attr].enum) {
-                  const options = schema[attr].enum.map((option, i) => {
-                    let checked = false;
-                    if (isString(schema[attr].default)) {
-                      checked = schema[attr].default === option;
-                    }
-
-                    if (isArray(schema[attr].default)) {
-                      checked = schema[attr].default.indexOf(option) > -1 ? true : false;
-                    }
-                    return (
-                      <label>{option}  <Input key={attr} type={'checkbox'} name={`${attr}[${i}]`} value={option} checked={ checked } /> </label>
-                    );
+                  const options = schema[attr].enum.map(option => {
+                    return {
+                      value: option,
+                      label: option,
+                    };
                   });
 
                   return (
-                    <fieldset>
-                      <legend>{attr}</legend>
-                      {options}
-                    </fieldset>
+                    <CheckboxGroup
+                        name={attr}
+                        value={[schema[attr].default]}
+                        label={attr}
+                        help=""
+                        options={options} />
                   );
                 }
                 return <p>Not options.</p>;
+
               case 'Boolean':
-                return <Input key={attr} type={'checkbox'} name={attr} title={attr} />;
+                return <Checkbox
+                          key={attr}
+                          name={attr}
+                          value={schema[attr].default}
+                          label={attr}
+                          valueLabel="" />;
+
               case 'hasOne':
                 return <Select key={attr} name={attr} title={attr} items={itemWithTemplate}  keyLabel={'template'} keyValue={'_id'} />;
+
               case 'hasMany':
                 return <MultiSelect key={attr} name={attr} items={itemWithTemplate} selectedItems={[]} />;
+
               default:
                 return null;
               }
