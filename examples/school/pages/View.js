@@ -76,38 +76,55 @@ class View extends Component {
 
       const valuesWithRelations = keys.reduce((acum2, key) => {
         if (isArray(item[key])) {
-          const obj = {};
-          const value = item[key].map((i, j) => {
-            let template = schema[key].template;
+          try {
+            const obj = {};
+            const value = item[key].map(i => {
 
-            Object.keys(i).forEach(x => {
-              template = template ? template.replace(`{${x}}`, i[x]) : '';
+              if (isObject(i)) {
+                let template = schema[key].template;
+
+                Object.keys(i).forEach(x => {
+                  template = template ? template.replace(`{${x}}`, i[x]) : '';
+                });
+
+                template = isEmpty(template) ? i._id : template;
+
+                return (
+                  <div>
+                    <Link key={i._id} as={`/${pluralize(key, 1)}/${i._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: i._id } }}><a>{template}</a></Link>
+                    <br />
+                  </div>
+                );
+              }
+
+              return <div>{i}</div>;
             });
 
-            template = isEmpty(template) ? i._id : template;
-
-            return (
-              <div>
-                  <Link key={i._id} as={`/${pluralize(key, 1)}/${i._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: i._id } }}><a>{template}</a></Link>
-                  <br />
-              </div>
-            );
-          });
-
-          obj[key] = value;
-          return Object.assign(acum2, obj);
+            obj[key] = value;
+            return Object.assign(acum2, obj);
+          } catch (e) {
+            /* eslint-disable no-console */
+            console.log(`Error when item is object: ${e}`);
+            /* eslint-enable no-console */
+          }
         }
 
         if (isObject(item[key])) {
-          let template = schema[key].template;
-          const obj = {};
-          Object.keys(item[key]).forEach(x => {
-            template = template.replace(`{${x}}`, item[key][x]);
-          });
+          try {
+            let template = schema[key].template;
+            const obj = {};
+            Object.keys(item[key]).forEach(x => {
+              template = template.replace(`{${x}}`, item[key][x]);
+            });
 
-          template = isEmpty(template) ? item._id : template;
-          obj[key] = (<Link key={item._id} as={`/${pluralize(key, 1)}/${item[key]._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: item[key]._id } }}><a>{template}</a></Link>);
-          return Object.assign(acum2, obj);
+            template = isEmpty(template) ? item._id : template;
+            obj[key] = (<Link key={item._id} as={`/${pluralize(key, 1)}/${item[key]._id}`} href= {{ pathname: '/Update', query: { model: pluralize(key, 2), id: item[key]._id } }}><a>{template}</a></Link>);
+            return Object.assign(acum2, obj);
+          } catch (e) {
+            /* eslint-disable no-console */
+            console.log(`Error when item is object: ${e}`);
+            /* eslint-enable no-console */
+          }
         }
 
         return acum2;
@@ -122,7 +139,7 @@ class View extends Component {
       elements: (<Actions {...this.props} />),
     };
 
-    const studentTable = !loading && !error ? (
+    const viewTable = !loading && !error ? (
       <Table items= {reduceData} actions={actions} omit={['__typename', 'active']} />
     ) : null;
 
@@ -132,7 +149,7 @@ class View extends Component {
           <div className="layout-header">
             <h2 className="main">{model}</h2>
           </div>
-          {studentTable}
+          {viewTable}
           <Link as={`/${pluralize(model, 1)}/create`} href= {{ pathname: '/Create', query: { model: pluralize(model, 2) } }}>
             <div className="btn-round">
               <span title="Create new">+</span>
