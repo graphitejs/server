@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 const { expect } = chai;
-import jwt from 'jsonwebtoken';
 
 import account from '../src/account';
 
