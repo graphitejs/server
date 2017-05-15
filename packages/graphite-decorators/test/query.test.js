@@ -48,7 +48,7 @@ describe('query', () => {
       it('should be Query a String and contain user(name: String)(_id: String, skip: Int, limit: Int, sort: String): [response]', (done) => {
         const params = {
           fields: 'name: String',
-          responseType: 'response'
+          responseType: 'response',
         };
         const decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
