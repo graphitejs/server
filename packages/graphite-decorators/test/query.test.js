@@ -74,7 +74,7 @@ describe('query', () => {
     context('When object only contain responseType', () => {
       it('should be Query a String and contain user(_id: String, skip: Int, limit: Int, sort: String): [response]', (done) => {
         const params = {
-          responseType: 'response'
+          responseType: 'response',
         };
         const decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
