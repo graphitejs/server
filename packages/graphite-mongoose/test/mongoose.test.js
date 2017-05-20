@@ -13,6 +13,7 @@ describe('Mongoose', () => {
     const mongoose = new Mongodb();
     mongoose.connect().then(connection => {
       expect(database.NAME).eql(connection.connections[0].name);
+      mongoose.disconnect();
       done();
     });
   });
@@ -20,8 +21,7 @@ describe('Mongoose', () => {
   it('should fail connection', (done) => {
     const mongoose = new Mongodb({ PORT: undefined, NAME: undefined });
     mongoose.connect().then().catch((error) => {
-      expect(error.name).eql('Error');
-      expect(error.message).eql('Connection failed.');
+      expect(error).eql('Connection failed.');
       done();
     });
   });
@@ -31,8 +31,7 @@ describe('Mongoose', () => {
     mongoose.connect();
 
     process.on('unhandledRejection', (reason) => {
-      expect(reason.name).eql('Error');
-      expect(reason.message).eql('Connection failed.');
+      expect(reason.name).eql('MongoError');
       done();
     });
   });
