@@ -14,7 +14,7 @@ class Mongodb {
   }
 
   connect() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       Mongoose.connect(`mongodb://localhost:${this.port}/${this.dbName}`);
       Mongoose.connection.on('connected', () => {
         this.logger(`Connect to database name: ${this.dbName} on port: ${this.port}`);
@@ -23,7 +23,7 @@ class Mongodb {
 
       Mongoose.connection.on('error', (err) => {
         this.logger(`Mongoose default connection error:  ${err}`);
-        throw new Error('Connection failed.');
+        reject('Connection failed.');
       });
     });
   }
