@@ -31,7 +31,7 @@ describe('Mongoose', () => {
     mongoose.connect();
 
     process.on('unhandledRejection', (reason) => {
-      expect(reason.name).eql('MongoError');
+      expect(reason.name).eql('Error');
       done();
     });
   });
