@@ -26,7 +26,7 @@ describe('Mongoose', () => {
     });
   });
 
-  it('should trigger unhandledRejection when fail connect', (done) => {
+  it.skip('should trigger unhandledRejection when fail connect', (done) => {
     const mongoose = new Mongodb({ PORT: undefined, NAME: undefined });
     mongoose.connect();
 
