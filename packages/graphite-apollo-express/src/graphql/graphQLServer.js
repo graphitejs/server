@@ -2,10 +2,11 @@ import { apolloExpress, graphiqlExpress } from 'apollo-server';
 import typeDefs from './schema';
 import { makeExecutableSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
-import { get, defaultsDeep } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import scalars from '@graphite/scalars';
 import { keys, without } from 'lodash';
 import * as defaultConfig from '../config/default';
+import cors from 'cors';
 import debug from 'debug';
 
 export default class GraphQLServer {
@@ -26,6 +27,14 @@ export default class GraphQLServer {
     this.logger(this.formatGraphQl(`type Mutation { ${Mutation} }`));
     this.logger(Resolvers);
 
+    if (isEmpty(Resolvers.Mutation)) {
+      delete Resolvers.Mutation;
+    }
+
+    if (isEmpty(Resolvers.Query)) {
+      delete Resolvers.Query;
+    }
+
     try {
       this.executableSchema = makeExecutableSchema({
         typeDefs: typeDefs(formatType, Query, Mutation),
@@ -39,8 +48,7 @@ export default class GraphQLServer {
                .forEach(this.executeInitialize.bind(this));
 
     const apollo = apolloExpress(this.requestApolloExpress.bind(this));
-
-    this.Graphite.use('/graphql', bodyParser.json(), apollo);
+    this.Graphite.use('/graphql', cors(), bodyParser.json(), apollo);
     this.Graphite.use('/graphiql', bodyParser.json(), graphiqlExpress({
       endpointURL: '/graphql',
     }));
