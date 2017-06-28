@@ -34,18 +34,18 @@ describe('query', () => {
   });
 
   context('When query have params and params is a String', () => {
-    it('should be Query a String and contain user(name: String)(_id: String, skip: Int, limit: Int, sort: String): [User]', (done) => {
+    it('should be Query a String and contain user(name: String): [User]', (done) => {
       const decoratorQuery = query('name: String');
       decoratorQuery(target, key, descriptor);
       expect(target.Query).to.have.string;
-      expect(target.Query.trim()).eql('user(name: String)(_id: String, skip: Int, limit: Int, sort: String): [User],');
+      expect(target.Query.trim()).eql('user(name: String): [User],');
       done();
     });
   });
 
   context('When query have params and params is a Object', () => {
     context('When object contain fields and responseType', () => {
-      it('should be Query a String and contain user(name: String)(_id: String, skip: Int, limit: Int, sort: String): [response]', (done) => {
+      it('should be Query a String and contain user(name: String): [response]', (done) => {
         const params = {
           fields: 'name: String',
           responseType: 'response',
@@ -53,20 +53,20 @@ describe('query', () => {
         const decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
         expect(target.Query).to.have.string;
-        expect(target.Query.trim()).eql('user(name: String)(_id: String, skip: Int, limit: Int, sort: String): [response],');
+        expect(target.Query.trim()).eql('user(name: String): [response],');
         done();
       });
     });
 
     context('When object only contain fields', () => {
-      it('should be Query a String and contain user(name: String)(_id: String, skip: Int, limit: Int, sort: String): []', (done) => {
+      it('should be Query a String and contain user(name: String): [User]', (done) => {
         const params = {
           fields: 'name: String',
         };
         const decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
         expect(target.Query).to.have.string;
-        expect(target.Query.trim()).eql('user(name: String)(_id: String, skip: Int, limit: Int, sort: String): [],');
+        expect(target.Query.trim()).eql('user(name: String): [User],');
         done();
       });
     });
@@ -85,12 +85,12 @@ describe('query', () => {
     });
 
     context('When object not contain fields and responseType', () => {
-      it('should be Query a String and contain user(_id: String, skip: Int, limit: Int, sort: String): []', (done) => {
+      it('should be Query a String and contain user(_id: String, skip: Int, limit: Int, sort: String): [User]', (done) => {
         const params = {};
         const decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
         expect(target.Query).to.have.string;
-        expect(target.Query.trim()).eql('user(_id: String, skip: Int, limit: Int, sort: String): [],');
+        expect(target.Query.trim()).eql('user(_id: String, skip: Int, limit: Int, sort: String): [User],');
         done();
       });
     });
