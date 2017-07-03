@@ -383,7 +383,6 @@ Is under development.
 
 [![Walter Zalazar](https://avatars.githubusercontent.com/u/5795257?s=64)](https://github.com/wzalazar) |
 |---|
-
 Walter Zalazar |
 :octocat: [@wzalazar](https://github.com/wzalazar) |
 :bird: [@wzalazar_](https://twitter.com/wzalazar_) |
