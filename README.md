@@ -395,7 +395,6 @@ Walter Zalazar |
 Walter Zalazar | José Luis Casella |
 :octocat:[@wzalazar](https://github.com/wzalazar) |
 [@jl-casella](https://github.com/jl-casella) |
-
 :bird:[@wzalazar_](https://twitter.com/wzalazar_) |
 [@jl-casella](https://twitter.com/jl-casella) |
 
