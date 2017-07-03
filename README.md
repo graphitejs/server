@@ -382,7 +382,7 @@ Is under development.
 ### Creator
 
 [![Walter Zalazar](https://avatars.githubusercontent.com/u/5795257?s=64)](https://github.com/wzalazar) |
-|---|---|---|---|
+|---|
 
 Walter Zalazar |
 :octocat:
@@ -395,7 +395,7 @@ Walter Zalazar |
 
 [![Walter Zalazar](https://avatars.githubusercontent.com/u/5795257?s=64)](https://github.com/wzalazar) |
 [![Jose Casella](https://avatars.githubusercontent.com/u/23145933?s=64)](https://github.com/jl-casella) |
-|---|---|---|---|
+|---|---|
 
 Walter Zalazar | José Luis Casella |
 :octocat:
