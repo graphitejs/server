@@ -116,7 +116,7 @@ Todo List:
 
 REST APIs:
 
-[Example with Spotify API](https://github.com/wzalazar/spotify)
+[Example with Spotify API](https://github.com/wzalazar/spotify) <br/>
 [Demo](https://spotify-graphitejs-scbvotbkhb.now.sh/)
 
 ## Scaffolds
@@ -385,11 +385,8 @@ Is under development.
 |---|
 
 Walter Zalazar |
-:octocat:
-[@wzalazar](https://github.com/wzalazar) |
-
-:bird:
-[@wzalazar_](https://twitter.com/wzalazar_) |
+:octocat: [@wzalazar](https://github.com/wzalazar) |
+:bird: [@wzalazar_](https://twitter.com/wzalazar_) |
 
 ### Core members
 
