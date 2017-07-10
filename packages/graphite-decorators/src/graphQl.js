@@ -15,8 +15,12 @@ const graphQl = function(target) {
   target.prototype.nameClass = nameClass;
 
   target.prototype.Types = `
-    type ${nameClass} {
-      _id: String,
+    interface node {
+      id: ID!
+    }
+
+    type ${nameClass} implements node {
+      id: ID!,
       ${typesAttr}
     }
 

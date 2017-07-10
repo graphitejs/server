@@ -28,6 +28,14 @@ const mongoose = function(target) {
     target.prototype.schemaModel.plugin(customId, { mongoose: Mongoose, generator: generateObjectId });
     target.prototype.Model = Mongoose.model(name.toLowerCase(), target.prototype.schemaModel);
     target.prototype.Mongoose = Mongoose;
+
+    target.prototype.schemaModel.virtual('id').get(function() {
+      return this._id;
+    });
+
+    target.prototype.schemaModel.set('toJSON', {
+      virtuals: true,
+    });
   } catch (err) {
     logger(`Mongoose decorators: ${err}`);
   }

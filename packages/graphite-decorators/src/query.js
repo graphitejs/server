@@ -4,7 +4,7 @@ import { get } from 'lodash';
 const query = function(params) {
   return (target, key, descriptor) => {
     const singularKey = pluralize(key, 1);
-    const defaultFields = '_id: String, skip: Int, limit: Int, sort: String';
+    const defaultFields = 'id: String, skip: Int, limit: Int, sort: String';
     const defaultResposeType = `${singularKey[0].toUpperCase() + singularKey.slice(1)}`;
 
     switch (typeof params) {

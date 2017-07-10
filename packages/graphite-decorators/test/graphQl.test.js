@@ -13,8 +13,8 @@ describe('graphQl', () => {
     Accounts.prototype.Resolvers = () => {};
 
     defaultSchema = `
-      type Accounts {
-        _id: String,
+      type Accounts implements node {
+        id: ID!,
       }
 
       type Errors {
@@ -24,8 +24,8 @@ describe('graphQl', () => {
     `;
 
     schemaWithOptionErrors = `
-      type Accounts {
-        _id: String,
+      type Accounts implements node {
+        id: ID!,
       }
 
       type Errors {
