@@ -8,8 +8,8 @@ const property = function(prop) {
   const types = {
     'String': String,
     '[String]': [String],
-    'Number': Number,
-    '[Number]': [Number],
+    'Int': Number,
+    '[Int]': [Number],
     'Date': Date,
     'Boolean': Boolean,
   };
@@ -43,7 +43,7 @@ const property = function(prop) {
             min: 'minlength',
             max: 'maxlength',
           },
-          'Number': {
+          'Int': {
             min: 'min',
             max: 'max',
           },

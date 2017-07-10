@@ -16,14 +16,14 @@ export default {
       },
     },
     {
-      type: 'Number | required',
+      type: 'Int | required',
       expectation: {
         type: Number,
         required: true,
       },
     },
     {
-      type: '[Number] | required',
+      type: '[Int] | required',
       expectation: {
         type: [Number],
         required: true,

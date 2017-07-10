@@ -14,13 +14,13 @@ export default {
       },
     },
     {
-      type: 'Number',
+      type: 'Int',
       expectation: {
         type: Number,
       },
     },
     {
-      type: '[Number]',
+      type: '[Int]',
       expectation: {
         type: [Number],
       },

@@ -16,14 +16,14 @@ export default {
       },
     },
     {
-      type: 'Number | unique',
+      type: 'Int | unique',
       expectation: {
         type: Number,
         unique: true,
       },
     },
     {
-      type: '[Number] | unique',
+      type: '[Int] | unique',
       expectation: {
         type: [Number],
         unique: true,

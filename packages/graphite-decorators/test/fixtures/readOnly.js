@@ -16,14 +16,14 @@ export default {
       },
     },
     {
-      type: 'Number | readonly',
+      type: 'Int | readonly',
       expectation: {
         type: Number,
         readonly: true,
       },
     },
     {
-      type: '[Number] | readonly',
+      type: '[Int] | readonly',
       expectation: {
         type: [Number],
         readonly: true,
