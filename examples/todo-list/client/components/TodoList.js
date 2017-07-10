@@ -25,7 +25,7 @@ export class TodoList extends Component {
   async onChange(item, event) {
     try {
       event.preventDefault();
-      const id = item._id;
+      const id = item.id;
       const updateTodo = {
         name: item.name,
         status: !item.status,
@@ -62,9 +62,9 @@ export class TodoList extends Component {
         {
           todo.map(item => (
             <li className={ item.status ? 'done' : '' }
-                onClick= { this.onChange.bind(this, item) } key={item._id}>{item.name}
+                onClick= { this.onChange.bind(this, item) } key={item.id}>{item.name}
                 <span className={ item.status ? 'done' : 'hidden' }> &#10004; </span>
-                <button className = {'reset delete'} onClick= {this.onRemove.bind(this, item._id) }><span>&#10006;</span></button>
+                <button className = {'reset delete'} onClick= {this.onRemove.bind(this, item.id) }><span>&#10006;</span></button>
             </li>
           ))
         }

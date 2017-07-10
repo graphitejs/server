@@ -12,12 +12,36 @@ const mongoose = new Mongodb(database);
 mongoose.connect();
 
 import { GraphiteAdmin } from './admin';
-import { getSchema } from './getSchema';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const collections = [ School, Student, Teacher ];
 const graphQLServer =  Graphite.graphQLServer({ graphql }, collections, scalars);
 
+graphQLServer.getSchema().then(schema => {
+  console.log(schema);
+});
+
 GraphiteAdmin(app, graphQLServer, collections);
-getSchema('http://localhost:8001/graphql');
+// getSchema('http://localhost:8001/graphql').then(schema => {
+//   console.log(schema);
+// });
+
+
+/*
+{
+  __type(name: "School") {
+    name
+    fields {
+      name
+      type {
+        name
+        ofType {
+          name
+          description
+        }
+      }
+    }
+  }
+}
+*/

@@ -19,9 +19,9 @@
     "test"
   ],
   "dependencies": {
-    "@graphite/apollo-express": "^0.1.11",
-    "@graphite/decorators": "^0.1.12",
-    "@graphite/mongoose": "^0.1.9",
+    "@graphite/apollo-express": "^0.2.24",
+    "@graphite/decorators": "^0.2.26",
+    "@graphite/mongoose": "^0.2.26",
     "apollo-client": "^0.10.1",
     "debug": "^2.6.1",
     "react": "^15.4.2",

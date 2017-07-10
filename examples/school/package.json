@@ -17,7 +17,7 @@
     "test"
   ],
   "dependencies": {
-    "@graphite/apollo-express": "^0.2.21",
+    "@graphite/apollo-express": "^0.2.24",
     "@graphite/decorators": "^0.2.20",
     "@graphite/mongoose": "^0.2.20",
     "@graphite/scalars": "^0.2.21",
