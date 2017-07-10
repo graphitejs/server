@@ -8,6 +8,7 @@ import { keys, without } from 'lodash';
 import * as defaultConfig from '../config/default';
 import cors from 'cors';
 import debug from 'debug';
+import { getSchema } from './getSchema';
 
 export default class GraphQLServer {
   logger = debug('apollo-express');
@@ -20,12 +21,6 @@ export default class GraphQLServer {
     const { graphql } = config;
     const { Types, Query, Mutation, Resolvers } = this.register([...collections, ...scalars]);
     const GRAPHQL_PORT = graphql.PORT;
-    const formatType = this.formatGraphQlType(Types);
-
-    this.logger(formatType);
-    this.logger(this.formatGraphQl(`type Query { ${Query} }`));
-    this.logger(this.formatGraphQl(`type Mutation { ${Mutation} }`));
-    this.logger(Resolvers);
 
     if (isEmpty(Resolvers.Mutation)) {
       delete Resolvers.Mutation;
@@ -37,7 +32,7 @@ export default class GraphQLServer {
 
     try {
       this.executableSchema = makeExecutableSchema({
-        typeDefs: typeDefs(formatType, Query, Mutation),
+        typeDefs: typeDefs(Types, Query, Mutation),
         resolvers: Resolvers,
         logger: { log: this.customLogger.bind(this) },
       });
@@ -54,28 +49,8 @@ export default class GraphQLServer {
     }));
 
     this.Graphite.listen(GRAPHQL_PORT, this.listenGraphQl.bind(this, GRAPHQL_PORT));
+    this.Graphite.getSchema = () => getSchema(`http://localhost:${GRAPHQL_PORT}/graphql`);
     return this.Graphite;
-  }
-
-  formatGraphQlType(text) {
-    const pattern = /\s+/g;
-    let formatText = text.replace(pattern, '');
-    formatText = formatText.replace(/type/g, 'type ');
-    formatText = formatText.replace(/scalar/g, '\nscalar ');
-    formatText = formatText.replace(/input/g, 'input ');
-    formatText = formatText.replace(/:/g, ': ');
-    formatText = formatText.replace(/,/g, ',\n\t');
-    formatText = formatText.replace(/{/g, ' {\n\t');
-    formatText = formatText.replace(/\n\t}/g, '\n}\n\n');
-    formatText = formatText + '\n';
-    return formatText;
-  }
-
-  formatGraphQl(text) {
-    let formatText = text.replace(/{/g, '{\n');
-    formatText = text.replace(/}/g, '\n}');
-    formatText = formatText + '\n';
-    return formatText;
   }
 
   customLogger(e) {
