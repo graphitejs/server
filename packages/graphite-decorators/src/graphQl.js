@@ -15,18 +15,9 @@ const graphQl = function(target) {
   target.prototype.nameClass = nameClass;
 
   target.prototype.Types = `
-    interface node {
-      id: ID!
-    }
-
     type ${nameClass} implements node {
       id: ID!,
       ${typesAttr}
-    }
-
-    type Errors {
-      key: String,
-      message: String!,
     }
 
     ${get(target.prototype, 'oTypes', '')}
