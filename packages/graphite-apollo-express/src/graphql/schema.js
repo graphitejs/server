@@ -1,8 +1,21 @@
 import isEmpty from 'lodash/isEmpty';
 
+const common = `
+  interface node {
+    id: ID!
+  }
+
+  type Errors {
+    key: String,
+    message: String!,
+  }
+`;
+
 export const typeDefinitionsAll = (Types, Query, Mutation) => {
   return `
     ${Types}
+
+    ${common}
 
     type Query {
       ${Query}
@@ -23,6 +36,8 @@ export const typeDefinitionsWithQuery = (Types, Query) => {
   return `
     ${Types}
 
+    ${common}
+
     type Query {
       ${Query}
     }
@@ -36,6 +51,8 @@ export const typeDefinitionsWithQuery = (Types, Query) => {
 export const typeDefinitionsWithMutation = (Types, Mutation) => {
   return `
     ${Types}
+
+    ${common}
 
     type Mutation {
       ${Mutation}
