@@ -4,48 +4,30 @@ import graphQl from '../src/graphQl';
 describe('graphQl', () => {
   /* eslint-disable */
   var Accounts;
-  var defaultSchema;
   var schemaWithOptionErrors;
   /* eslint-disable */
+
+  const common = `
+    interface node {
+      id: ID!
+    }
+
+    type Errors {
+      key: String,
+      message: String!,
+    }
+  `;
 
   beforeEach(() => {
     Accounts = function() {};
     Accounts.prototype.Resolvers = () => {};
 
-    defaultSchema = `
-      type Accounts implements node {
-        id: ID!,
-      }
-
-      type Errors {
-        key: String,
-        message: String!,
-      }
-    `;
-
     schemaWithOptionErrors = `
-      type Accounts implements node {
-        id: ID!,
-      }
-
-      type Errors {
-        key: String,
-        message: String!,
-      }
-
       type responseAccounts {
         accounts: Accounts,
         errors: [Errors],
       }
     `;
-  });
-
-  it('Should has name Accounts and generate default schema', (done) => {
-    const pattern = /\s+/g;
-    graphQl(Accounts);
-    expect(Accounts.name).eql('Accounts');
-    expect(Accounts.prototype.Types.replace(pattern, '')).to.contain(defaultSchema.replace(pattern, ''));
-    done();
   });
 
   it('Should be hasOne a function', (done) => {

@@ -15,12 +15,25 @@ describe('schema', () => {
   var expetationWithTypesMutation;
   /* eslint-enable */
 
+  const common = `
+    interface node {
+      id: ID!
+    }
+
+    type Errors {
+      key: String,
+      message: String!,
+    }
+  `;
+
   beforeEach(() => {
     Types = 'types';
     Query = 'query';
     Mutation = 'mutation';
     expectationWithTypesQueryMutation = `
       ${Types}
+
+      ${common}
 
       type Query {
         ${Query}
@@ -39,6 +52,8 @@ describe('schema', () => {
     expectationWithTypesQuery = `
       ${Types}
 
+      ${common}
+
       type Query {
         ${Query}
       }
@@ -50,6 +65,8 @@ describe('schema', () => {
 
     expetationWithTypesMutation = `
       ${Types}
+
+      ${common}
 
       type Mutation {
          ${Mutation}
@@ -129,6 +146,8 @@ describe('schema', () => {
         const pattern = /\s+/g;
         const result = schema('', Query, Mutation);
         const expectation = `
+          ${common}
+
           type Query {
             ${Query}
           }
@@ -161,6 +180,8 @@ describe('schema', () => {
         const pattern = /\s+/g;
         const result = schema('', Query, '');
         const expectation = `
+            ${common}
+
             type Query {
               ${Query}
             }
@@ -180,6 +201,8 @@ describe('schema', () => {
         const pattern = /\s+/g;
         const result = schema('', '', Mutation);
         const expectation = `
+          ${common}
+          
           type Mutation {
             ${Mutation}
           }
