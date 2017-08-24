@@ -23,14 +23,14 @@
     "debug": "^2.6.1",
     "react": "^15.4.2",
     "react-apollo": "^0.13.2",
-    "@graphite/apollo-express": "^0.2.4",
-    "@graphite/mongoose": "^0.1.9",
-    "@graphite/mongoose-account": "^0.1.9",
-    "@graphite/mongoose-account-password": "^0.2.3",
-    "@graphite/mongoose-account-facebook": "^0.1.9",
-    "@graphite/react-account-password": "^0.2.1",
-    "@graphite/react-account-facebook": "^0.1.9",
-    "@graphite/react-account-logout": "^0.1.9"
+    "@graphite/apollo-express": "^0.2.27",
+    "@graphite/mongoose": "^0.2.27",
+    "@graphite/mongoose-account": "^0.2.27",
+    "@graphite/mongoose-account-password": "^0.2.27",
+    "@graphite/mongoose-account-facebook": "^0.2.27",
+    "@graphite/react-account-password": "^0.2.16",
+    "@graphite/react-account-facebook": "^0.2.16",
+    "@graphite/react-account-logout": "^0.2.16"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
