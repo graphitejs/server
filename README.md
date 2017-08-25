@@ -28,6 +28,9 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
   - [Setup](#setup)
   - [Create GraphQl server](#create-graphql-server)
   - [Create a GraphQl Schema model](#create-a-graphql-schema-model)
+- [Examples](#examples)
+- [Scaffolds](#scaffolds)
+- [Packages](#packages)
 - [Contributing](#contributing)
 - [Team](#team)
 
