@@ -22,6 +22,7 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
 - **Data agnostic:** GraphiteJS supports any kind of data source. Now is availabe MongoDB.
 
 ---
+## Guide
 
 - [How to use](#how-to-use)
   - [Setup](#setup)
