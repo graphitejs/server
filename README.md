@@ -29,6 +29,9 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
   - [Create GraphQl server](#create-graphql-server)
   - [Create a GraphQl Schema model](#create-a-graphql-schema-model)
 - [Examples](#examples)
+  - [For accounts](#for-accounts)
+  - [Todo List](#todo-list)
+  - [REST APIs](#rest-apis)
 - [Scaffolds](#scaffolds)
 - [Packages](#packages)
 - [Contributing](#contributing)
@@ -125,17 +128,17 @@ Graphite.graphQLServer({ graphql: PORT: 8001 }, [Todo]);
 
 Graphite JS, we are working in several examples for you. Nowadays you can find this examples.
 
-For accounts:
+#### For accounts:
 
 [graphite-mongoose-accounts](/examples/accounts/graphite-mongoose-accounts)
 
-Todo List:
+#### Todo List:
 
 [todo-list-redux-sagas](/examples/todo-list-redux-sagas)
 
 [todo-list](/examples/todo-list)
 
-REST APIs:
+### REST APIs:
 
 [Example with Spotify API](https://github.com/wzalazar/spotify) <br/>
 [Demo](https://spotify-graphitejs-scbvotbkhb.now.sh/)
