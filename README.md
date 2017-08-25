@@ -26,7 +26,7 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
 - [How to use](#how-to-use)
   - [Setup](#setup)
 - [Contributing](#contributing)
-- [Authors](#authors)
+- [Team](#team)
 
 ## How to work
 
