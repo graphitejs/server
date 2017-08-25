@@ -130,18 +130,18 @@ Graphite JS, we are working in several examples for you. Nowadays you can find t
 
 #### For accounts:
 
-[graphite-mongoose-accounts](/examples/accounts/graphite-mongoose-accounts)
+- [graphite-mongoose-accounts](/examples/accounts/graphite-mongoose-accounts)
 
 #### Todo List:
 
-[todo-list-redux-sagas](/examples/todo-list-redux-sagas)
+- [todo-list-redux-sagas](/examples/todo-list-redux-sagas)
 
-[todo-list](/examples/todo-list)
+- [todo-list](/examples/todo-list)
 
-### REST APIs:
+#### REST APIs:
 
-[Example with Spotify API](https://github.com/wzalazar/spotify) <br/>
-[Demo](https://spotify-graphitejs-scbvotbkhb.now.sh/)
+- [Example with Spotify API](https://github.com/wzalazar/spotify) <br/>
+- [Demo](https://spotify-graphitejs-scbvotbkhb.now.sh/)
 
 ## Scaffolds
 
