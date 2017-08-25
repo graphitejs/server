@@ -136,7 +136,7 @@ export default new Todo();
 
 ```
 
-#### Update GraphQl server:
+## Update GraphQl server:
 
 You need to pass the new model Todo.
 
