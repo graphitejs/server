@@ -140,7 +140,7 @@ Graphite JS, we are working in several examples for you. Nowadays you can find t
 
 #### REST APIs:
 
-- [Example with Spotify API](https://github.com/wzalazar/spotify) <br/>
+- [Example with Spotify API](https://github.com/wzalazar/spotify)
 - [Demo](https://spotify-graphitejs-scbvotbkhb.now.sh/)
 
 ## Scaffolds
