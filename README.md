@@ -21,6 +21,13 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
 - **Any Front:** GraphiteJS support any front library.
 - **Data agnostic:** GraphiteJS supports any kind of data source. Now is availabe MongoDB.
 
+
+
+- [How to use](#how-to-use)
+  - [Setup](#setup)
+- [Contributing](#contributing)
+- [Authors](#authors)
+
 ## How to work
 
 GraphiteJS **allow choose** the packages and built your project **like you want**
@@ -348,6 +355,8 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 
 ## Contributing
+
+Please see our [contributing.md](./contributing.md)
 
 - Clone this repository.
 - Install dependencies.
