@@ -367,7 +367,7 @@ GraphiteJS has several solutions. Contains solutions for SERVER or CLIENT.
 
 ## Contributing
 
-Please see our [contributing.md](./contributing.md)
+Please see our [contributing.md](./CONTRIBUTING.md)
 
 - Clone this repository.
 - Install dependencies.
