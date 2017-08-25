@@ -28,6 +28,8 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
   - [Setup](#setup)
   - [Create GraphQl server](#create-graphql-server)
   - [Create a GraphQl Schema model](#create-a-graphql-schema-model)
+  - [Querying](#querying)
+  - [Update GraphQl server](#update-graphql-server)
 - [Examples](#examples)
   - [For accounts](#for-accounts)
   - [Todo List](#todo-list)
@@ -51,11 +53,21 @@ Install it:
 
 **For example:**
 
+#### Add Graphite server
+
 ```bash
 
 npm i @graphite/apollo-express --save
 
 yarn add @graphite/apollo-express
+
+```
+#### Add Graphite decorators
+
+```bash
+
+npm i @graphite/decorators --save
+yarn add @graphite/decorators
 
 ```
 
@@ -73,11 +85,25 @@ Done, your first server **is ready!** Now you only need to create the models and
 
 ## Create a GraphQl Schema model:
 
-```bash
+```javascript
 
-npm i @graphite/decorators --save
+import { property, graphQl, query } from '@graphite/decorators';
+
+@graphQl
+class Todo {
+  @property('String | required')
+  name;
+
+  @property('Boolean')
+  status = false;
+}
+
+export default new Todo();
 
 ```
+
+
+## Querying:
 
 ```javascript
 
@@ -112,7 +138,7 @@ export default new Todo();
 
 #### Update GraphQl server:
 
-Now, you need to pass the new model Todo.
+You need to pass the new model Todo.
 
 ```javascript
 
