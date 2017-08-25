@@ -26,20 +26,30 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
 
 - [How to use](#how-to-use)
   - [Setup](#setup)
+  - [Create GraphQl server](#create-graphql-server)
+  - [Create a GraphQl Schema model](#create-a-graphQl-schema-model)
 - [Contributing](#contributing)
 - [Team](#team)
 
-## How to work
+---
+
+## How to use
 
 GraphiteJS **allow choose** the packages and built your project **like you want**
 
 Firstly you need to choose one Sever - GraphQL.
+
+# Setup
+
+Install it:
 
 **For example:**
 
 ```bash
 
 npm i @graphite/apollo-express --save
+
+yarn add @graphite/apollo-express
 
 ```
 
@@ -55,7 +65,7 @@ Graphite.graphQLServer({ graphql: PORT: 8001 }, []);
 
 Done, your first server **is ready!** Now you only need to create the models and pass them to GraphQl server.
 
-#### Create your first model:
+#### Create a GraphQl Schema model:
 
 ```bash
 
