@@ -29,6 +29,7 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
   - [Create GraphQl server](#create-graphql-server)
   - [Create a GraphQl Schema model](#create-a-graphql-schema-model)
   - [Querying](#querying)
+  - [Mutations](#mutations)
   - [Update GraphQl server](#update-graphql-server)
 - [Examples](#examples)
   - [For accounts](#for-accounts)
@@ -129,6 +130,39 @@ class Todo {
             status: false
         }
     ];
+  }
+}
+
+export default new Todo();
+
+```
+
+## Mutations:
+
+```javascript
+
+import { property, graphQl, mutation } from '@graphite/decorators';
+
+@graphQl
+class Todo {
+  @property('String | required')
+  name;
+
+  @property('Boolean')
+  status = false;
+  
+  @mutation({
+    fields: 'name: String, status: Boolean',
+    responseType: 'Todo',
+  })
+  async createTodo(_, { name, status }) {
+    try {
+      // Handling the new data 
+      return todo;
+    } catch (err) {
+      // Handling the error
+      return err;
+    }
   }
 }
 
