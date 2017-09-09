@@ -5,12 +5,14 @@ import {
   isEqual,
   keys,
   get,
+  noop,
 } from 'lodash';
 
 import { functionName } from '@graphite/utils';
 
 const graphQl = function(target) {
   const nameClass = functionName(target);
+  const createTypes = target.prototype.createTypes;
   const typesAttr = get(target.prototype, 'Types', '');
   target.prototype.nameClass = nameClass;
 
@@ -37,57 +39,21 @@ const graphQl = function(target) {
     Object.assign(target.prototype.Resolvers, hasMany);
   }
 
-  if (target.prototype.create || target.prototype.update || target.prototype.remove) {
-    const responseTypes = {};
-    responseTypes[`response${nameClass}`] = {};
-    responseTypes[`response${nameClass}`][nameClass.toLowerCase()] = function(model = {}) {
-      return isEmpty(pick(model, Object.keys(get(target.prototype, 'schema', {})))) ? null : model;
-    };
-    responseTypes[`response${nameClass}`].errors = function(errors) {
-      const requiredKeys = ['key', 'message'];
-      if (isArray(errors) && isEqual(keys(errors[0]), requiredKeys)) {
-        return errors;
-      }
-      return null;
-    };
-    Object.assign(target.prototype.Resolvers, responseTypes);
-
-    target.prototype.Types += `
-      type response${nameClass} {
-        ${nameClass.toLowerCase()}: ${nameClass},
-        errors: [Errors],
-      }
-    `;
-  }
-
   if (target.prototype.create) {
-    target.prototype.Types += `
-      input create${nameClass} {
-        ${target.prototype.createTypes}
-      }
-    `;
-    target.prototype.Mutation = `${get(target.prototype, 'Mutation', '')}
-                                 ${target.prototype.create(nameClass)}`;
+    target.prototype.Types += target.prototype.create(nameClass, createTypes);
   }
 
   if (target.prototype.update) {
-    target.prototype.Types += `
-      input update${nameClass} {
-        ${target.prototype.updateTypes}
-      }
-    `;
-    target.prototype.Mutation = `${get(target.prototype, 'Mutation', '')}
-                                 ${target.prototype.update(nameClass)}`;
+    target.prototype.Types += target.prototype.update(nameClass, createTypes);
   }
 
-  if (target.prototype.remove) {
-    target.prototype.Mutation = `${get(target.prototype, 'Mutation', '')}
-                                 ${target.prototype.remove(nameClass)}`;
+  if (target.prototype.responseTypeWithError) {
+    target.prototype.Types += target.prototype.responseTypeWithError(nameClass);
   }
 
-  target.prototype.Mutation = `${get(target.prototype, 'Mutation', '')}`;
   target.prototype.Types = `${get(target.prototype, 'Types', '')}`;
-  target.prototype.Query = `${get(target.prototype, 'Query', '')}`;
+  target.prototype.Mutation = get(target.prototype, 'Mutation', () => noop)()(nameClass);
+  target.prototype.Query = get(target.prototype, 'Query', () => noop)()(nameClass);
 };
 
 export default graphQl;

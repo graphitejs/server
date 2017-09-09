@@ -1,27 +1,18 @@
 import pluralize from 'pluralize';
-import { get } from 'lodash';
+import { get, noop } from 'lodash';
 
-const query = function(params) {
-  return (target, key, descriptor) => {
-    const singularKey = pluralize(key, 1);
-    const defaultFields = 'id: String, skip: Int, limit: Int, sort: String';
-    const defaultResposeType = `${singularKey[0].toUpperCase() + singularKey.slice(1)}`;
+const allQueries = [];
 
-    switch (typeof params) {
-    case 'string':
-      target.Query = `${target.Query || ''} \n ${key}(${params}): [${defaultResposeType}],`;
-      break;
-    case 'object':
-      const fields = get(params, 'fields', defaultFields);
-      target.Query = `${target.Query || ''} \n ${key}(${fields}): [${get(params, 'responseType', defaultResposeType)}],`;
-      break;
-    default:
-      target.Query = `${target.Query || ''} \n ${key}(${defaultFields}): [${singularKey[0].toUpperCase() + singularKey.slice(1)}],`;
-    }
+const addQuery = (query = () => '') => {
+  allQueries.push(query);
+  return (newQuery = () => '') => {
+    allQueries.push(newQuery);
+    return (key) => allQueries.map(query => `${query(key)} \n` ).join('');
+  }
+}
 
-    target.Resolvers = Object.assign({}, target.Resolvers);
-    target.Resolvers.Query = Object.assign({}, target.Resolvers.Query);
-    target.Resolvers.Query[key] = async function() {
+const addResolver = (target, key, descriptor) => {
+  return async function() {
       try {
         const isAllow = get(target[key], 'allow', function() { return true; });
         if (isAllow.bind(target)(...arguments)) {
@@ -33,7 +24,30 @@ const query = function(params) {
         throw new Error('Decorators query failed. \n' + error);
       }
     };
-  };
+}
+
+const query = function(params) {
+  return (target, key, descriptor) => {
+    const defaultFields = 'id: String, skip: Int, limit: Int, sort: String';
+    let newQuery = '';
+
+    switch (typeof params) {
+      case 'string':
+      newQuery = (nameType) => `${key}(${params}): [${nameType}],`;
+      break;
+      case 'object':
+      const fields = get(params, 'fields', defaultFields);
+      newQuery = (nameType) => `${key}(${fields}): [${get(params, 'responseType', nameType)}],`;
+      break;
+      default:
+      newQuery = (nameType) => `${key}(${defaultFields}): [${nameType}],`;
+    }
+
+    target.Query = addQuery(newQuery);
+    target.Resolvers = Object.assign({}, target.Resolvers);
+    target.Resolvers.Query = Object.assign({}, target.Resolvers.Query);
+    target.Resolvers.Query[key] = addResolver(target, key, descriptor);
+  }
 };
 
 export default query;

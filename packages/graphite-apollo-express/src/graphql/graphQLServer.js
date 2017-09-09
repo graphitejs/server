@@ -30,6 +30,7 @@ export default class GraphQLServer {
       delete Resolvers.Query;
     }
 
+
     try {
       this.executableSchema = makeExecutableSchema({
         typeDefs: typeDefs(Types, Query, Mutation),
@@ -90,13 +91,12 @@ export default class GraphQLServer {
       const mutationMethods = keys(get(collection, 'Resolvers.Mutation', {}));
       const queryMethods = keys(get(collection, 'Resolvers.Query', {}));
       const resolversNames = without(keys(collection.Resolvers), 'Query', 'Mutation');
-
       mutationMethods.map((value) => {
-        acum.Resolvers.Mutation[value] = collection[value].bind(collection);
+        acum.Resolvers.Mutation[value] = collection.Resolvers.Mutation[value].bind(collection);
       });
 
       queryMethods.map((value) => {
-        acum.Resolvers.Query[value] = collection[value].bind(collection);
+        acum.Resolvers.Query[value] = collection.Resolvers.Query[value].bind(collection);
       });
 
       resolversNames.forEach(resolverName => {

@@ -1,6 +1,6 @@
 export const database = ({
   PORT: 3001,
-  NAME: 'TODO',
+  NAME: 'TODO2',
 });
 
 export const graphql = ({

@@ -12,27 +12,36 @@ class Todo {
 
   @query()
   @allow((_, todo, {}) => true)
-  todo() {
+  getAllTodo() {
     return this.Model.find();
   }
 
-  @create
-  @mutation()
+  @query()
+  @allow((_, todo, {}) => true)
+  getSomeTodo() {
+    return this.Model.find();
+  }
+
+  @query()
+  @allow((_, todo, {}) => true)
+  otroe() {
+    return this.Model.find();
+  }
+
+  @mutation({ type: 'create' })
   @allow((_, todo, {}) => true)
   async createTodo(_, { todo }) {
     try {
       return await this.Model.create(todo);
     } catch (err) {
-      const errorKeys = Object.keys(err.errors);
-      return errorKeys.reduce((errorsCreate, error) => {
-        errorsCreate.push({ key: error, message: err.errors[error].message });
-        return errorsCreate;
-      }, []);
+      return [{
+        key: '1',
+        message: 'chau'
+      }]
     }
   }
 
-  @update
-  @mutation()
+  @mutation({ type: 'update' })
   async updateTodo(_, { id, todo }) {
     try {
       return await this.Model.findByIdAndUpdate(id, todo, { 'new': true });
@@ -41,8 +50,7 @@ class Todo {
     }
   }
 
-  @remove
-  @mutation()
+  @mutation({ type: 'remove' })
   async removeTodo(_, { id }) {
     try {
       return await this.Model.findByIdAndRemove(id);
