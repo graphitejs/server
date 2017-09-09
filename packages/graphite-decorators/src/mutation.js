@@ -87,17 +87,23 @@ const mutation = function(params) {
 
           if (type == 'create') {
             target.create = createInputType;
+            // key name of function for e.g., createTodo
+            // createTodo(todo: createTodo): responseTodo
             newMutation = (nameType) => `${key}(${lowerFirst(nameType)}: create${nameType}): response${nameType},`;
             break;
           }
 
           if (type == 'update') {
             target.update = updateInputType;
+            // key name of function for e.g., updateTodo
+            // updateTodo(id: ID!, todo: updateTodo): responseTodo
             newMutation = (nameType) => `${key}(id: ID!, ${lowerFirst(nameType)}: update${nameType}): response${nameType},`;
             break;
           }
 
           if (type == 'remove') {
+            // key name of function for e.g., removeTodo
+            // removeTodo(id: ID!): responseTodo
             newMutation = (nameType) => `${key}(id: ID!): response${nameType},`;
             break;
           }
