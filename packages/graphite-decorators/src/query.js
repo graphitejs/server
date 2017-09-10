@@ -1,13 +1,12 @@
-import pluralize from 'pluralize';
-import { get, noop } from 'lodash';
+import { get } from 'lodash';
 
-const allQueries = [];
+const QUERYS = [];
 
 const addQuery = (query = () => '') => {
-  allQueries.push(query);
+  QUERYS.push(query);
   return (newQuery = () => '') => {
-    allQueries.push(newQuery);
-    return (key) => allQueries.map(query => `${query(key)} \n` ).join('');
+    QUERYS.push(newQuery);
+    return (key) => QUERYS.map(query => `${query(key)} \n` ).join('');
   }
 }
 

@@ -8,7 +8,7 @@ const MUTATIONS = [];
 const DEFAULT_MUTATION = (nameType) => `${key}: ${nameType},`;
 
 
-const addMutation = (mutation = () => '') => {
+const addMutation = (key, mutation = () => '') => {
   MUTATIONS.push(mutation);
   return (newMutation = () => '') => {
     MUTATIONS.push(newMutation);
@@ -38,7 +38,7 @@ const addResolver = (target, key, descriptor) => {
         }
         return null;
       } catch (error) {
-        throw new Error('Decorators query failed. \n' + error);
+        throw new Error('Decorators mutation failed. \n' + error);
       }
     };
 }
@@ -52,7 +52,7 @@ const TYPE_CREATE = {
   },
   // key name of function for e.g., createTodo
   // createTodo(todo: createTodo): responseTodo
-  mutation: (nameType) => `${key}(${lowerFirst(nameType)}: create${nameType}): response${nameType},`,
+  mutation: key => nameType => `${key}(${lowerFirst(nameType)}: create${nameType}): response${nameType},`,
 }
 
 const TYPE_UPDATE = {
@@ -66,13 +66,13 @@ const TYPE_UPDATE = {
   },
   // key name of function for e.g., updateTodo
   // updateTodo(id: ID!, todo: updateTodo): responseTodo
-  mutation: (nameType) => `${key}(id: ID!, ${lowerFirst(nameType)}: update${nameType}): response${nameType},`,
+  mutation: key => nameType => `${key}(id: ID!, ${lowerFirst(nameType)}: update${nameType}): response${nameType},`,
 }
 
 const TYPE_REMOVE = {
   // key name of function for e.g., removeTodo
   // removeTodo(id: ID!): responseTodo
-  mutation: (nameType) => `${key}(id: ID!): response${nameType},`,
+  mutation: key => nameType => `${key}(id: ID!): response${nameType},`,
 }
 
 const TYPE_RESPONSE_WITH_ERROR = (typeName) => {
@@ -111,16 +111,16 @@ const mutation = function(params) {
 
             case CREATE:
               target.create = TYPE_CREATE.inputType;
-              newMutation = TYPE_CREATE.mutation;
+              newMutation = TYPE_CREATE.mutation(key);
               break;
 
             case UPDATE:
               target.update = TYPE_UPDATE.inputType;
-              newMutation = TYPE_UPDATE.mutation;
+              newMutation = TYPE_UPDATE.mutation(key);
               break;
 
             case REMOVE:
-              newMutation = TYPE_REMOVE.mutation;
+              newMutation = TYPE_REMOVE.mutation(key);
               break;
 
             default:
@@ -143,7 +143,7 @@ const mutation = function(params) {
         newMutation = DEFAULT_MUTATION;
     }
 
-    target.Mutation = addMutation(newMutation);
+    target.Mutation = addMutation(key, newMutation);
     target.Resolvers = Object.assign({}, target.Resolvers);
     target.Resolvers.Mutation = Object.assign({}, target.Resolvers.Mutation);
     target.Resolvers.Mutation[key] = addResolver(target, key, descriptor);
