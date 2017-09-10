@@ -35,8 +35,6 @@ const query = function(params) {
       newQuery = (nameType) => `${key}(${defaultFields}): [${nameType}],`;
     }
 
-    //target.Query = addQuery(newQuery);
-
     target.QUERYS = get(target, 'QUERYS', []);
     target.QUERYS.push(newQuery);
     target.Query = addQuery(target.QUERYS);
