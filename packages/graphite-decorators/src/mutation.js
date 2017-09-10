@@ -4,7 +4,7 @@ const CREATE = 'create';
 const UPDATE = 'update';
 const REMOVE = 'remove';
 const ACTIONS_TYPES = [CREATE, UPDATE, REMOVE];
-const DEFAULT_MUTATION = (nameType) => `${key}: ${nameType},`;
+const DEFAULT_MUTATION = (nameClass) => `${key}: ${nameClass},`;
 
 
 const addMutation = (mutations) => (newMutation = []) => (nameClass) =>
@@ -47,7 +47,7 @@ const TYPE_CREATE = {
   },
   // key name of function for e.g., createTodo
   // createTodo(todo: createTodo): responseTodo
-  mutation: key => nameType => `${key}(${lowerFirst(nameType)}: create${nameType}): response${nameType},`,
+  mutation: key => nameClass => `${key}(${lowerFirst(nameClass)}: create${nameClass}): response${nameClass},`,
 }
 
 const TYPE_UPDATE = {
@@ -61,13 +61,13 @@ const TYPE_UPDATE = {
   },
   // key name of function for e.g., updateTodo
   // updateTodo(id: ID!, todo: updateTodo): responseTodo
-  mutation: key => nameType => `${key}(id: ID!, ${lowerFirst(nameType)}: update${nameType}): response${nameType},`,
+  mutation: key => nameClass => `${key}(id: ID!, ${lowerFirst(nameClass)}: update${nameClass}): response${nameClass},`,
 }
 
 const TYPE_REMOVE = {
   // key name of function for e.g., removeTodo
   // removeTodo(id: ID!): responseTodo
-  mutation: key => nameType => `${key}(id: ID!): response${nameType},`,
+  mutation: key => nameClass => `${key}(id: ID!): response${nameClass},`,
 }
 
 const TYPE_RESPONSE_WITH_ERROR = (typeName) => {
@@ -93,7 +93,7 @@ const mutation = function(params) {
       // ('id: ID!') // default return current name Type
       case 'string':
         parseFields = isEmpty(params) ? '' : `(${params})`;
-        newMutation = (nameType) => `${key}${parseFields}: ${nameType},`;
+        newMutation = (nameClass) => `${key}${parseFields}: ${nameClass},`;
         break;
 
       case 'object':
@@ -128,7 +128,7 @@ const mutation = function(params) {
 
         if (fields) {
           parseFields = isEmpty(fields) ? '' : `(${params})`;
-          newMutation = nameType => `${key}${parseFields}: ${get(params, 'responseType', nameType)},`;
+          newMutation = nameClass => `${key}${parseFields}: ${get(params, 'responseType', nameClass)},`;
           break;
         }
 

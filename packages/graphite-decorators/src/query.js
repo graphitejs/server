@@ -25,14 +25,14 @@ const query = function(params) {
 
     switch (typeof params) {
       case 'string':
-      newQuery = (nameType) => `${key}(${params}): [${nameType}],`;
+      newQuery = (nameClass) => `${key}(${params}): [${nameClass}],`;
       break;
       case 'object':
       const fields = get(params, 'fields', defaultFields);
-      newQuery = (nameType) => `${key}(${fields}): [${get(params, 'responseType', nameType)}],`;
+      newQuery = (nameClass) => `${key}(${fields}): [${get(params, 'responseType', nameClass)}],`;
       break;
       default:
-      newQuery = (nameType) => `${key}(${defaultFields}): [${nameType}],`;
+      newQuery = (nameClass) => `${key}(${defaultFields}): [${nameClass}],`;
     }
 
     target.QUERYS = get(target, 'QUERYS', []);
