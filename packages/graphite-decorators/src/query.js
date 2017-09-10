@@ -1,16 +1,5 @@
 import { get } from 'lodash';
 
-
-// const QUERYS = [];
-// const addQuery = (query = () => '') => {
-//   QUERYS.push(query);
-//   return (newQuery = () => '') => {
-//     QUERYS.push(newQuery);
-//     return (key) => QUERYS.map(query => `${query(key)} \n` ).join('');
-//   }
-// }
-
-
 const addQuery = (querys) => (newQuery = []) => (nameClass) =>
                       [...querys, ...newQuery].map(query => `${query(nameClass)} \n` ).join('');
 
