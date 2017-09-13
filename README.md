@@ -30,6 +30,7 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
   - [Create a GraphQl Schema model](#create-a-graphql-schema-model)
   - [Querying](#querying)
   - [Mutations](#mutations)
+  - [Resolver Query and Mutation](#resolvers-query-and-mutation)
   - [Update GraphQl server](#update-graphql-server)
 - [Examples](#examples)
   - [For accounts](#for-accounts)
@@ -170,6 +171,61 @@ export default new Todo();
 
 ```
 
+## Mutation decorator
+
+Accepts 
+
+
+- **String** - When you pass a String, you are specified the field that will accepts the mutation
+The String is a key value where value is a valid Scalar Type. In this case the default return type regards to name Class User.
+
+```javascript
+
+@graphql
+class User {
+    @mutation('firstName: String, lastName: String')
+    createUser(_, { firstName, lastName }) {
+        ...
+    }
+}
+
+```
+
+- Object
+- Empty
+
+## Resolvers Query and Mutation
+
+Every resolver in a GraphQL.js schema accepts four positional arguments:
+
+```javascript
+
+fieldName(obj, args, context, info) { result }
+
+```
+
+These arguments have the following meanings and conventional names:
+
+- **obj**: The object that contains the result returned from the resolver on the parent field, or, in the case of a top-level Query field, the rootValue passed from the server configuration. This argument enables the nested nature of GraphQL queries.
+
+- **args**: An object with the arguments passed into the field in the query. For example, if the field was called with author(name: "Ada"), the args object would be: { "name": "Ada" }.
+
+- **context**: This is an object shared by all resolvers in a particular query, and is used to contain per-request state, including authentication information, dataloader instances, and anything else that should be taken into account when resolving the query. If you’re using Apollo Server, read about how to set the context in the setup documentation.
+
+- **info**: This argument should only be used in advanced cases, but it contains information about the execution state of the query, including the field name, path to the field from the root, and more. It’s only documented in the GraphQL.js source code.
+
+
+### Resolver result format
+
+Resolvers in GraphQL can return different kinds of results which are treated differently:
+
+- **null or undefined** - this indicates the object could not be found. If your schema says that field is nullable, then the result will have a null value at that position. If the field is non-null, the result will “bubble up” to the nearest nullable field and that result will be set to null. This is to ensure that the API consumer never gets a null value when they were expecting a result.
+
+- **An array** - this is only valid if the schema indicates that the result of a field should be a list. The sub-selection of the query will run once for every item in this array.
+
+- **A promise** - resolvers often do asynchronous actions like fetching from a database or backend API, so they can return promises. This can be combined with arrays, so a resolver can return a promise that resolves to an array, or an array of promises, and both are handled correctly.
+
+- **A scalar or object value** - a resolver can also return any other kind of value, which doesn’t have any special meaning but is simply passed down into any nested resolvers, as described in the next section.
 ## Update GraphQl server:
 
 You need to pass the new model Todo.
