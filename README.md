@@ -192,7 +192,7 @@ class User {
 
 ```
 
-- Object
+- **Object**
 
 
 There two cases, the first one you choose the field and return type. For example below:
@@ -252,7 +252,9 @@ class User {
 
 ```
 
-- Empty
+- **Empty**
+
+If you have decided send empty arguments its not have available arguments and  return Type will be the current Type.
 
 ## Resolvers Query and Mutation
 
