@@ -173,8 +173,9 @@ export default new Todo();
 
 ## Mutation decorator
 
-Accepts 
+You have to define the arguments will accepts the mutation and return type.
 
+The mutation decorator accepts these type parameter for to define the arguments and return type. 
 
 - **String** - When you pass a String, you are specified the field that will accepts the mutation
 The String is a key value where value is a valid Scalar Type. In this case the default return type regards to name Class User.
@@ -192,6 +193,65 @@ class User {
 ```
 
 - Object
+
+
+There two cases, the first one you choose the field and return type. For example below:
+
+```javascript
+
+@graphql
+class User {
+    @mutation({
+        fields: 'firstName: String, lastName: String',
+        responseType: 'User',
+    })
+    createUser(_, { firstName, lastName }) {
+        ...
+    }
+}
+
+```
+The second one you pass the type key with option you want. The option can be:
+
+ - **create**
+
+    When you send create like type. This will create an Input Type for the argument. Also will create
+    a return type with the current Type object and Error type.
+
+
+ - **update** 
+
+   When you send update like type. This will create an Input Type with any field required for the argument and id:ID!. Also will create
+   a return type with the current Type object and Error type.
+
+ - **remove**
+
+ When you send remove like type. This will id:ID! like paramteer. Also will create
+ a return type with the current Type object and Error type.
+
+
+```javascript
+
+@graphql
+class User {
+    @mutation({ type: 'create' })
+    createUser(_, { user }) {
+        ...
+    }
+
+    @mutation({ type: 'update' })
+    updateUser(_, { id, user }) {
+        ...
+    }
+
+    @mutation({ type: 'remove' })
+    removeUser(_, { id }) {
+        ...
+    }
+}
+
+```
+
 - Empty
 
 ## Resolvers Query and Mutation
