@@ -30,6 +30,7 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
   - [Create a GraphQl Schema model](#create-a-graphql-schema-model)
   - [Querying](#querying)
   - [Mutations](#mutations)
+  - [Mutation Decorator](#mutation-decorator)
   - [Resolver Query and Mutation](#resolvers-query-and-mutation)
   - [Update GraphQl server](#update-graphql-server)
 - [Examples](#examples)
