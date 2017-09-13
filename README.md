@@ -177,7 +177,7 @@ You have to define the arguments will accepts the mutation and return type.
 
 The mutation decorator accepts these type parameter for to define the arguments and return type. 
 
-- **String** - When you pass a String, you are specified the field that will accepts the mutation
+- **String**: When you pass a String, you are specified the field that will accepts the mutation
 The String is a key value where value is a valid Scalar Type. In this case the default return type regards to name Class User.
 
 ```javascript
@@ -192,10 +192,7 @@ class User {
 
 ```
 
-- **Object**
-
-
-There two cases, the first one you choose the field and return type. For example below:
+- **Object**: There two cases, the first one you choose the field and return type. For example below:
 
 ```javascript
 
@@ -213,21 +210,12 @@ class User {
 ```
 The second one you pass the type key with option you want. The option can be:
 
- - **create**
-
-    When you send create like type. This will create an Input Type for the argument. Also will create
-    a return type with the current Type object and Error type.
+ - **create**: When you send create like type. This will create an Input Type for the argument. Also will create a return type with the current Type object and Error type.
 
 
- - **update** 
+ - **update**: When you send update like type. This will create an Input Type with any field required for the argument and id:ID!. Also will create a return type with the current Type object and Error type.
 
-   When you send update like type. This will create an Input Type with any field required for the argument and id:ID!. Also will create
-   a return type with the current Type object and Error type.
-
- - **remove**
-
- When you send remove like type. This will id:ID! like paramteer. Also will create
- a return type with the current Type object and Error type.
+ - **remove**: When you send remove like type. This will id:ID! like paramteer. Also will create a return type with the current Type object and Error type.
 
 
 ```javascript
@@ -252,9 +240,7 @@ class User {
 
 ```
 
-- **Empty**
-
-If you have decided send empty arguments its not have available arguments and  return Type will be the current Type.
+- **Empty**: If you have decided send empty arguments its not have available arguments and  return Type will be the current Type.
 
 ## Resolvers Query and Mutation
 
