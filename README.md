@@ -36,7 +36,7 @@ This project is a monorepo built with [Lerna](https://github.com/lerna/lerna).
   - [Class](#class)
     - [Graphql Decorator](#graphql-decorator)
     - [InputType Decorator](#input-type-decorator)
-  - [Property](#property)
+  - [Property](#property)
     - [Property Decorator](#property-decorator)
     - [HasOne Decorator](#has-one-decorator)
     - [HasMany Decorator](#has-many-decorator)
