@@ -78,7 +78,7 @@ yarn add @graphite/decorators
 ```javascript
 
 import { Graphite } from '@graphite/apollo-express';
-Graphite.graphQLServer({ graphql: PORT: 8001 }, []);
+Graphite.graphQLServer({ graphql: { PORT: 8001 }}, []);
 
 ```
 
