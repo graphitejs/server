@@ -3,55 +3,55 @@ import { property, mutation, graphQl, query, create, update, remove, allow } fro
 
 @mongoose
 @graphQl
-class Todo {
+class Task {
   @property('String | required | minlength=1 | maxlength=90')
-  name;
+  nameTask;
 
   @property('Boolean')
-  status = false;
+  statusTask = false;
 
   @query()
-  @allow((_, todo, {}) => true)
-  getAllTodo()
+  @allow((_, task, {}) => true)
+  getAllTask() {
     return this.Model.find();
   }
 
   @query()
-  @allow((_, todo, {}) => true)
-  getSomeTodo() {
+  @allow((_, task, {}) => true)
+  getSomeTask() {
     return this.Model.find();
   }
 
   @query()
-  @allow((_, todo, {}) => true)
+  @allow((_, task, {}) => true)
   otroe() {
     return this.Model.find();
   }
 
   @mutation({ type: 'create' })
-  @allow((_, todo, {}) => true)
-  async createTodo(_, { todo }) {
+  @allow((_, Task, {}) => true)
+  async createTask(_, { task }) {
     try {
-      return await this.Model.create(todo);
+      return await this.Model.create(task);
     } catch (err) {
       return [{
         key: '1',
-        message: 'chfedau'
+        message: 'chau'
       }]
     }
   }
 
   @mutation({ type: 'update' })
-  async updateTodo(_, { id, todo }) {
+  async updateTask(_, { id, task }) {
     try {
-      return await this.Model.findByIdAndUpdate(id, todo, { 'new': true });
+      return await this.Model.findByIdAndUpdate(id, task, { 'new': true });
     } catch (err) {
       return null;
     }
   }
 
   @mutation({ type: 'remove' })
-  async removeTodo(_, { id }) {
+  async removeTask(_, { id }) {
     try {
       return await this.Model.findByIdAndRemove(id);
     } catch (err) {
@@ -60,4 +60,4 @@ class Todo {
   }
 }
 
-export default new Todo();
+export default new Task();

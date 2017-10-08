@@ -1,0 +1,17 @@
+{
+    "restartable": "rs",
+    "verbose": false,
+    "watch": [
+        "server",
+        "../../packages/graphite-account/dist",
+        "../../packages/graphite-apollo-express/dist",
+        "../../packages/graphite-decorators/dist",
+        "../../packages/graphite-mongoose/dist",
+        "../../packages/graphite-mongoose-account/dist",
+        "../../packages/graphite-mongoose-account-facebook/dist",
+        "../../packages/graphite-mongoose-account-password/dist",
+        "../../packages/graphite-scalars/dist",
+        "../../packages/graphite-utils/dist"
+    ],
+    "ext": "js json"
+}

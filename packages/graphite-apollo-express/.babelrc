@@ -1,6 +1,7 @@
 {
   "presets": ["latest"],
   "plugins": [
+    "transform-runtime",
     "babel-plugin-transform-class-properties",
     "add-module-exports"
   ]

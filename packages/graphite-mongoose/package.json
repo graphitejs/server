@@ -7,6 +7,7 @@
     "test": "npm run mongod && npm run compile && mocha --compilers js:babel-core/register --require babel-polyfill --recursive",
     "coverage": "npm run mongod && node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --recursive",
     "compile": "babel src --out-dir dist",
+    "compile:watch": "npm run compile -- -w --source-maps=inline",
     "prepublish": "npm run compile",
     "mongod": "(killall -9 mongod || true) && mkdir -p ./.build/data/log && mongod --fork --quiet --logpath ./.build/data/mongodb.log --dbpath ./.build/data --port 3001"
   },

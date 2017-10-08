@@ -1,5 +1,8 @@
 const functionName = function(fun) {
   try {
+    if (fun.name) {
+      return fun.name;
+    }
     let ret = fun.toString();
     ret = ret.substr('function '.length);
     ret = ret.substr(0, ret.indexOf('('));

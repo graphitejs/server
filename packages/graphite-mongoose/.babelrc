@@ -1,6 +1,7 @@
 {
   "presets": ["latest"],
   "plugins": [
+    "transform-runtime",
     "transform-decorators-legacy",
     "transform-class-properties",
     "add-module-exports"

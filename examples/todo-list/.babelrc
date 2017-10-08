@@ -1,8 +1,25 @@
 {
-  "presets": ["react", "babel-preset-latest"],
-  "plugins": [
-    "transform-decorators-legacy",
-    "add-module-exports",
-    "transform-class-properties"
-  ]
+  "env": {
+    "server": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "node": "current"
+          },
+          "include": []
+        }]
+        ],
+        "plugins": [
+          "transform-decorators-legacy",
+          "transform-class-properties",
+          "transform-regenerator"
+        ]
+    },
+    "client": {
+      "presets": ["react", "latest"],
+      "plugins": [
+        "transform-decorators-legacy"
+      ]
+    }
+  }
 }

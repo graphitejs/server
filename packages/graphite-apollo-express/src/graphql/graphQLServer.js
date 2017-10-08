@@ -18,6 +18,7 @@ export default class GraphQLServer {
   }
 
   init(config = defaultConfig, collections = []) {
+
     const { graphql } = config;
     const { Types, Query, Mutation, Resolvers } = this.register([...collections, ...scalars]);
     const GRAPHQL_PORT = graphql.PORT;
@@ -29,7 +30,6 @@ export default class GraphQLServer {
     if (isEmpty(Resolvers.Query)) {
       delete Resolvers.Query;
     }
-
 
     try {
       this.executableSchema = makeExecutableSchema({
