@@ -1,6 +1,6 @@
 {
   "name": "@graphite/apollo-express",
-  "version": "0.2.27",
+  "version": "0.2.28",
   "description": "Graphite Framework, apollo express",
   "main": "dist/Graphite.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
-    "@graphite/scalars": "^0.2.24",
+    "@graphite/scalars": "^0.2.28",
     "apollo-server": "^0.3.3",
     "body-parser": "^1.15.2",
     "cors": "^2.8.3",

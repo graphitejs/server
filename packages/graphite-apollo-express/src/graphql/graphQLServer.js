@@ -51,6 +51,7 @@ export default class GraphQLServer {
 
     this.Graphite.listen(GRAPHQL_PORT, this.listenGraphQl.bind(this, GRAPHQL_PORT));
     this.Graphite.getSchema = () => getSchema(`http://localhost:${GRAPHQL_PORT}/graphql`);
+    this.Graphite.schema = this.executableSchema;
     return this.Graphite;
   }
 
