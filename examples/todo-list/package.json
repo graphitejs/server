@@ -12,26 +12,16 @@
     "server:debug": "DEBUG=apollo-express,mongoose,mongoose-account,mongoose-account-password,mongoose-account-facebook nodemon --inspect=5858 ./build-server/main.js",
     "mongod": "(killall -9 mongod || true) && mkdir -p ./.build/data/log && mongod --fork --quiet --logpath ./.build/data/mongodb.log --dbpath ./.build/data --port 3001",
     "mongo:reset": "rm -R ./build/data",
-    "start": "npm run mongod && npm run proxy & npm run server:debug",
-    "graphite-account": "cd ../../packages/graphite-account && npm run compile:watch",
-    "graphite-apollo-express": "cd ../../packages/graphite-apollo-express && npm run compile:watch",
-    "graphite-decorators": "cd ../../packages/graphite-decorators && npm run compile:watch",
-    "graphite-mongoose": "cd ../../packages/graphite-mongoose && npm run compile:watch",
-    "graphite-mongoose-account": "cd ../../packages/graphite-mongoose-account && npm run compile:watch",
-    "graphite-mongoose-account-facebook": "cd ../../packages/graphite-mongoose-account-facebook && npm run compile:watch",
-    "graphite-mongoose-account-password": "cd ../../packages/graphite-mongoose-account-password && npm run compile:watch",
-    "graphite-scalars": "cd ../../packages/graphite-scalars && npm run compile:watch",
-    "graphite-utils": "cd ../../packages/graphite-utils && npm run compile:watch",
-    "graphite-debug": "npm run graphite-account & npm run graphite-apollo-express & npm run graphite-decorators & npm run graphite-mongoose & npm run graphite-mongoose-account & npm run graphite-mongoose-account-facebook & npm run graphite-mongoose-account-password & npm run graphite-scalars & npm run graphite-utils & npm run server:debug"
+    "start": "npm run mongod && npm run proxy & npm run server:debug"
   },
   "pre-push": [
     "lint",
     "test"
   ],
   "dependencies": {
-    "@graphite/apollo-express": "../../packages/graphite-apollo-express/src",
-    "@graphite/decorators": "../../packages/graphite-decorators/src",
-    "@graphite/mongoose": "../../packages/graphite-mongoose/src",
+    "@graphite/apollo-express": "../../packages/graphite-apollo-express/dist",
+    "@graphite/decorators": "../../packages/graphite-decorators/dist",
+    "@graphite/mongoose": "../../packages/graphite-mongoose/dist",
     "apollo-client": "^0.10.1",
     "debug": "^2.6.1",
     "react": "^15.4.2",

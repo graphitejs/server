@@ -31,7 +31,7 @@
     "debug": "^2.3.3",
     "dyn-require": "0.0.3",
     "lodash": "^4.17.4",
-    "mongoose": "^4.7.2",
+    "mongoose": "^5.0.1",
     "mongoose-hook-custom-id": "^0.1.4",
     "mongoose-readonly": "^1.0.2",
     "pluralize": "^4.0.0"
