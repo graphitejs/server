@@ -35,7 +35,7 @@ describe('query', () => {
 
   context('When query have params and params is a String', () => {
     it('should be Query a String and contain user(name: String): [User]', (done) => {
-      const decoratorQuery = query('name: String');
+      decoratorQuery = query('name: String');
       decoratorQuery(target, key, descriptor);
       expect(target.Query).to.have.string;
       expect(target.Query.trim()).eql('user(name: String): [User],');
@@ -50,7 +50,7 @@ describe('query', () => {
           fields: 'name: String',
           responseType: 'response',
         };
-        const decoratorQuery = query(params);
+        decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
         expect(target.Query).to.have.string;
         expect(target.Query.trim()).eql('user(name: String): [response],');
@@ -63,7 +63,7 @@ describe('query', () => {
         const params = {
           fields: 'name: String',
         };
-        const decoratorQuery = query(params);
+        decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
         expect(target.Query).to.have.string;
         expect(target.Query.trim()).eql('user(name: String): [User],');
@@ -76,7 +76,7 @@ describe('query', () => {
         const params = {
           responseType: 'response',
         };
-        const decoratorQuery = query(params);
+        decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
         expect(target.Query).to.have.string;
         expect(target.Query.trim()).eql('user(id: String, skip: Int, limit: Int, sort: String): [response],');
@@ -87,7 +87,7 @@ describe('query', () => {
     context('When object not contain fields and responseType', () => {
       it('should be Query a String and contain user(id: String, skip: Int, limit: Int, sort: String): [User]', (done) => {
         const params = {};
-        const decoratorQuery = query(params);
+        decoratorQuery = query(params);
         decoratorQuery(target, key, descriptor);
         expect(target.Query).to.have.string;
         expect(target.Query.trim()).eql('user(id: String, skip: Int, limit: Int, sort: String): [User],');

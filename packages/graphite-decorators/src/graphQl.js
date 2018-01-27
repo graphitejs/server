@@ -1,9 +1,4 @@
 import {
-  pick,
-  isEmpty,
-  isArray,
-  isEqual,
-  keys,
   get,
   noop,
 } from 'lodash';
@@ -12,7 +7,6 @@ import { functionName } from '@graphite/utils';
 
 const graphQl = function(target) {
   const nameClass = functionName(target);
-  console.log("nameClass ",nameClass)
   const createTypes = target.prototype.createTypes;
   const typesAttr = get(target.prototype, 'Types', '');
   target.prototype.nameClass = nameClass;

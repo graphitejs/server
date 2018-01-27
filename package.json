@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "GraphiteJS Framework",
   "scripts": {
-    "lint": "eslint -f table ./packages/**/src ./packages/**/test || exit 1",
+    "lint": "eslint --fix ./packages/**/src ./packages/**/test || exit 1",
     "coverage": "lerna exec npm run coverage"
   },
   "pre-push": [],
@@ -11,9 +11,11 @@
     "babel-eslint": "^6.1.2",
     "eslint": "^3.11.1",
     "eslint-plugin-babel": "^4.0.0",
+    "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^6.10.3",
     "lerna": "2.0.0-rc.2",
-    "pre-push": "^0.1.1"
+    "pre-push": "^0.1.1",
+    "prettier": "^1.10.2"
   },
   "dependencies": {
     "redux": "^3.6.0"

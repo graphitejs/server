@@ -1,7 +1,8 @@
 {
   "parser": "babel-eslint",          // https://github.com/babel/babel-eslint
   "plugins": [
-    "react"                          // https://github.com/yannickcr/eslint-plugin-react
+    "react",                          // https://github.com/yannickcr/eslint-plugin-react
+    "prettier"
   ],
   "env": {                           // http://eslint.org/docs/user-guide/configuring.html#specifying-environments
     "browser": true,                 // browser global variables

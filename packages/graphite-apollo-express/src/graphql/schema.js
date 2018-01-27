@@ -66,9 +66,6 @@ export const typeDefinitionsWithMutation = (Types, Mutation) => {
 
 
 export default (Types = '', Query = '', Mutation = '') => {
-  Mutation = Mutation.trim();
-  Query = Query.trim();
-
   if (!isEmpty(Query) && !isEmpty(Mutation)) {
     return [typeDefinitionsAll(Types, Query, Mutation)];
   }

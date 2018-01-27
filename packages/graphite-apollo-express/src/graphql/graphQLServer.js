@@ -18,7 +18,6 @@ export default class GraphQLServer {
   }
 
   init(config = defaultConfig, collections = []) {
-
     const { graphql } = config;
     const { Types, Query, Mutation, Resolvers } = this.register([...collections, ...scalars]);
     const GRAPHQL_PORT = graphql.PORT;

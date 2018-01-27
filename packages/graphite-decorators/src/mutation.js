@@ -19,24 +19,23 @@ const validateSchema = (target, newData) =>
 
 const addResolver = (target, key, descriptor) => {
   return async function() {
-      try {
-        const nameClass = lowerFirst(target.nameClass);
-        const isAllow = get(target[key], 'allow', function() { return true; });
-        if (isAllow.bind(target)(...arguments)) {
-          const resolveData = await descriptor.value.bind(target)(...arguments);
+    try {
+      const nameClass = lowerFirst(target.nameClass);
+      const isAllow = get(target[key], 'allow', function() { return true; });
+      if (isAllow.bind(target)(...arguments)) {
+        const resolveData = await descriptor.value.bind(target)(...arguments);
 
-          if (validateSchema(target, resolveData)) {
-            return { [nameClass]: resolveData, errors: null };
-          } else {
-            return { [nameClass]: null, errors: resolveData };
-          }
+        if (validateSchema(target, resolveData)) {
+          return { [nameClass]: resolveData, errors: null };
         }
-        return null;
-      } catch (error) {
-        throw new Error('Decorators mutation failed. \n' + error);
+        return { [nameClass]: null, errors: resolveData };
       }
-    };
-}
+      return null;
+    } catch (error) {
+      throw new Error('Decorators mutation failed. \n' + error);
+    }
+  };
+};
 
 const TYPE_CREATE = {
   inputType: (typeName, createTypes) => {
@@ -48,7 +47,7 @@ const TYPE_CREATE = {
   // key name of function for e.g., createTodo
   // createTodo(todo: createTodo): responseTodo
   mutation: key => nameClass => `${key}(${lowerFirst(nameClass)}: create${nameClass}): response${nameClass},`,
-}
+};
 
 const TYPE_UPDATE = {
   inputType: (typeName, createTypes) => {
@@ -62,13 +61,13 @@ const TYPE_UPDATE = {
   // key name of function for e.g., updateTodo
   // updateTodo(id: ID!, todo: updateTodo): responseTodo
   mutation: key => nameClass => `${key}(id: ID!, ${lowerFirst(nameClass)}: update${nameClass}): response${nameClass},`,
-}
+};
 
 const TYPE_REMOVE = {
   // key name of function for e.g., removeTodo
   // removeTodo(id: ID!): responseTodo
   mutation: key => nameClass => `${key}(id: ID!): response${nameClass},`,
-}
+};
 
 const TYPE_RESPONSE_WITH_ERROR = (typeName) => {
   return `
@@ -77,11 +76,10 @@ const TYPE_RESPONSE_WITH_ERROR = (typeName) => {
       errors: [Errors],
     }
   `;
-}
+};
 
 const mutation = function(params) {
   return function(target, key, descriptor) {
-
     let newMutation = '';
     let parseFields = '';
 
@@ -91,51 +89,51 @@ const mutation = function(params) {
       // { type: 'remove'} // return resposeType with errors
       // ({ fields: 'id: ID!', responseType: 'Todo' })
       // ('id: ID!') // default return current name Type
-      case 'string':
-        parseFields = isEmpty(params) ? '' : `(${params})`;
-        newMutation = (nameClass) => `${key}${parseFields}: ${nameClass},`;
-        break;
+    case 'string':
+      parseFields = isEmpty(params) ? '' : `(${params})`;
+      newMutation = (nameClass) => `${key}${parseFields}: ${nameClass},`;
+      break;
 
-      case 'object':
-        const type = get(params, 'type', false);
+    case 'object':
+      const type = get(params, 'type', false);
 
-        if (ACTIONS_TYPES.includes(type)) {
-          target.responseTypeWithError = TYPE_RESPONSE_WITH_ERROR;
+      if (ACTIONS_TYPES.includes(type)) {
+        target.responseTypeWithError = TYPE_RESPONSE_WITH_ERROR;
 
-          switch (type) {
+        switch (type) {
 
-            case CREATE:
-              target.create = TYPE_CREATE.inputType;
-              newMutation = TYPE_CREATE.mutation(key);
-              break;
+        case CREATE:
+          target.create = TYPE_CREATE.inputType;
+          newMutation = TYPE_CREATE.mutation(key);
+          break;
 
-            case UPDATE:
-              target.update = TYPE_UPDATE.inputType;
-              newMutation = TYPE_UPDATE.mutation(key);
-              break;
+        case UPDATE:
+          target.update = TYPE_UPDATE.inputType;
+          newMutation = TYPE_UPDATE.mutation(key);
+          break;
 
-            case REMOVE:
-              newMutation = TYPE_REMOVE.mutation(key);
-              break;
+        case REMOVE:
+          newMutation = TYPE_REMOVE.mutation(key);
+          break;
 
-            default:
-              break;
-          }
+        default:
           break;
         }
-
-        const fields = get(params, 'fields', false);
-
-        if (fields) {
-          parseFields = isEmpty(fields) ? '' : `(${params})`;
-          newMutation = nameClass => `${key}${parseFields}: ${get(params, 'responseType', nameClass)},`;
-          break;
-        }
-
-        newMutation = DEFAULT_MUTATION;
         break;
-      default:
-        newMutation = DEFAULT_MUTATION;
+      }
+
+      const fields = get(params, 'fields', false);
+
+      if (fields) {
+        parseFields = isEmpty(fields) ? '' : `(${params})`;
+        newMutation = nameClass => `${key}${parseFields}: ${get(params, 'responseType', nameClass)},`;
+        break;
+      }
+
+      newMutation = DEFAULT_MUTATION;
+      break;
+    default:
+      newMutation = DEFAULT_MUTATION;
     }
 
     target.MUTATIONS = get(target, 'MUTATIONS', []);
