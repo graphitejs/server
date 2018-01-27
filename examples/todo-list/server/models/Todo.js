@@ -12,19 +12,13 @@ class Todo {
 
   @query()
   @allow((_, todo, {}) => true)
-  getAllTodo()
+  getAllTodo() {
     return this.Model.find();
   }
 
   @query()
   @allow((_, todo, {}) => true)
   getSomeTodo() {
-    return this.Model.find();
-  }
-
-  @query()
-  @allow((_, todo, {}) => true)
-  otroe() {
     return this.Model.find();
   }
 
@@ -36,7 +30,7 @@ class Todo {
     } catch (err) {
       return [{
         key: '1',
-        message: 'chfedau'
+        message: 'create'
       }]
     }
   }

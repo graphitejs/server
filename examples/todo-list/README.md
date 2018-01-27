@@ -22,7 +22,7 @@ Open browser in **http://localhost:8001/graphiql** for graphiql
 mutation createTodo($newTodo: createTodo) {
   createTodo(todo: $newTodo) {
     todo {
-      _id
+      id
       name
       status
     }
@@ -35,8 +35,8 @@ mutation createTodo($newTodo: createTodo) {
 
 mutation updateTodo($id: String, $updateTodo: updateTodo) {
   updateTodo(id: $id, todo: $updateTodo) {
-    todo {
-      _id
+    getAllTodo {
+      id
       name
       status
     }
@@ -50,7 +50,7 @@ mutation updateTodo($id: String, $updateTodo: updateTodo) {
 mutation removeTodo($id: String) {
   removeTodo(id: $id) {
     todo {
-      _id
+      id
       name
       status
     }
@@ -62,8 +62,8 @@ mutation removeTodo($id: String) {
 }
 
 query listTodo {
-  todo {
-    _id
+  getAllTodo {
+    id
     name
     status
   }

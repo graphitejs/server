@@ -9,7 +9,7 @@
     "compile:server": "BABEL_ENV=server babel -d ./build-server ./server -w -s",
     "client": "webpack-dev-server --port 3002 --config ./.webpack/webpack.client.js",
     "proxy": "webpack-dev-server --config ./.webpack/webpack.proxy.js",
-    "server:debug": "DEBUG=apollo-express,mongoose,mongoose-account,mongoose-account-password,mongoose-account-facebook nodemon --inspect=5858 ./build-server/main.js",
+    "server:debug": "BABEL_ENV=server DEBUG=apollo-express,mongoose,mongoose-account,mongoose-account-password,mongoose-account-facebook nodemon --watch server -L --exec 'babel-node ./server/main.js'",
     "mongod": "(killall -9 mongod || true) && mkdir -p ./.build/data/log && mongod --fork --quiet --logpath ./.build/data/mongodb.log --dbpath ./.build/data --port 3001",
     "mongo:reset": "rm -R ./build/data",
     "start": "npm run mongod && npm run proxy & npm run server:debug"
@@ -19,9 +19,9 @@
     "test"
   ],
   "dependencies": {
-    "@graphite/apollo-express": "../../packages/graphite-apollo-express/dist",
-    "@graphite/decorators": "../../packages/graphite-decorators/dist",
-    "@graphite/mongoose": "../../packages/graphite-mongoose/dist",
+    "@graphite/apollo-express": "../../packages/graphite-apollo-express",
+    "@graphite/decorators": "../../packages/graphite-decorators",
+    "@graphite/mongoose": "../../packages/graphite-mongoose",
     "apollo-client": "^0.10.1",
     "debug": "^2.6.1",
     "react": "^15.4.2",

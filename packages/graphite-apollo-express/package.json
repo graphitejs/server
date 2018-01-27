@@ -22,7 +22,6 @@
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.20.0",
     "babel-preset-env": "^1.6.0",
-    "babel-preset-latest": "^6.16.0",
     "chai": "^3.5.0",
     "debug": "^2.3.3",
     "mocha": "^3.2.0",

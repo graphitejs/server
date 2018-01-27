@@ -4,7 +4,8 @@
   "description": "GraphiteJS Framework",
   "scripts": {
     "lint": "eslint --fix ./packages/**/src ./packages/**/test || exit 1",
-    "coverage": "lerna exec npm run coverage"
+    "coverage": "lerna exec npm run coverage",
+    "bootstrap": "lerna bootstrap"
   },
   "pre-push": [],
   "devDependencies": {
