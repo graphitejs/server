@@ -33,9 +33,9 @@ mutation createTodo($newTodo: createTodo) {
   }
 }
 
-mutation updateTodo($id: String, $updateTodo: updateTodo) {
+mutation updateTodo($id: ID!, $updateTodo: updateTodo) {
   updateTodo(id: $id, todo: $updateTodo) {
-    getAllTodo {
+    todo {
       id
       name
       status
@@ -47,7 +47,7 @@ mutation updateTodo($id: String, $updateTodo: updateTodo) {
   }
 }
 
-mutation removeTodo($id: String) {
+mutation removeTodo($id: ID!) {
   removeTodo(id: $id) {
     todo {
       id
