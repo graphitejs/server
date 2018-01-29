@@ -1,6 +1,6 @@
 {
   "name": "@graphite/account",
-  "version": "0.2.16",
+  "version": "0.3.0",
   "description": "Graphite Framework, login account",
   "main": "dist/Account.js",
   "scripts": {
