@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint --fix ./packages/**/src ./packages/**/test || exit 1",
     "coverage": "lerna exec npm run coverage",
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "publish": "lerna publish"
   },
   "pre-push": [],
   "devDependencies": {
