@@ -17,6 +17,7 @@
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^6.10.3",
     "lerna": "3.7.0",
+    "lerna-semantic-release": "9.1.0",
     "pre-push": "^0.1.1",
     "prettier": "^1.10.2"
   },
