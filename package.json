@@ -7,7 +7,9 @@
     "coverage": "lerna exec npm run coverage",
     "bootstrap": "lerna bootstrap --hoist",
     "clean": "lerna clean",
-    "publish": "lerna publish"
+    "publish": "lerna publish",
+    "semantic-release": "lerna-semantic-release pre && lerna-semantic-release post && lerna-semantic-release perform",
+    "postinstall": "npm run bootstrap"
   },
   "pre-push": [],
   "devDependencies": {
