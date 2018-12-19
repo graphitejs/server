@@ -1,9 +1,7 @@
 language: node_js
 before_install:
   - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-  - git remote set-url origin "https://${GH_TOKEN}@github.com/react-core/react-core.git"
-script:
-  - npm run bootstrap
+  - git remote set-url origin "https://${GH_TOKEN}@github.com:graphitejs/graphitejs.git"
 after_success:
   - echo "TRAVIS_BRANCH= " $TRAVIS_BRANCH
   - echo "TRAVIS_PULL_REQUEST_BRANCH= " $TRAVIS_PULL_REQUEST_BRANCH
