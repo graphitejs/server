@@ -13,21 +13,21 @@
   "author": "Walter Zalazar",
   "license": "MIT",
   "dependencies": {
-    "debug": "^2.6.3"
+    "debug": "2.6.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.23.1",
-    "babel-istanbul": "^0.11.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-polyfill": "^6.20.0",
-    "babel-preset-latest": "^6.16.0",
-    "babel-runtime": "^6.23.0",
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0",
-    "sinon": "^2.1.0",
-    "sinon-chai": "^2.9.0"
+    "babel-cli": "6.18.0",
+    "babel-core": "6.23.1",
+    "babel-istanbul": "0.11.0",
+    "babel-plugin-add-module-exports": "0.2.1",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-polyfill": "6.20.0",
+    "babel-preset-latest": "6.16.0",
+    "babel-runtime": "6.23.0",
+    "chai": "3.5.0",
+    "mocha": "3.2.0",
+    "sinon": "2.1.0",
+    "sinon-chai": "2.9.0"
   },
   "publishConfig": {
     "access": "public"

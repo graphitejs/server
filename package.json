@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint --fix ./packages/**/src ./packages/**/test || exit 1",
     "coverage": "lerna exec npm run coverage",
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --hoist",
+    "clean": "lerna clean",
     "publish": "lerna publish"
   },
   "pre-push": [],
@@ -15,7 +16,7 @@
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^6.10.3",
-    "lerna": "2.0.0-rc.2",
+    "lerna": "3.7.0",
     "pre-push": "^0.1.1",
     "prettier": "^1.10.2"
   },
