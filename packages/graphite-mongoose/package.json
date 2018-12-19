@@ -1,6 +1,6 @@
 {
   "name": "@graphite/mongoose",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Graphite Framework, middleware mongoose",
   "main": "dist/mongoose.js",
   "scripts": {
@@ -26,8 +26,8 @@
     "mocha": "3.2.0"
   },
   "dependencies": {
-    "@graphite/decorators": "0.3.0",
-    "@graphite/utils": "0.3.0",
+    "@graphite/decorators": "^0.3.1",
+    "@graphite/utils": "^0.3.1",
     "debug": "2.3.3",
     "dyn-require": "0.0.3",
     "lodash": "4.17.4",

@@ -1,6 +1,6 @@
 {
   "name": "@graphite/react-account-password",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Graphite Framework, react account password",
   "main": "dist/account.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "author": "Walter Zalazar",
   "license": "MIT",
   "dependencies": {
-    "@graphite/account": "0.3.0",
+    "@graphite/account": "^0.3.1",
     "apollo-client": "0.10.1",
     "graphql-tag": "1.3.1",
     "react": "15.4.2",

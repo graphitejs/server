@@ -1,6 +1,6 @@
 {
   "name": "@graphite/mongoose-account-password",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Graphite Framework, mongoose account password",
   "main": "dist/AccountPassword.js",
   "scripts": {
@@ -28,10 +28,10 @@
     "sinon-stub-promise": "4.0.0"
   },
   "dependencies": {
-    "@graphite/decorators": "0.3.0",
-    "@graphite/mongoose": "0.3.0",
-    "@graphite/mongoose-account": "0.3.0",
-    "@graphite/utils": "0.3.0",
+    "@graphite/decorators": "^0.3.1",
+    "@graphite/mongoose": "^0.3.1",
+    "@graphite/mongoose-account": "^0.3.1",
+    "@graphite/utils": "^0.3.1",
     "debug": "2.3.3",
     "jsonwebtoken": "7.2.1"
   },
