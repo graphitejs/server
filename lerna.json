@@ -1,7 +1,16 @@
 {
-  "lerna": "2.0.0-rc.2",
-  "version": "0.3.0",
+  "lerna": "2.9.0",
+  "version": "0.0.0",
   "packages": [
     "packages/*"
-  ]
+  ],
+  "command": {
+    "init": {
+      "exact": true
+    },
+    "publish": {
+      "independent": false,
+      "conventionalCommits": true
+    }
+  }
 }
