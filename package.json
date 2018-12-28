@@ -1,45 +1,38 @@
 {
-  "name": "GraphiteJS",
-  "version": "0.0.1",
+  "name": "@graphite/server",
+  "version": "0.0.0",
   "description": "GraphiteJS Framework",
   "scripts": {
-    "lint": "eslint --fix ./packages/**/src ./packages/**/test || exit 1",
-    "coverage": "lerna exec npm run coverage",
-    "bootstrap": "lerna bootstrap --hoist",
-    "clean": "lerna clean",
-    "publish": "lerna publish",
-    "semantic-release": "lerna-semantic-release pre && lerna-semantic-release post && lerna-semantic-release perform",
-    "postinstall": "npm run bootstrap",
-    "test:functional:riteway": "babel-node --root-mode upward ./test/functional",
-    "test:functional:riteway:watch": "babel-node --root-mode upward  ./test/functional --watch --source-maps inline --inspect"
+    "lint:": "eslint --fix ./src",
+    "lint:fix": "eslint ./src",
+    "test": "",
+    "test:unit": "",
+    "test:integration": "",
+    "test:functional": "",
+    "coverage": "",
+    "coverage:unit": "",
+    "coverage:integration": "",
+    "coverage:functional": "",
+    "compile": "babel src --out-dir dist",
+    "prepublish": "npm run compile"
   },
-  "pre-push": [],
   "devDependencies": {
     "@babel/core": "7.2.2",
-    "@babel/plugin-proposal-class-properties": "7.2.3",
-    "@babel/plugin-proposal-decorators": "7.2.3",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
-    "@babel/plugin-transform-runtime": "7.2.0",
     "@babel/preset-env": "7.2.3",
-    "@babel/preset-react": "7.0.0",
     "@babel/register": "7.0.0",
-    "apollo-server": "0.3.3",
     "babel-eslint": "^6.1.2",
     "conventional-github-releaser": "3.1.2",
     "eslint": "^3.11.1",
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^6.10.3",
-    "express": "4.16.4",
-    "graphql": "14.0.2",
-    "lerna": "3.7.0",
-    "lerna-semantic-release": "9.1.0",
-    "nodemon": "1.18.9",
     "pre-push": "^0.1.1",
     "prettier": "^1.10.2",
     "riteway": "4.0.1"
   },
   "dependencies": {
-    "redux": "^3.6.0"
+    "apollo-server": "0.3.3",
+    "graphql": "14.0.2"
   }
 }

@@ -1,8 +1,0 @@
-node_modules/
-test/
-src/
-coverage/
-*.log
-.babelrc
-.storybook
-stories
