@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run compile && mocha --compilers js:babel-core/register --require babel-polyfill --require jsdom-global/register --recursive",
     "coverage": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- ./test --require jsdom-global/register --recursive",
-    "compile": "babel src --out-dir dist",
+    "compile": "babel --root-mode upward src --out-dir dist",
     "prepublish": "npm run compile"
   },
   "author": "Walter Zalazar",
@@ -17,15 +17,7 @@
     "react": "15.4.2"
   },
   "devDependencies": {
-    "babel-cli": "6.18.0",
-    "babel-core": "6.23.1",
-    "babel-istanbul": "0.11.0",
-    "babel-plugin-add-module-exports": "0.2.1",
-    "babel-plugin-transform-class-properties": "6.23.0",
-    "babel-polyfill": "6.20.0",
-    "babel-preset-latest": "6.16.0",
-    "babel-preset-react": "6.23.0",
-    "babel-runtime": "6.23.0",
+    "@babel/cli": "7.2.3",
     "chai": "3.5.0",
     "enzyme": "2.7.1",
     "jsdom": "9.12.0",

@@ -20,6 +20,7 @@ export default class GraphQLServer {
   init(config = defaultConfig, collections = []) {
     const { graphql } = config;
     const { Types, Query, Mutation, Resolvers } = this.register([...collections, ...scalars]);
+
     const GRAPHQL_PORT = graphql.PORT;
 
     if (isEmpty(Resolvers.Mutation)) {
@@ -63,7 +64,7 @@ export default class GraphQLServer {
     this.logger(`Graphiql Server is now running on http://localhost:${GRAPHQL_PORT}/graphiql`);
   }
 
-  hasPropertyInitialize(collection) {
+  hasPropertyInitialize(collection = {}) {
     return typeof collection.initialize === 'function';
   }
 
@@ -74,6 +75,14 @@ export default class GraphQLServer {
   requestApolloExpress(req, res) {
     const userId = req.userId;
     return Object.assign({ schema: this.executableSchema, context: { userId, req, res }});
+  }
+
+  async close() {
+    return new Promise((resolve) => {
+      this.Graphite.close(() => {
+        resolve()
+      });
+    });
   }
 
   register(collections = []) {
@@ -87,7 +96,8 @@ export default class GraphQLServer {
       },
     };
 
-    return collections.reduce((acum, collection) => {
+    return collections.reduce((acum, collection = {}) => {
+      console.log("collection ",collection.Types)
       const mutationMethods = keys(get(collection, 'Resolvers.Mutation', {}));
       const queryMethods = keys(get(collection, 'Resolvers.Query', {}));
       const resolversNames = without(keys(collection.Resolvers), 'Query', 'Mutation');
@@ -108,7 +118,7 @@ export default class GraphQLServer {
           }
         });
       });
-
+      console.log(`get(collection, 'Types', '') ${get(collection, 'Types', '')}`)
       return  {
         Types: `${acum.Types} ${get(collection, 'Types', '')}`,
         Query: `${acum.Query} ${get(collection, 'Query', '')}`,

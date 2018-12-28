@@ -6,7 +6,7 @@
             "request": "attach",
             "name": "GraphiteJS - todo-list",
             "address": "localhost",
-            "port": 5858,
+            "port": 9229,
             "sourceMaps": true,
             "protocol": "inspector",
             "restart": true,

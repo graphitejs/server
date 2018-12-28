@@ -1,12 +1,10 @@
 import express from 'express';
 import GraphQLServer from './graphql/graphQLServer';
 
-class Graphite {
-  constructor() {
-    const app = express();
-    const graphQLServer = new GraphQLServer(app);
-    this.graphQLServer = graphQLServer.init.bind(graphQLServer);
-  }
-}
+export const Graphite = () => {
+  const app = express();
+  const graphQL = new GraphQLServer(app);
+  const graphQLServer = graphQL.init.bind(graphQL);
 
-export default { Graphite: new Graphite() };
+  return { graphQLServer }
+};

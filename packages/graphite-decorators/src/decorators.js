@@ -6,13 +6,13 @@ import hasMany from './hasMany';
 import hasOne from './hasOne';
 import inputType from './inputType';
 import mutation from './mutation';
-import property from './property';
+import {property} from './property';
 import query from './query';
 import remove from './remove';
 import type from './type';
 import update from './update';
 
-export default {
+export {
   allow,
   create,
   errors,
