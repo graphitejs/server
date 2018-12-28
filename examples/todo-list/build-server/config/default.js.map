@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../server/config/default.js"],"names":["database","PORT","NAME","graphql"],"mappings":";;;;;AAAO,MAAMA,8BAAW;AACtBC,QAAM,IADgB;AAEtBC,QAAM;AAFgB,CAAjB;;AAKA,MAAMC,4BAAU;AACrBF,QAAM;AADe,CAAhB","file":"default.js","sourcesContent":["export const database = {\n  PORT: 3001,\n  NAME: 'TODO2',\n};\n\nexport const graphql = {\n  PORT: 8001,\n};\n"]}

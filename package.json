@@ -14,10 +14,13 @@
     "coverage:integration": "",
     "coverage:functional": "",
     "compile": "babel src --out-dir dist",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile",
+    "start:example": "babel-node ./examples/TodoList"
   },
   "devDependencies": {
+    "@babel/cli": "7.2.3",
     "@babel/core": "7.2.2",
+    "@babel/node": "7.2.2",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/preset-env": "7.2.3",
     "@babel/register": "7.0.0",
@@ -32,7 +35,9 @@
     "riteway": "4.0.1"
   },
   "dependencies": {
-    "apollo-server": "0.3.3",
-    "graphql": "14.0.2"
+    "apollo-server": "2.3.1",
+    "graphql": "14.0.2",
+    "pino": "5.10.5",
+    "pino-pretty": "2.5.0"
   }
 }
