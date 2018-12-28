@@ -1,4 +1,4 @@
-const functionName = function(fun) {
+export const functionName = (fun) => {
   try {
     if (fun.name) {
       return fun.name;
@@ -10,8 +10,4 @@ const functionName = function(fun) {
   } catch (err) {
     throw new Error(err);
   }
-};
-
-export default {
-  functionName,
 };

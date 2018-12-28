@@ -1,0 +1,29 @@
+{
+  "name": "@graphite/server",
+  "version": "0.3.1",
+  "description": "Graphite Server",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "babel-node --root-mode upward ./src/example.js",
+    "test:functional": "babel-node --root-mode upward ./test/functional",
+    "compile": "babel --root-mode upward src --out-dir dist",
+    "prepublish": "npm run compile"
+  },
+  "author": "Walter Zalazar",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "7.2.3",
+    "@babel/node": "7.2.2",
+    "riteway": "4.0.1",
+    "sinon": "1.17.7"
+  },
+  "dependencies": {
+    "apollo-server": "2.3.1",
+    "graphql": "14.0.2",
+    "pino": "5.10.5",
+    "pino-pretty": "2.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

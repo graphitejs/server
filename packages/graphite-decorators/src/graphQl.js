@@ -5,50 +5,58 @@ import {
 
 import { functionName } from '@graphite/utils';
 
+const getObjectType = (nameClass = '', types = '') => `
+  type ${nameClass} implements node {
+    id: ID!,
+    ${types}
+  }
+`;
+
+
 const graphQl = function(target) {
   const nameClass = functionName(target);
-  const createTypes = target.prototype.createTypes;
-  const typesAttr = get(target.prototype, 'Types', '');
-  target.prototype.nameClass = nameClass;
+  const graphQlDefault = { Types: '' }
+  const graphql = get(target.prototype, 'graphQl', graphQlDefault);
 
-  target.prototype.Types = `
-    type ${nameClass} implements node {
-      id: ID!,
-      ${typesAttr}
-    }
+  // const createTypes = target.prototype.createTypes;
 
-    ${get(target.prototype, 'oTypes', '')}
-  `;
+  target.nameClass = nameClass;
+  target.Types = getObjectType(nameClass, graphql.Types);
+  target.Resolvers = Object.assign({}, target.Resolvers);
+  target.isTestable = true;
 
-  target.prototype.Resolvers = Object.assign({}, target.prototype.Resolvers);
+  // if (target.hasOne) {
+  //   const hasOne = {};
+  //   hasOne[nameClass] = target.hasOne;
+  //   Object.assign(target.Resolvers, hasOne);
+  // }
 
-  if (target.prototype.hasOne) {
-    const hasOne = {};
-    hasOne[nameClass] = target.prototype.hasOne;
-    Object.assign(target.prototype.Resolvers, hasOne);
-  }
+  // if (target.hasMany) {
+  //   const hasMany = {};
+  //   hasMany[nameClass] = target.hasMany;
+  //   Object.assign(target.Resolvers, hasMany);
+  // }
 
-  if (target.prototype.hasMany) {
-    const hasMany = {};
-    hasMany[nameClass] = target.prototype.hasMany;
-    Object.assign(target.prototype.Resolvers, hasMany);
-  }
+  // if (target.create) {
+  //   target.Types += target.create(nameClass, createTypes);
+  // }
 
-  if (target.prototype.create) {
-    target.prototype.Types += target.prototype.create(nameClass, createTypes);
-  }
+  // if (target.update) {
+  //   target.Types += target.update(nameClass, createTypes);
+  // }
 
-  if (target.prototype.update) {
-    target.prototype.Types += target.prototype.update(nameClass, createTypes);
-  }
+  // if (target.responseTypeWithError) {
+  //   target.Types += target.responseTypeWithError(nameClass);
+  // }
 
-  if (target.prototype.responseTypeWithError) {
-    target.prototype.Types += target.prototype.responseTypeWithError(nameClass);
-  }
+  // // target.Types = `${get(target, 'Types', '')}`;
+  // target.Mutation = get(target, 'Mutation', () => noop)()(nameClass);
+  // target.Query = get(target, 'Query', () => noop)()(nameClass);
+  // // console.log(" target.Types ", target.Types)
 
-  target.prototype.Types = `${get(target.prototype, 'Types', '')}`;
-  target.prototype.Mutation = get(target.prototype, 'Mutation', () => noop)()(nameClass);
-  target.prototype.Query = get(target.prototype, 'Query', () => noop)()(nameClass);
+  // console.log("target.Types  ",target.Types )
+
+  // return target
 };
 
 export default graphQl;
