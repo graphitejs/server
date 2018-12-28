@@ -1,4 +1,4 @@
-import { GraphQL, Graphite, PubSub } from './index'
+import { GraphQL, Graphite, PubSub } from '../src/index'
 
 const pubsub = new PubSub();
 const TODO_ADDED = 'TODO_ADDED';

@@ -1,7 +1,0 @@
-{
-  "presets": ["next/babel", "babel-preset-latest"],
-  "plugins": [
-    "transform-decorators-legacy",
-    "transform-class-properties"
-  ]
-}
