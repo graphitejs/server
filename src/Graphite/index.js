@@ -7,7 +7,7 @@ const logger = pino({
   prettyPrint: true,
 })
 
-export const Graphite = async (models) => {
+export const Graphite = async(models) => {
   try {
     const types = getTypeDefs(models)
     const query = getQueries('Query')(models)
@@ -30,8 +30,9 @@ export const Graphite = async (models) => {
 
     const { url } = await server.listen()
     logger.info(`🚀  Server ready at ${url}`)
-    return { PubSub }
   } catch (e) {
     logger.error({ message: e.message }, 'Error on Graphite Initialization')
   }
+
+  return { PubSub }
 }

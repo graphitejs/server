@@ -1,9 +1,3 @@
-const defaultDefinitionTypeObject = {
-  Mutation: {},
-  Query: {},
-  Subscription: {},
-}
-
 const templateAtomicType = (key = '', [value, comment]) =>
   `
    "${comment}"
