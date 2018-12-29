@@ -27,13 +27,12 @@ describe('Graphite Mutation', async assert => {
 
     const request = await fetch('http://localhost:4000/graphql', options)
 
-
     const actual = (await request.json()).data.createDeveloper.name
     const expected = 'Wally'
 
     assert({
-      given: 'GraphQl query valid',
-      should: 'return the data query',
+      given: 'GraphQ mutation valid',
+      should: 'return the data sended',
       actual,
       expected,
     })
