@@ -9,7 +9,7 @@
     "test:unit": "",
     "test:integration": "",
     "test:functional": "babel-node ./test/functional",
-    "coverage": "nyc --report-dir ./.coverage-functional npm run test",
+    "coverage": "nyc --report-dir ./.coverage npm run test",
     "coverage:unit": "",
     "coverage:integration": "",
     "coverage:functional": "nyc --report-dir ./.coverage-functional npm run test:functional",
