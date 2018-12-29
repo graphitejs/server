@@ -9,6 +9,8 @@ const logger = pino({
   prettyPrint: true,
 })
 
+const queryResolverDefault = { Query: { hello: () => 'Hello World! 🎉🎉🎉' }}
+
 export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
   try {
     const types = getTypeDefs(models)
@@ -19,9 +21,9 @@ export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
 
     const typeDefs = getGraphQLSchema(types, query, mutation, subscription)
     const resolvers = {
-      Query: getResolvers('Query')(models),
-      Mutation: getResolvers('Mutation')(models),
-      Subscription: getResolvers('Subscription')(models),
+      ...query ? { Query: getResolvers('Query')(models) } : queryResolverDefault,
+      ...mutation ? { Mutation: getResolvers('Mutation')(models) } : {},
+      ...subscription ? { Subscription: getResolvers('Subscription')(models) } : {},
       ...relations,
     }
 
@@ -51,6 +53,6 @@ export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
     return { stop }
   } catch (e) {
     logger.error({ message: e.message }, 'Error on Graphite Initialization')
-    return { stop }
+    return {}
   }
 }
