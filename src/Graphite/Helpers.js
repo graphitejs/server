@@ -7,25 +7,37 @@ const createQueryRoot = () => {
   `
 }
 
+const mutationTemplate = (mutation = '') => `type Mutation {
+  ${mutation}
+}`
+
+const subscriptionTemplate = (subscription = '') => `type Subscription {
+  ${subscription}
+}`
+
+const queryTemplate = (query = '') => `type Query {
+  ${query}
+}`
+
 export const getTypeDefs = (models) => models.map(model => model.Types).join('')
 
-export const getGraphQLSchema = (types = '', query = '', mutation = '', subscription = '') => gql`
-  ${types}
+export const getGraphQLSchema = (types = '', query = '', mutation = '', subscription = '') => {
+  const queries = query === '' ? queryTemplate(createQueryRoot()) : queryTemplate(query)
+  const mutations = mutation === '' ? '' : mutationTemplate(mutation)
+  const subscriptions = subscription === '' ? '' : subscriptionTemplate(subscription)
 
-  type Query {
-    ${query}
-  }
+  return gql`
+    ${types}
 
-  type Mutation {
-    ${mutation}
-  }
+    ${queries}
 
-  type Subscription {
-    ${subscription}
-  }
-`
+    ${mutations}
 
-export const getQueries = (type = '') => (models = []) => models.map(model => model[type].map(query => query.definition).join('\n')).join('\n') || createQueryRoot()
+    ${subscriptions}
+  `
+}
+
+export const getQueries = (type = '') => (models = []) => models.map(model => model[type].map(query => query.definition).join('\n')).join('\n')
 
 export const getResolvers = (type = '') => (models = []) => models.reduce((acum, model) => {
   const resolver = model[type].reduce((x, query) => ({ ...x, ...query.resolver }), {})

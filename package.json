@@ -27,6 +27,7 @@
     "babel-eslint": "10.0.1",
     "eslint": "5.11.1",
     "eslint-plugin-prettier": "3.0.1",
+    "isomorphic-fetch": "2.2.1",
     "prettier": "1.15.3",
     "riteway": "4.0.1"
   },
