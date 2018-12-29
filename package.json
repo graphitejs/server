@@ -5,14 +5,14 @@
   "scripts": {
     "lint": "eslint -f table ./src/** ./test/**",
     "lint:fix": "eslint --fix ./src/** ./test/**",
-    "test": "",
+    "test": "babel-node ./test",
     "test:unit": "",
     "test:integration": "",
     "test:functional": "babel-node ./test/functional",
-    "coverage": "",
+    "coverage": "nyc --report-dir ./.coverage-functional npm run test",
     "coverage:unit": "",
     "coverage:integration": "",
-    "coverage:functional": "",
+    "coverage:functional": "nyc --report-dir ./.coverage-functional npm run test:functional",
     "compile": "babel src --out-dir dist",
     "prepublish": "npm run compile",
     "start:example": "babel-node ./examples/TodoList"
@@ -28,6 +28,7 @@
     "eslint": "5.11.1",
     "eslint-plugin-prettier": "3.0.1",
     "isomorphic-fetch": "2.2.1",
+    "nyc": "13.1.0",
     "prettier": "1.15.3",
     "riteway": "4.0.1"
   },
