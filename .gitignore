@@ -1,8 +1,9 @@
 *.log
 node_modules
-coverage
 dist
 .build
 .DS_Store
-.next
-next
+.coverage
+.coverage-functional
+.nyc_output
+.nycrc
