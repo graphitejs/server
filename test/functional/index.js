@@ -1,1 +1,2 @@
 import './app'
+import './query'
