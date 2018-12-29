@@ -8,7 +8,7 @@
     "test": "",
     "test:unit": "",
     "test:integration": "",
-    "test:functional": "",
+    "test:functional": "babel-node ./test/functional",
     "coverage": "",
     "coverage:unit": "",
     "coverage:integration": "",
@@ -32,6 +32,8 @@
   },
   "dependencies": {
     "apollo-server": "2.3.1",
+    "apollo-server-express": "2.3.1",
+    "express": "4.16.4",
     "graphql": "14.0.2",
     "pino": "5.10.5",
     "pino-pretty": "2.5.0"
