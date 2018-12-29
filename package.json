@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "GraphiteJS Framework",
   "scripts": {
-    "lint": "eslint -f table ./src/**",
-    "lint:fix": "eslint --fix ./src/**",
+    "lint": "eslint -f table ./src/** ./test/**",
+    "lint:fix": "eslint --fix ./src/** ./test/**",
     "test": "",
     "test:unit": "",
     "test:integration": "",
