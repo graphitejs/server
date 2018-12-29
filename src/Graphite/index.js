@@ -1,4 +1,6 @@
-import { ApolloServer, PubSub } from 'apollo-server'
+import express from 'express'
+import { ApolloServer } from 'apollo-server-express'
+import http from 'http'
 import pino from 'pino'
 
 import { getTypeDefs, getQueries, getRelations, getGraphQLSchema, getResolvers } from './Helpers'
@@ -7,7 +9,7 @@ const logger = pino({
   prettyPrint: true,
 })
 
-export const Graphite = async(models) => {
+export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
   try {
     const types = getTypeDefs(models)
     const query = getQueries('Query')(models)
@@ -23,16 +25,32 @@ export const Graphite = async(models) => {
       ...relations,
     }
 
-    const server = new ApolloServer({
+    const apollo = new ApolloServer({
       typeDefs,
       resolvers,
     })
 
-    const { url } = await server.listen()
-    logger.info(`🚀  Server ready at ${url}`)
+    const app = express()
+    apollo.applyMiddleware({ app, path })
+    const server = http.createServer(app)
+    apollo.installSubscriptionHandlers(server)
+
+    const serverGraphQl = await server.listen({ port: 4000 })
+
+    logger.info(`🚀  Server Graphite ready at http://localhost:4000${apollo.graphqlPath}`)
+
+    const stop = () => {
+      return new Promise((resolve) => {
+        serverGraphQl.close(() => {
+          logger.info('⛄️  Closing Graphite')
+          resolve()
+        })
+      })
+    }
+
+    return { stop }
   } catch (e) {
     logger.error({ message: e.message }, 'Error on Graphite Initialization')
+    return { stop }
   }
-
-  return { PubSub }
 }

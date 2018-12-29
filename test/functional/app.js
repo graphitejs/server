@@ -1,10 +1,7 @@
-import { describe } from 'riteway';
-import { GraphServer } from './helpers/GraphServer'
-import ModelWithString from './helpers/Models/ModelWithString';
+import { describe } from 'riteway'
+import { Graphite } from '../../src/index'
 
-describe('sum()', async assert => {
-  // console.log("ModelWithString.Types ", ModelWithString)
-
-
-  // const graphServer = GraphServer([ModelWithString])
+describe('Running Graphite', async assert => {
+  const graphite = await Graphite()
+  await graphite.stop()
 })
