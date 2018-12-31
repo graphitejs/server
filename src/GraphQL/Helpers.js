@@ -11,7 +11,7 @@ export const createSchemaType = (name = '') => (types = '') => {
 
   return `
     type ${name} {
-      ${properties.join('')}
+      ${properties.join('\n')}
     }
   `
 }

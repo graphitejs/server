@@ -22,8 +22,8 @@ export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
     const typeDefs = getGraphQLSchema(types, query, mutation, subscription)
     const resolvers = {
       ...query ? { Query: getResolvers('Query')(models) } : queryResolverDefault,
-      ...mutation ? { Mutation: getResolvers('Mutation')(models) } : {},
-      ...subscription ? { Subscription: getResolvers('Subscription')(models) } : {},
+      ...(mutation.trim() === '' ? {} : { Mutation: getResolvers('Mutation')(models) }),
+      ...(subscription.trim() === '' ? {} : { Subscription: getResolvers('Subscription')(models) }),
       ...relations,
     }
 

@@ -23,8 +23,8 @@ export const getTypeDefs = (models) => models.map(model => model.Types).join('')
 
 export const getGraphQLSchema = (types = '', query = '', mutation = '', subscription = '') => {
   const queries = query === '' ? queryTemplate(createQueryRoot()) : queryTemplate(query)
-  const mutations = mutation === '' ? '' : mutationTemplate(mutation)
-  const subscriptions = subscription === '' ? '' : subscriptionTemplate(subscription)
+  const mutations = mutation.trim() === '' ? '' : mutationTemplate(mutation)
+  const subscriptions = subscription.trim() === '' ? '' : subscriptionTemplate(subscription)
 
   return gql`
     ${types}
