@@ -39,7 +39,8 @@ export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
 
     const serverGraphQl = await server.listen({ port: 4000 })
 
-    logger.info(`🚀  Server Graphite ready at http://localhost:4000${apollo.graphqlPath}`)
+    logger.info(`🚀  Server Graphite GraphQL ready at http://localhost:4000${apollo.graphqlPath}`)
+    logger.info(`🚀  Server Graphite Subscription ready at ws://localhost:4000${apollo.subscriptionsPath}`)
 
     const stop = () => {
       return new Promise((resolve) => {

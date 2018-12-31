@@ -1,6 +1,6 @@
 import { createSchemaType, getDataParsed, createRelations } from './Helpers'
 
-export const GraphQL = (name = '') => (definition = defaultDefinitionTypeObject) => {
+export const GraphQL = (name = '') => (definition = {}) => {
   const { Mutation, Query, Subscription, ...types } = definition
 
   return {
