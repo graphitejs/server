@@ -2,8 +2,7 @@ import fetch from 'isomorphic-fetch'
 import { describe } from 'riteway'
 import { Graphite, GraphQL } from '../../src/index'
 
-
-describe('Graphite Query', async assert => {
+describe('Graphite Relations', async assert => {
   {
     const Repository = GraphQL('Repository')({
       name: ['String'],
