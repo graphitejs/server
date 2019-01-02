@@ -14,7 +14,7 @@
 
 <br />
 
-GraphiteJS is a NODE.JS Framework for building GraphQL schemas/types fast, easily and scalability. 
+GraphiteJS is a NODE.JS Framework for building GraphQL schemas/types fast, easily and with scalability. 
 
 - **Easy to use:** GraphiteJS make easy GraphQL in NodeJS without effort.
 - **Any Front:** GraphiteJS support any front library.
