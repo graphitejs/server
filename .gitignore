@@ -7,4 +7,3 @@ dist
 .coverage-functional
 .coverage-unit
 .nyc_output
-.nycrc

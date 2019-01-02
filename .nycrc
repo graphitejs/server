@@ -1,0 +1,17 @@
+{
+    "extension": [
+        ".js"
+    ],
+    "include": [
+      "src/**/*.js"
+    ],
+    "reporter": [
+        "html",
+        "text",
+        "text-summary",
+        "lcovonly"
+    ],
+    "all": true,
+    "cache": false,
+    "esModules": true
+}
