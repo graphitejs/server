@@ -72,7 +72,8 @@ After install `@graphite/server` you have to create your first model. I recommen
 import { GraphQL } from '@graphite/server'
 
 export const Developer = GraphQL('Developer')({
-  name: ['String!', 'Your name is required'], // the value always have to be an array first arg the type, sercond arg optional a comment
+   // the value always have to be an array first arg is the type, the second arg is an optional comment
+  name: ['String!', 'Your name is required'],
   age: ['Number'],
   isGreatDeveloper: ['Boolean']
 })
@@ -105,7 +106,7 @@ main()
 import { GraphQL } from '@graphite/server'
 
 export const Developer = GraphQL('Developer')({
-  name: ['String!', 'Your name is required'], // the value always have to be an array first arg the type, sercond arg optional a comment
+  name: ['String!', 'Your name is required'],
   age: ['Number'],
   isGreatDeveloper: ['Boolean'],
 
@@ -125,7 +126,7 @@ export const Developer = GraphQL('Developer')({
 import { GraphQL } from '@graphite/server'
 
 export const Developer = GraphQL('Developer')({
-  name: ['String!', 'Your name is required'], // the value always have to be an array first arg the type, sercond arg optional a comment
+  name: ['String!', 'Your name is required'],
 
   Mutation: {
     'createDeveloper(name: String): Developer': (_, { name, }) => ({ name }),
@@ -148,7 +149,6 @@ const pubsub = new PubSub()
 const DEVELOPER_ADDED = 'DEVELOPER_ADDED'
 
 export const Developer = GraphQL('Developer')({
-  // the value always have to be an array first arg is the type, the second arg is an optional comment
   name: ['String!', 'Your name is required'],
 
   Mutation: {
