@@ -8,8 +8,8 @@
 
 <p align="center">
     <a href="http://graphitejs.com"><img alt="graphitejs" src="https://img.shields.io/badge/GraphiteJS-Beta-yellow.svg"></a>
-    <a href="https://circleci.com/gh/graphitejs/graphitejs"><img alt="CircleCI Status" src="https://travis-ci.org/graphitejs/server.svg?branch=master"></a>
-    <a href="https://codecov.io/gh/graphitejs/graphitejs"><img alt="Codecov Status" src="https://codecov.io/gh/graphitejs/graphitejs/branch/master/graph/badge.svg"></a>
+    <a href="https://travis-ci.org/graphitejs/server"><img alt="TravisCI Status" src="https://travis-ci.org/graphitejs/server.svg?branch=master"></a>
+    <a href="https://codecov.io/gh/graphitejs/server"><img alt="Codecov Status" src="https://codecov.io/gh/graphitejs/server/branch/master/graph/badge.svg"></a>
 </p>
 
 <br />
