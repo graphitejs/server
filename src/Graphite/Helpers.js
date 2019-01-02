@@ -7,15 +7,15 @@ const createQueryRoot = () => {
   `
 }
 
-const mutationTemplate = (mutation = '') => `type Mutation {
+const mutationTemplate = (mutation) => `type Mutation {
   ${mutation}
 }`
 
-const subscriptionTemplate = (subscription = '') => `type Subscription {
+const subscriptionTemplate = (subscription) => `type Subscription {
   ${subscription}
 }`
 
-const queryTemplate = (query = '') => `type Query {
+const queryTemplate = (query) => `type Query {
   ${query}
 }`
 

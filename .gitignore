@@ -5,5 +5,6 @@ dist
 .DS_Store
 .coverage
 .coverage-functional
+.coverage-unit
 .nyc_output
 .nycrc
