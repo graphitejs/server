@@ -16,13 +16,9 @@ describe('Graphite Relations', async assert => {
     const Developer = GraphQL('Developer')({
       name: ['String'],
 
-      'respositories: [Repository]': () => {
-        return [{ name: 'GraphiteJS', url: 'https://github.com/graphitejs/graphitejs' }]
-      },
+      'respositories: [Repository]': () => [{ name: 'GraphiteJS', url: 'https://github.com/graphitejs/graphitejs' }],
 
-      'githubProfile: GithubProfile': () => {
-        return { url: 'https://github.com/wzalazar' }
-      },
+      'githubProfile: GithubProfile': () => ({ url: 'https://github.com/wzalazar' }),
 
       Query: {
         'developer: Developer': () => ({ name: 'Walter Zalazar' }),
