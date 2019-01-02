@@ -148,7 +148,8 @@ const pubsub = new PubSub()
 const DEVELOPER_ADDED = 'DEVELOPER_ADDED'
 
 export const Developer = GraphQL('Developer')({
-  name: ['String!', 'Your name is required'], // the value always have to be an array first arg the type, sercond arg optional a comment
+  // the value always have to be an array first arg is the type, the second arg is an optional comment
+  name: ['String!', 'Your name is required'],
 
   Mutation: {
     'createDeveloper(name: String): Developer': (_, { name, }) => { 
