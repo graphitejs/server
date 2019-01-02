@@ -35,7 +35,7 @@ GraphiteJS is a NODE.JS Framework for building GraphQL schemas/types fast, easil
 
 ---
 
-# Install
+## Install
 
 ```bash
 
@@ -61,11 +61,11 @@ main()
 
 and that's all, you have running the graphqli tool on the port [4000](http://localhost:4000/graphqle) by default.
 
-# How to use
+## How to use
 
 After install `@graphite/server` you have to create your first model. I recommend creating a folder called models and follow the pattern matching the filename with the Type name.
 
-### Types
+#### Types
 
 ```javascript
 
@@ -97,7 +97,7 @@ main()
 
 ```
 
-### Queries
+#### Queries
 
 
 ```javascript
@@ -117,7 +117,7 @@ export const Developer = GraphQL('Developer')({
 
 ```
 
-### Mutations
+#### Mutations
 
 
 ```javascript
@@ -137,7 +137,7 @@ export const Developer = GraphQL('Developer')({
 ```
 
 
-### Subscriptions
+#### Subscriptions
 
 
 ```javascript
@@ -167,7 +167,7 @@ export const Developer = GraphQL('Developer')({
 
 ```
 
-## Relations
+#### Relations
 
 
 ```javascript
@@ -218,7 +218,7 @@ main()
 
 ```
 
-# Contributing
+## Contributing
 
 Please see our [contributing.md](./CONTRIBUTING.md)
 
@@ -234,7 +234,7 @@ npm install
 - Feel free for pull request.
 
 
-# Team
+## Team
 
 ### Creator
 
