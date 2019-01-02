@@ -1,4 +1,4 @@
-const templateAtomicType = (key = '', [value, comment]) =>
+const templateAtomicType = (key, [value, comment]) =>
   `
    "${comment}"
    ${key}: ${value}
@@ -9,11 +9,11 @@ export const createSchemaType = (name = '') => (types = '') => {
     return typeof definition === 'function' ? key : templateAtomicType(key, definition)
   })
 
-  return `
+  return name ? `
     type ${name} {
       ${properties.join('\n')}
     }
-  `
+  ` : ''
 }
 
 export const getDataParsed = (query = {}, split = '') => {
@@ -23,7 +23,7 @@ export const getDataParsed = (query = {}, split = '') => {
   })
 }
 
-export const createRelations = (name = '') => (types) => {
+export const createRelations = (name = '') => (types = {}) => {
   const properties = Object.entries(types).reduce((acum, [key, definition]) => {
     if (typeof definition === 'function') {
       const keyParsed = key.split(':')[0].trim()
@@ -33,5 +33,5 @@ export const createRelations = (name = '') => (types) => {
     return acum
   }, {})
 
-  return { [name]: properties }
+  return name ? { [name]: properties } : {}
 }
