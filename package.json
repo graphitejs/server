@@ -63,5 +63,8 @@
     "graphql": "14.0.2",
     "pino": "5.10.5",
     "pino-pretty": "2.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
