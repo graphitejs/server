@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="GraphiteJS" src="https://github.com/graphitejs/graphitejs/blob/master/images/graphite.png" width="334">
+  <img alt="GraphiteJS" src="https://raw.githubusercontent.com/graphitejs/server/HEAD/images/graphite.png" width="334">
 </p>
 
 <p align="center">
@@ -10,6 +10,12 @@
     <a href="http://graphitejs.com"><img alt="graphitejs" src="https://img.shields.io/badge/GraphiteJS-Beta-yellow.svg"></a>
     <a href="https://travis-ci.org/graphitejs/server"><img alt="TravisCI Status" src="https://travis-ci.org/graphitejs/server.svg?branch=master"></a>
     <a href="https://codecov.io/gh/graphitejs/server"><img alt="Codecov Status" src="https://codecov.io/gh/graphitejs/server/branch/master/graph/badge.svg"></a>
+    <a href="#badge">
+      <img alt="semantic-release" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg">
+    </a>
+    <a href="https://www.npmjs.com/package/@graphite/server">
+      <img alt="npm latest version" src="https://img.shields.io/npm/v/@graphite/server/latest.svg">
+    </a>
 </p>
 
 <br />
@@ -246,12 +252,11 @@ Walter Zalazar |
 
 ### Core members
 
-[![Walter Zalazar](https://avatars.githubusercontent.com/u/5795257?s=64)](https://github.com/wzalazar) |
-[![Jose Casella](https://avatars.githubusercontent.com/u/23145933?s=64)](https://github.com/jl-casella) |
+| [![Walter Zalazar](https://avatars.githubusercontent.com/u/5795257?s=64)](https://github.com/wzalazar)  | [![Jose Casella](https://avatars.githubusercontent.com/u/23145933?s=64)](https://github.com/jl-casella) |
 |---|---|
-Walter Zalazar | José Luis Casella |
-:octocat:[@wzalazar](https://github.com/wzalazar) | [@jl-casella](https://github.com/jl-casella) |
-:bird:[@wzalazar_](https://twitter.com/wzalazar_) | [@jl-casella](https://twitter.com/jl-casella) |
+| Walter Zalazar | José Luis Casella |
+| :octocat:[@wzalazar](https://github.com/wzalazar) | [@jl-casella](https://github.com/jl-casella) |
+| :bird:[@wzalazar_](https://twitter.com/wzalazar_) | [@jl-casella](https://twitter.com/jl-casella) |
 
 ## License
 
