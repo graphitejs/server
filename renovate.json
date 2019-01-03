@@ -1,5 +1,20 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "schedule": [
+    "after 2am",
+    "before 4am"
+  ],
+  "patch": {
+    "automerge": true
+  },
+  "devDependencies": {
+    "minor": {
+      "automerge": true
+    }
+  }
 }
