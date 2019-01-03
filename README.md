@@ -80,7 +80,7 @@ import { GraphQL } from '@graphite/server'
 export const Developer = GraphQL('Developer')({
    // the value always have to be an array first arg is the type, the second arg is an optional comment
   name: ['String!', 'Your name is required'],
-  age: ['Number'],
+  age: ['Int'],
   isGreatDeveloper: ['Boolean']
 })
 
@@ -113,7 +113,7 @@ import { GraphQL } from '@graphite/server'
 
 export const Developer = GraphQL('Developer')({
   name: ['String!', 'Your name is required'],
-  age: ['Number'],
+  age: ['Int'],
   isGreatDeveloper: ['Boolean'],
 
   Query: {
