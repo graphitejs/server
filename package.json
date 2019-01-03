@@ -21,6 +21,8 @@
     "travis-deploy-once": "travis-deploy-once",
     "start:example": "babel-node ./examples/TodoList"
   },
+  "author": "Walter Zalazar",
+  "license": "MIT",
   "lint-staged": {
     "*.js": [
       "npm run lint:fix",
