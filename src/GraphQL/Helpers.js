@@ -18,6 +18,11 @@ export const createSchemaType = (name = '') => (types = '') => {
 
 export const getDataParsed = (query = {}, split = '') => {
   return Object.entries(query).map(([definition, resolver]) => {
+    if (definition.includes('(') && definition.includes(')')) {
+      const [key] = definition.split('(')
+      return { definition, resolver: { [key]: resolver }}
+    }
+
     const [key] = definition.split(split)
     return { definition, resolver: { [key]: resolver }}
   })
