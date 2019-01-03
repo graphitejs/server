@@ -16,6 +16,8 @@
     "compile": "babel src --out-dir dist",
     "prepublish": "npm run compile",
     "codecov": "codecov",
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once",
     "start:example": "babel-node ./examples/TodoList"
   },
   "lint-staged": {
@@ -31,6 +33,9 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/preset-env": "7.2.3",
     "@babel/register": "7.0.0",
+    "@semantic-release/git": "7.0.7",
+    "@semantic-release/github": "5.2.8",
+    "@semantic-release/npm": "5.1.3",
     "apollo-cache-inmemory": "1.3.12",
     "apollo-client": "2.4.8",
     "apollo-link-ws": "1.0.12",
@@ -46,7 +51,9 @@
     "nyc": "13.1.0",
     "prettier": "1.15.3",
     "riteway": "4.0.1",
+    "semantic-release": "15.13.2",
     "subscriptions-transport-ws": "0.9.15",
+    "travis-deploy-once": "5.0.11",
     "ws": "6.1.2"
   },
   "dependencies": {
