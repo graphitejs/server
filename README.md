@@ -69,7 +69,7 @@ and that's all, you have running the graphqli tool on the port [4000](http://loc
 
 ## How to use
 
-After install `@graphite/server` you have to create your first model. I recommend creating a folder called models and follow the pattern matching the filename with the Type name.
+After install `@graphite/server` you have to create your first model. We recommend creating a folder called models and follow the pattern matching the filename with the Type name.
 
 #### Types
 
