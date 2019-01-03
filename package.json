@@ -2,6 +2,7 @@
   "name": "@graphite/server",
   "version": "0.4.0",
   "description": "GraphiteJS Framework",
+  "main": "dist/index.js",
   "scripts": {
     "lint": "eslint -f table ./src/** ./test/**",
     "lint:fix": "eslint --fix ./src/** ./test/** ./examples/**",
