@@ -52,7 +52,7 @@
     "mongodb": "3.1.12",
     "mongodb-memory-server": "3.0.0",
     "nyc": "13.1.0",
-    "prettier": "1.16.0",
+    "prettier": "1.16.1",
     "riteway": "4.0.1",
     "semantic-release": "15.13.3",
     "subscriptions-transport-ws": "0.9.15",
