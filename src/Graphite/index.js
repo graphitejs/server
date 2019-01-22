@@ -50,5 +50,5 @@ export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
     })
   }
 
-  return { stop, graphQLServer }
+  return { stop, graphQLServer, app }
 }
