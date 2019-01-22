@@ -26,4 +26,28 @@ describe('Running Graphite', async assert => {
 
     await graphite.stop()
   }
+
+  {
+    const graphite = await Graphite({ port: 3000 })
+
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: '{ hello }' }),
+    }
+
+    const request = await fetch('http://localhost:3000/graphql', options)
+
+    const actual = (await request.json()).data.hello
+    const expected = 'Hello World! 🎉🎉🎉'
+
+    assert({
+      given: 'Graphite Server with another port',
+      should: 'return the default query',
+      actual,
+      expected,
+    })
+
+    await graphite.stop()
+  }
 })

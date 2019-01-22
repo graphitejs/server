@@ -11,7 +11,7 @@ const logger = pino({
 
 const queryResolverDefault = { Query: { hello: () => 'Hello World! 🎉🎉🎉' }}
 
-export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
+export const Graphite = async({ models = [], path = '/graphql', port = 4000 } = {}) => {
   const types = getTypeDefs(models)
   const query = getQueries('Query')(models)
   const mutation = getQueries('Mutation')(models)
@@ -36,10 +36,10 @@ export const Graphite = async({ models = [], path = '/graphql' } = {}) => {
   const server = http.createServer(app)
   apollo.installSubscriptionHandlers(server)
 
-  const graphQLServer = await server.listen({ port: 4000 })
+  const graphQLServer = await server.listen({ port })
 
-  logger.info(`🚀  Server Graphite GraphQL ready at http://localhost:4000${apollo.graphqlPath}`)
-  logger.info(`🚀  Server Graphite Subscription ready at ws://localhost:4000${apollo.subscriptionsPath}`)
+  logger.info(`🚀  Server Graphite GraphQL ready at http://localhost:${port}${apollo.graphqlPath}`)
+  logger.info(`🚀  Server Graphite Subscription ready at ws://localhost:${port}${apollo.subscriptionsPath}`)
 
   const stop = () => {
     return new Promise((resolve) => {
