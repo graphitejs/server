@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "apollo-server": "2.3.3",
-    "apollo-server-express": "2.3.2",
+    "apollo-server-express": "2.3.3",
     "express": "4.16.4",
     "graphql": "14.1.1",
     "pino": "5.11.1",
