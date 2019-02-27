@@ -9,12 +9,11 @@
     "after 2am",
     "before 4am"
   ],
-  "patch": {
-    "automerge": true
+  "automerge": true,
+  "major": {
+    "automerge": false
   },
   "devDependencies": {
-    "minor": {
-      "automerge": true
-    }
+    "automerge": true
   }
 }
