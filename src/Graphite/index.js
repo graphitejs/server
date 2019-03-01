@@ -11,7 +11,7 @@ const logger = pino({
 
 const queryResolverDefault = { Query: { hello: () => 'Hello World! 🎉🎉🎉' }}
 
-export const Graphite = async({ models = [], path = '/graphql', port = 4000 } = {}) => {
+export const Graphite = async({ models = [], path = '/graphql', port = 4000, introspection = true, playground = true } = {}) => {
   const types = getTypeDefs(models)
   const query = getQueries('Query')(models)
   const mutation = getQueries('Mutation')(models)
@@ -29,6 +29,8 @@ export const Graphite = async({ models = [], path = '/graphql', port = 4000 } = 
   const apollo = new ApolloServer({
     typeDefs,
     resolvers,
+    introspection,
+    playground,
   })
 
   const app = express()
