@@ -53,7 +53,7 @@
     "mongodb-memory-server": "3.1.2",
     "nyc": "13.3.0",
     "prettier": "1.16.4",
-    "riteway": "6.0.2",
+    "riteway": "6.0.3",
     "semantic-release": "15.13.3",
     "subscriptions-transport-ws": "0.9.15",
     "travis-deploy-once": "5.0.11",
