@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server-express'
 import http from 'http'
 import pino from 'pino'
 
-import { getTypeDefs, getQueries, getRelations, getGraphQLSchema, getResolvers } from './Helpers'
+import { getTypeDefs, getQueries, getRelations, getGraphQLSchema, getResolvers, getCustomScalars } from './Helpers'
 
 const logger = pino({
   prettyPrint: true,
@@ -11,20 +11,24 @@ const logger = pino({
 
 const queryResolverDefault = { Query: { hello: () => 'Hello World! 🎉🎉🎉' }}
 
-export const Graphite = async({ models = [], path = '/graphql', port = 4000, introspection = true, playground = true } = {}) => {
+export const Graphite = async({ models = [], scalars = [], path = '/graphql', port = 4000, introspection = true, playground = true } = {}) => {
   const types = getTypeDefs(models)
   const query = getQueries('Query')(models)
   const mutation = getQueries('Mutation')(models)
   const subscription = getQueries('Subscription')(models)
   const relations = getRelations(models)
+  const customScalars = getCustomScalars(scalars)
 
-  const typeDefs = getGraphQLSchema(types, query, mutation, subscription)
+  const typeDefs = getGraphQLSchema(customScalars.typeDefs, types, query, mutation, subscription)
   const resolvers = {
+    ...customScalars.resolvers,
     ...query ? { Query: getResolvers('Query')(models) } : queryResolverDefault,
     ...(mutation.trim() === '' ? {} : { Mutation: getResolvers('Mutation')(models) }),
     ...(subscription.trim() === '' ? {} : { Subscription: getResolvers('Subscription')(models) }),
     ...relations,
   }
+  // console.log("customScalars.resolvers ",customScalars)
+  // console.log("resolvers ",resolvers)
 
   const apollo = new ApolloServer({
     typeDefs,

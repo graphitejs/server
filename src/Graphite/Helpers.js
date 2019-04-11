@@ -21,12 +21,14 @@ const queryTemplate = (query) => `type Query {
 
 export const getTypeDefs = (models) => models.map(model => model.Types).join('')
 
-export const getGraphQLSchema = (types = '', query = '', mutation = '', subscription = '') => {
+export const getGraphQLSchema = (scalar = '', types = '', query = '', mutation = '', subscription = '') => {
   const queries = query === '' ? queryTemplate(createQueryRoot()) : queryTemplate(query)
   const mutations = mutation.trim() === '' ? '' : mutationTemplate(mutation)
   const subscriptions = subscription.trim() === '' ? '' : subscriptionTemplate(subscription)
 
   return gql`
+    ${scalar}
+
     ${types}
 
     ${queries}
@@ -47,3 +49,17 @@ export const getResolvers = (type = '') => (models = []) => models.reduce((acum,
 export const getRelations = (models = []) => models.reduce((acum, model) => {
   return { ...acum, ...model.Relations }
 }, {})
+
+export const getCustomScalars = (scalars = []) => {
+  const customScalars = scalars.reduce((acum, scalar) => {
+    const resolvers = { ...acum.resolvers, ...scalar.resolver }
+    const typeDefs = acum.typeDefs + ' ' + `scalar ${scalar.properties.name}`
+
+    return { resolvers, typeDefs }
+  }, {
+    resolvers: {},
+    typeDefs: '',
+  })
+
+  return customScalars
+}
