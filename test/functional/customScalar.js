@@ -13,6 +13,15 @@ const Developer = GraphQL('Developer')({
   },
 })
 
+const DeveloperWithOdd = GraphQL('Developer')({
+  created: ['Date'],
+  odd: ['Odd'],
+
+  Query: {
+    'getDeveloper(created: Date, odd: Odd): Developer': (_, {created, odd}) => ({ created, odd }),
+  },
+})
+
 const CustomScalarDate = GraphQLScalar('Date', 'Date custom scalar type')({
   parseValue(value) {
     return new Date(value).getTime()
@@ -30,19 +39,32 @@ const CustomScalarDate = GraphQLScalar('Date', 'Date custom scalar type')({
   },
 })
 
+const oddValue = (value) => value % 2 === 1 ? value : null
+
+const CustomScalarOdd = GraphQLScalar('Odd', 'Odd custom scalar type')({
+  parseValue: oddValue,
+  serialize: oddValue,
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      return oddValue(parseInt(ast.value, 10))
+    }
+    return null
+  },
+})
+
 describe('Graphite Custom Scalar', async assert => {
   {
     const scalars = [CustomScalarDate]
     const graphite = await Graphite({ models: [Developer], scalars })
 
     const date = new Date()
-    const timestamp = date.getTime()
+    const created = date.getTime()
 
-    const query = getQuery(`getDeveloper(created: ${timestamp} ) { created }`)
+    const query = getQuery(`getDeveloper(created: ${created} ) { created }`)
     const request = await fetch('http://localhost:4000/graphql', query)
 
     const actual = (await request.json()).data.getDeveloper.created
-    const expected = timestamp
+    const expected = created
 
     assert({
       given: 'GraphQl with Custom Scalar',
@@ -50,6 +72,50 @@ describe('Graphite Custom Scalar', async assert => {
       actual,
       expected,
     })
+
+    await graphite.stop()
+  }
+
+  {
+    const scalars = [CustomScalarDate, CustomScalarOdd]
+    const graphite = await Graphite({ models: [DeveloperWithOdd], scalars })
+
+    const date = new Date()
+    const created = date.getTime()
+
+    {
+      const odd = 3
+
+      const query = getQuery(`getDeveloper(created: ${created}, odd: ${odd} ) { created, odd }`)
+      const request = await fetch('http://localhost:4000/graphql', query)
+
+      const actual = (await request.json()).data.getDeveloper
+      const expected = { created, odd }
+
+      assert({
+        given: 'GraphQl with Two Custom Scalar',
+        should: 'return the odd value',
+        actual,
+        expected,
+      })
+    }
+
+    {
+      const odd = 2
+
+      const query = getQuery(`getDeveloper(created: ${created}, odd: ${odd} ) { created, odd }`)
+      const request = await fetch('http://localhost:4000/graphql', query)
+
+      const actual = (await request.json()).data.getDeveloper
+      const expected = { created, odd: null }
+
+      assert({
+        given: 'GraphQl with Two Custom Scalar',
+        should: 'return null in the odd value',
+        actual,
+        expected,
+      })
+    }
 
     await graphite.stop()
   }
