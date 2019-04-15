@@ -36,6 +36,7 @@ GraphiteJS is a NODE.JS Framework for building GraphQL schemas/types fast, easil
     - [Mutations](#mutations)
     - [Subscriptions](#subscriptions)
     - [Relations](#relations)
+    - [Custom Scalars](#custom-scalars)
 - [Contributing](#contributing)
 - [Team](#team)
 
@@ -223,6 +224,43 @@ main = async () => {
 main()
 
 ```
+
+#### Custom Scalars
+
+```javascript
+
+// scalars/Odd.js
+
+const oddValue = (value) => value % 2 === 1 ? value : null
+
+export const Odd = GraphQLScalar('Odd', 'Odd custom scalar type')({
+  parseValue: oddValue,
+  serialize: oddValue,
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      return oddValue(parseInt(ast.value, 10))
+    }
+    return null
+  },
+})
+
+```
+
+on `index.js`
+
+```javascript
+
+import { Graphite } from '@graphite/server'
+import { Odd } from './scalars/Odd'
+
+main = async () => {
+  await Graphite({ models: [], scalars: [Odd] })
+}
+
+main()
+
+```
+
 
 ## Contributing
 
