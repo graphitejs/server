@@ -27,8 +27,6 @@ export const Graphite = async({ models = [], scalars = [], path = '/graphql', po
     ...(subscription.trim() === '' ? {} : { Subscription: getResolvers('Subscription')(models) }),
     ...relations,
   }
-  // console.log("customScalars.resolvers ",customScalars)
-  // console.log("resolvers ",resolvers)
 
   const apollo = new ApolloServer({
     typeDefs,
