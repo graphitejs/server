@@ -63,7 +63,7 @@
     "apollo-server": "2.9.0",
     "apollo-server-express": "2.9.0",
     "express": "4.17.1",
-    "graphql": "14.5.0",
+    "graphql": "14.5.1",
     "pino": "5.13.2",
     "pino-pretty": "2.6.1"
   },
