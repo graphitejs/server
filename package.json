@@ -41,7 +41,7 @@
     "@semantic-release/npm": "5.1.15",
     "apollo-cache-inmemory": "1.6.3",
     "apollo-client": "2.6.4",
-    "apollo-link-ws": "1.0.18",
+    "apollo-link-ws": "1.0.19",
     "babel-eslint": "10.0.3",
     "codecov": "3.5.0",
     "eslint": "5.16.0",
