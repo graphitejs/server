@@ -64,7 +64,7 @@
     "apollo-server-express": "2.9.3",
     "express": "4.17.1",
     "graphql": "14.5.4",
-    "pino": "5.13.2",
+    "pino": "5.13.3",
     "pino-pretty": "2.6.1"
   },
   "publishConfig": {
