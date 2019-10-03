@@ -38,7 +38,7 @@
     "@babel/register": "7.6.2",
     "@semantic-release/git": "7.0.16",
     "@semantic-release/github": "5.5.0",
-    "@semantic-release/npm": "5.1.15",
+    "@semantic-release/npm": "5.2.0",
     "apollo-cache-inmemory": "1.6.3",
     "apollo-client": "2.6.4",
     "apollo-link-ws": "1.0.19",
