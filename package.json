@@ -30,11 +30,11 @@
     ]
   },
   "devDependencies": {
-    "@babel/cli": "7.6.2",
-    "@babel/core": "7.6.2",
-    "@babel/node": "7.6.2",
+    "@babel/cli": "7.6.3",
+    "@babel/core": "7.6.3",
+    "@babel/node": "7.6.3",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
-    "@babel/preset-env": "7.6.2",
+    "@babel/preset-env": "7.6.3",
     "@babel/register": "7.6.2",
     "@semantic-release/git": "7.0.16",
     "@semantic-release/github": "5.5.2",
