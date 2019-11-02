@@ -38,7 +38,7 @@
     "@babel/register": "7.6.2",
     "@semantic-release/git": "7.0.17",
     "@semantic-release/github": "5.5.5",
-    "@semantic-release/npm": "5.3.2",
+    "@semantic-release/npm": "5.3.3",
     "apollo-cache-inmemory": "1.6.3",
     "apollo-client": "2.6.4",
     "apollo-link-ws": "1.0.19",
@@ -54,7 +54,7 @@
     "nyc": "13.3.0",
     "prettier": "1.18.2",
     "riteway": "6.1.0",
-    "semantic-release": "15.13.29",
+    "semantic-release": "15.13.30",
     "subscriptions-transport-ws": "0.9.16",
     "travis-deploy-once": "5.0.11",
     "ws": "6.2.1"
