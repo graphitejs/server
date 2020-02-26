@@ -42,7 +42,7 @@
     "apollo-cache-inmemory": "1.6.5",
     "apollo-client": "2.6.8",
     "apollo-link-ws": "1.0.19",
-    "babel-eslint": "10.0.3",
+    "babel-eslint": "10.1.0",
     "codecov": "3.6.5",
     "eslint": "5.16.0",
     "eslint-plugin-prettier": "3.1.2",
