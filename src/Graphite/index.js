@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server-express'
 import http from 'http'
 import pino from 'pino'
 
-import { getTypeDefs, getQueries, getRelations, getGraphQLSchema, getResolvers } from './Helpers'
+import { getTypeDefs, getQueries, getRelations, getGraphQLSchema, getResolvers, getDirectives } from './Helpers'
 
 const logger = pino({
   prettyPrint: true,
@@ -11,14 +11,15 @@ const logger = pino({
 
 const queryResolverDefault = { Query: { hello: () => 'Hello World! 🎉🎉🎉' }}
 
-export const Graphite = async({ models = [], path = '/graphql', port = 4000, introspection = true, playground = true } = {}) => {
+export const Graphite = async({ models = [], directives = [], path = '/graphql', port = 4000, introspection = true, playground = true } = {}) => {
   const types = getTypeDefs(models)
   const query = getQueries('Query')(models)
   const mutation = getQueries('Mutation')(models)
   const subscription = getQueries('Subscription')(models)
   const relations = getRelations(models)
+  const { schemaDirectives, typeDefsDirectives } = getDirectives(directives)
 
-  const typeDefs = getGraphQLSchema(types, query, mutation, subscription)
+  const typeDefs = getGraphQLSchema(types, query, mutation, subscription, typeDefsDirectives)
   const resolvers = {
     ...query ? { Query: getResolvers('Query')(models) } : queryResolverDefault,
     ...(mutation.trim() === '' ? {} : { Mutation: getResolvers('Mutation')(models) }),
@@ -31,6 +32,7 @@ export const Graphite = async({ models = [], path = '/graphql', port = 4000, int
     resolvers,
     introspection,
     playground,
+    schemaDirectives,
   })
 
   const app = express()
