@@ -21,12 +21,14 @@ const queryTemplate = (query) => `type Query {
 
 export const getTypeDefs = (models) => models.map(model => model.Types).join('')
 
-export const getGraphQLSchema = (types = '', query = '', mutation = '', subscription = '') => {
+export const getGraphQLSchema = (types = '', query = '', mutation = '', subscription = '', directives = '') => {
   const queries = query === '' ? queryTemplate(createQueryRoot()) : queryTemplate(query)
   const mutations = mutation.trim() === '' ? '' : mutationTemplate(mutation)
   const subscriptions = subscription.trim() === '' ? '' : subscriptionTemplate(subscription)
 
   return gql`
+    ${directives}
+
     ${types}
 
     ${queries}
@@ -47,3 +49,15 @@ export const getResolvers = (type = '') => (models = []) => models.reduce((acum,
 export const getRelations = (models = []) => models.reduce((acum, model) => {
   return { ...acum, ...model.Relations }
 }, {})
+
+
+export const getDirectives = (directives) => {
+  const defaultDirective = { schemaDirectives: {}, typeDefsDirectives: '' }
+
+  return directives.reduce((acum, directive) => {
+    const schemaDirectives = { ...acum.schemaDirectives, ...directive.schemaDirective }
+    const typeDefsDirectives = acum.typeDefsDirectives + ' ' + `directive ${directive.nameDirective}`
+
+    return { schemaDirectives, typeDefsDirectives }
+  }, defaultDirective)
+}
