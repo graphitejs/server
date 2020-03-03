@@ -1,6 +1,6 @@
 {
   "name": "@graphite/server",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "GraphiteJS Framework",
   "main": "dist/index.js",
   "scripts": {
