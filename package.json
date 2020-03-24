@@ -44,7 +44,7 @@
     "apollo-link-ws": "1.0.19",
     "babel-eslint": "10.1.0",
     "codecov": "3.6.5",
-    "eslint": "5.16.0",
+    "eslint": "6.8.0",
     "eslint-plugin-prettier": "3.1.2",
     "husky": "4.2.3",
     "isomorphic-fetch": "2.2.1",
