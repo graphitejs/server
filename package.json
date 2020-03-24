@@ -65,7 +65,7 @@
     "express": "4.17.1",
     "graphql": "14.6.0",
     "pino": "5.17.0",
-    "pino-pretty": "2.6.1"
+    "pino-pretty": "3.6.1"
   },
   "publishConfig": {
     "access": "public"
