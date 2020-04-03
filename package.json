@@ -51,7 +51,7 @@
     "lint-staged": "10.0.9",
     "mongodb": "3.5.5",
     "mongodb-memory-server": "6.5.0",
-    "nyc": "15.0.0",
+    "nyc": "15.0.1",
     "prettier": "1.19.1",
     "riteway": "6.1.1",
     "semantic-release": "17.0.4",
