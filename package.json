@@ -57,7 +57,7 @@
     "semantic-release": "17.0.4",
     "subscriptions-transport-ws": "0.9.16",
     "travis-deploy-once": "5.0.11",
-    "ws": "6.2.1"
+    "ws": "7.3.0"
   },
   "dependencies": {
     "apollo-server": "2.11.0",
