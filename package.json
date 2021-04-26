@@ -46,7 +46,7 @@
     "codecov": "3.7.2",
     "eslint": "5.16.0",
     "eslint-plugin-prettier": "3.1.4",
-    "husky": "4.2.3",
+    "husky": "6.0.0",
     "isomorphic-fetch": "2.2.1",
     "lint-staged": "10.2.11",
     "mongodb": "3.6.0",
