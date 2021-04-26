@@ -50,7 +50,7 @@
     "isomorphic-fetch": "2.2.1",
     "lint-staged": "10.2.11",
     "mongodb": "3.6.0",
-    "mongodb-memory-server": "6.6.3",
+    "mongodb-memory-server": "6.9.6",
     "nyc": "15.1.0",
     "prettier": "1.19.1",
     "riteway": "6.1.1",
