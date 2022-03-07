@@ -49,7 +49,7 @@
     "husky": "4.2.3",
     "isomorphic-fetch": "2.2.1",
     "lint-staged": "10.2.11",
-    "mongodb": "3.6.0",
+    "mongodb": "3.7.3",
     "mongodb-memory-server": "6.6.3",
     "nyc": "15.1.0",
     "prettier": "1.19.1",
