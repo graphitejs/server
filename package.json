@@ -55,7 +55,7 @@
     "prettier": "1.19.1",
     "riteway": "6.1.1",
     "semantic-release": "17.1.1",
-    "subscriptions-transport-ws": "0.9.17",
+    "subscriptions-transport-ws": "0.11.0",
     "travis-deploy-once": "5.0.11",
     "ws": "6.2.1"
   },
