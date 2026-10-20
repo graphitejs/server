@@ -60,7 +60,7 @@
     "ws": "6.2.1"
   },
   "dependencies": {
-    "apollo-server": "2.16.1",
+    "apollo-server": "2.25.4",
     "apollo-server-express": "2.16.1",
     "express": "4.17.1",
     "graphql": "14.7.0",
